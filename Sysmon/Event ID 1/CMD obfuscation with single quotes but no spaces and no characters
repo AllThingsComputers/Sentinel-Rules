@@ -1,0 +1,6 @@
+// Rule Name: CMD obfuscation with single quotes but no spaces and no characters
+// Rule This can detect obfuscated commands like 'netsh ad"vfi"rewall show currentprofile state as per the web page  https://www.wietzebeukema.nl/blog/windows-command-line-obfuscation
+Other rules may covers this already 
+Sysmon
+| where EventID = 1
+| where CommandLine matches regex  '\'\''
