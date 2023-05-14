@@ -1,0 +1,5 @@
+// Rule Name: listing security products
+// Rule Description: Hackers will list security products to get info about installed security programs on systems
+Sysmon
+| where EventID == 1
+| where CommandLine matches regex '(?i)wmic product'
