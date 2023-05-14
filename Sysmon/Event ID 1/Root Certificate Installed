@@ -1,0 +1,5 @@
+// Rule Name: Root Certificate Installed.
+// Rule Description: Adversaries may install a root certificate on a cornpromised system to avoid warninga when connecting to adversary controlled web servers. https://superuser.corn/questions/1506440/import-cettificates-using-command-line-on-windows
+Sysmon
+| where EventID == 1
+| where CommandLine matches regex '(?i)(certutil(\.exe)? -addstore root .*\.cer)'
