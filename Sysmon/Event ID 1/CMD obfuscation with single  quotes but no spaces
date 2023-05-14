@@ -1,0 +1,6 @@
+// Rule Name:: CMD obfuscation with single  quotes but no spaces
+// Rule Description: This can detect obfuscated commands like 'netsh ad"vfi"rewall show currentprofile state as per the web page  https://www.wietzebeukema.nl/blog/windows-command-line-obfuscation
+Sysmon
+| where EventID = 1
+| where CommandLine matches regex  '.\'.*\''
+// to address as this as the has O or any characters. could  have at least twice to it {2,} 
