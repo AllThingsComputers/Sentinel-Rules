@@ -1,0 +1,5 @@
+// Rule Name: Unicode representations in cmd
+// Rule Description:  for example certutil happens to accept hyphens, slashes, and most Unicode representations of slashes, such as the division slash (0x2215) and fraction slash (0x2044). https://www.wietzebeukema.nl/blog/windowgxommand-line-obfuscation  // may need to research more if this will catch unicode charatrs in code . woudl it appear in event log.
+Sysmon
+| where EventID == 1
+| where CommandLine matches regex '(?i)(0[x+]2215|0[x+]2044|U[+x]08BA)' 
