@@ -1,0 +1,5 @@
+// Rule Name: detecting Environment Variable Substrings 
+// Rule Description:  This can be used for obfuscation in cmd prompt (set) https://www.fireeye.com/content/dam/fireeye- www/blog/pdfs/dosfuscation-report.pdf>  page 8. This will detect %ALLUSERSPROFILE:~4,1% or %ALLUSERSPROFILE:~7,1% 
+Sysmon
+| where EventID == 1
+| where CommandLine matches regex '%.*:~\d,\d%'
