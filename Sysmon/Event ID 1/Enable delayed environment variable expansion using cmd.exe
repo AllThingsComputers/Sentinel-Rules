@@ -1,0 +1,5 @@
+// Rule Name: Enable delayed environment variable expansion using cmd.exe 
+// Rule Description:   This is a method we can use for obfuscation though is rare https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/dosfuscation-report.pdf page 25
+Sysmon
+| where EventID == 1
+| where CommandLine matches regex  '(?i)[-/\\]V:ON'
