@@ -1,0 +1,5 @@
+// Rule Name: detecting tick escape character in posh 
+// Rule Description:  Can be used for obfuscation // If one more layer of escape characters is addedto• the sarnple command, powershell.exe would throw an error since it does not treat the caret as an escape character cmd.exe but rather uses the tick character ( for escaping. https://www.fireeye.com/content/darn/fireeye-www/blog/pdfs/dosfuscation-report.pdf page 11 
+Sysmon
+| where EventID == 1
+| where CommandLine matches regex  '[^\s]`[^\s]//'  
