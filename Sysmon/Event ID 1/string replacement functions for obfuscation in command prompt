@@ -1,0 +1,5 @@
+// Rule Name: string replacement functions for obfuscation in command prompt
+// Rule Description:  The string replacement functionality is of the pattern %variablename:stringtofind=newstring% . StringToFind is the @symbol and the NewSTring is blank. Which means the @ symbol is removed. See link https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/dosfuscation-report.pdf  page 5. it will find echo %x:@=%  | cmd // could extend to echo cmd.should be cmd only and not powershell 
+Sysmon
+| where EventID = 1
+| where CommandLine matches regex  '%.*:.*%'
