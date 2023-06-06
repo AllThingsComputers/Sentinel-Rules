@@ -1,0 +1,7 @@
+// Title of Detection:  network Connection to fake organisation website
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  an adversary can register a fake website that is similar to their  target companies name so any network connections domains fly under the radar. for example if you work for acme.com then amce.com is made to look similar as per below
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 3 and DestinationIp <> "127.0.0.1" and DestinationHostname matches regex ‘(?i)amce|accme|aacme|acme.net’ and not(ipv4_is_private (tostring(DestinationIp)))

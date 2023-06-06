@@ -1,0 +1,8 @@
+// Title of Detection:  Execution of Batch, CMD and Powershell Scripts
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Adversaries may abuse the Windows command shell for execution. The Windows command shell ([cmd]) is the primary command prompt on Windows systems. The  Windows command prompt can be used to control almost any aspect of a system, with various permission levels required for different subsets of commands. Batch files (ex: .bat or .cmd) also provide the shell with a list of sequential commands to run, as well as normal scripting operations such as conditionals and loops. Common uses of batch files include long or repetitive tasks, or the need to run the same set of commands on multiple system. These scripts can be used to hide commands. In future can also add more script extensions
+// References (if available):  https://attack.mitre.org/software/S0106 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i).*\.(bat|cmd|ps1)'

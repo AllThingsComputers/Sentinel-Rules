@@ -1,0 +1,8 @@
+// Title of Detection: Nmap.exe attempting Unexpected Ports
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Adversaries may communicate using a protocol and port pairing that are typically not associated. For example,  https over port 8088(Citation: Symantec Elfin Mar 2019) or port 587(Citation: Fortinet Agent Tesla April 2018) as opposed to the traditional port 443. Living off the Land they can utilise the tool nmap . format it matches will be  nmap -p 1-200 <IP_address> can ping ICMP domain, pc name or IP.  negative look forwards are not supported in KQL’s regex so this is  written the long way.
+// References (if available):   https://atomicredteam.io/command-and-control/T1571/
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex (?i)nmap(\.exe)? -p ?(8(?!0$)(?!0 )|4(?!43$)(?!43 )|[1235679])\d{0,4}.*'

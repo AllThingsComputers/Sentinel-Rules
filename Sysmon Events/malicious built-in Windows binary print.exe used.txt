@@ -1,0 +1,7 @@
+// Title of Detection:   malicious built-in Windows binary print.exe used
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Detects to identify when a built-in Windows binary named print.exe was being used to execute ATT&CK Technique T1105 (Remote File Copy) in order to download a payload to an endpoint.
+// References (if available):   https://redcanary.com/blog/breathing-life-detection-capability/ 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 11 and Image endswith "print.exe" and TargetFilename endswith ".exe"

@@ -1,0 +1,8 @@
+// Title of Detection:  Firewall switched off in Command-Line
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: A  quantifier regex is used here
+// References (if available):  https://www.socinvestigation.com/ransomware-how-attackers-are-breaching-corporate-networks 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)netsh.*(\b( advfirewall| set| allprofiles| state| off)\b.*){5,}'

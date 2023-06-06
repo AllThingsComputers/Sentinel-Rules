@@ -1,0 +1,8 @@
+// Title of Detection: FORcoding aka for-loop encoding in command-line
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  For-loop encoding is a payload obfuscation technique that uses variable expansion inside of the for loop of cmd.exe to fully encode the input commands. This technique is unlikely to be used by IT admins.  
+// References (if available): https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/dosfuscation-report.pdf  page 26.
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)(&&\s?)?FOR %A IN'

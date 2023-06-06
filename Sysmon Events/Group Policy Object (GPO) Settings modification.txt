@@ -1,0 +1,8 @@
+// Title of Detection:   Group Policy Object (GPO) Settings modification
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   this detects malicious GPO modifications that can be used to implement other malicious behaviour
+// References (if available):  https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1484.001/T1484.001.md 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System\" /v (GroupPolicyRefreshTimeDC /t REG_DWORD /d 0 /f|GroupPolicyRefreshTimeOffsetDC /t REG_DWORD /d 0 /f|GroupPolicyRefreshTime /t REG_DWORD /d 0 /f GroupPolicyRefreshTimeOffset /t REG_DWORD /d 0 /f| EnableSmartScreen /t REG_DWORD /d 0 /f|ShellSmartScreenLevel /t REG_SZ /d Block /f)'

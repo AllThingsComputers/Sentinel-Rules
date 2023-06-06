@@ -1,0 +1,8 @@
+// Title of Detection:  Machine Tools  Listed
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: Hackers will list security software to learn about the security software that has been installed on systems.
+// References (if available):   N/A 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)wmic product'

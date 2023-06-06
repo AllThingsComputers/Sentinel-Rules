@@ -1,0 +1,7 @@
+// Title of Detection: open command for uac bypass
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  detectsmodifying data inside the default value in the regkey in the query would result in execution of the script or binary to which the registry is pointing. Detecting living off the land attacker techniques in microsoft windows.  
+// References (if available): https://pentestlab.blog/2017/05/02/uac-bypass-event-viewer/   page 39
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID in (12, 13, 14) and TargetObject matches regex @'(?i)(hkcr[HKEY_CLASSES_ROOT)\\mscfile\\shell\\open\\command'

@@ -1,0 +1,8 @@
+// Title of Detection: Encoding  using Certutil.exe 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  An attacker may use LOTL tools to encode data to avoid detection.
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)certutil(\.exe)?\"? -encode .*.txt .*.txt'

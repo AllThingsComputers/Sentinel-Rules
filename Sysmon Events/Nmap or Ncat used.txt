@@ -1,0 +1,8 @@
+// Title of Detection:  Nmap or Ncat used
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: Detecting Nmap/Ncat on network. Netcat has been used to provide malicious, unauthorised access to their targets
+// References (if available):  https://www.sciencedirect.com/science/article/abs/pii/B9781597492577000054
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)(nmap|ncat|netcat)$'

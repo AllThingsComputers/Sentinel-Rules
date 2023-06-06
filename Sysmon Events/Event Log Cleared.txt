@@ -1,0 +1,8 @@
+// Title of Detection:  Event Log Cleared 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  To cover their tracks on a victim system the actors may also clear the Windows event log  
+// References (if available): https://www.socinvestigation.com/ransomware-how-attackers-are-breaching-corporate-networks/ 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)Clear-EventLog'

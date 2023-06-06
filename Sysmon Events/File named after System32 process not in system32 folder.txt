@@ -1,0 +1,7 @@
+// Title of Detection: File named after System32 process not in system32 folder
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: this may be an illegitimate file. You can add the full path starting with the C and also do more processes including from syswow
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 11 and TargetFilename matches regex @"(?i)\\(conhost|svchost| Isass|dashost)\exe$" and not(TargetFilename matches regex @"(?i)C:\\Windows\\System32\\[a- z0-9\.]*.exe")

@@ -1,0 +1,7 @@
+// Title of Detection: potential obfuscation in cmd.exe via Parentheses character
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Evenly-paired parentheses can encapsulate individual commands in cmd.exe's arguments without affecting the execution of each command.  
+// References (if available): https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/dosfuscation-report.pdf  page 12
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where (Image matches regex @"(?i)\\cmd.exe$" and '\(.*\)') or TargetObject matches regex @'\(.*\)'

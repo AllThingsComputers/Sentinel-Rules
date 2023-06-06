@@ -1,0 +1,8 @@
+// Title of Detection:  GPO Discovery in Domain
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Detects attempt to pull the GPOs in a domain.
+// References (if available): n/a
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)gpresult'

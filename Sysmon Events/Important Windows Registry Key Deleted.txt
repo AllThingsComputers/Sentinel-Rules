@@ -1,0 +1,7 @@
+// Title of Detection:  Important Windows Registry Key Deleted
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Removal of a Registry Key (ex: Windows EventID 4658 or Sysmon EventID 12) . You can  add exclusions of common processes and keys for your environment
+// References (if available): https://attack.mitre.org/datasources/DS0024/   https://attack.mitre.org/techniques/T1562/001/
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where (EventID == 12 and EventType == "DeleteKey" and TargetObject matches regex @"(?i)\\SOFTWARE\\Microsoft\\AMSI\\Providers|HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows Defender\\") or EventID == 12 and EventType == "DeleteKey

@@ -1,0 +1,8 @@
+// Title of Detection:   NtdsUtil.exe Dump Detected
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  This detects execution of a script that reads from a ntds.dit file and may be used to get access to credentials without using any credential dumpers  
+// References (if available): https://www.cyberis.com/article/obtaining-ntdsdit-using-built-windows-commands 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)ntdsutil(\.exe).*ifm.*(create full)?'

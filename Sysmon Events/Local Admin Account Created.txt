@@ -1,0 +1,7 @@
+// Title of Detection:  Local Admin Account Created
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   
+// References (if available):    https://blog.menasec.net/2020/09/hunting-local-accounts-and-groups.html 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and OriginalFileName in~ ("cmd.exe", "net.exe", "net1.exe") and "/add" and "/administrator'

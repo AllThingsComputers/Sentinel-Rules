@@ -1,0 +1,7 @@
+// Title of Detection:  msxl used
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   
+// References (if available): https://redcanary.com/blog/detecting-msxsl-attacks/ 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where (EventID == 1 and ("(?i)msxl.* [^(-o)]" or '(?i)msxl.* (www|http|\.com]\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})')) or (EventID == 3 and Image matches regex @"(?i)\\msxl\.exe")

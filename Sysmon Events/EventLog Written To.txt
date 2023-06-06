@@ -1,0 +1,8 @@
+// Title of Detection: EventLog Written To
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  This Detects usage of the Write to event log. The command can be leverage to write malicious payloads to the EventLog and then retrieve them later for later use by the attacker  
+// References (if available): https://www.blackhillsinfosec.com/windows-event-logs-for-red-testtest/   https://stackoverflow.com/questions/446691/how-to-create-windows-eventlog-source-from-command-line 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)eventcreate'

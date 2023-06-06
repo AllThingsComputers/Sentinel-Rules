@@ -1,0 +1,7 @@
+// Title of Detection:  mshta usage with a hta file in its command line
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Using .hta files or its partner in crime, mshta.exe, is an alternative to using macro enabled document for attacks and has been around a long time.  
+// References (if available):  https://www.mcafee.com/blogs/other-blogs/mcafee-labs/what-is-mshta-how-can-it-be-used-and-how-to-protect-against-it/ 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and Image matches regex @"(?i)\\mshta\.exe$" and CommandLine contains ".hta"

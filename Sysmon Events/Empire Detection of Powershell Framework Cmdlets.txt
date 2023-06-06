@@ -1,0 +1,8 @@
+// Title of Detection: Empire Detection of Powershell Framework Cmdlets 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Empire is an open-source, cross-platform remote administration and post-exploitation framework for penetration testers and criminals.
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)(-NOP -STA -W 1-ENC|Invoke-Token Manipulation|Invoke-RunAs|Install-SSP|Invoke-Mimikatz|Invoke-PSRemoting|New-GPOImmediateTask|Invoke-PSInject|Invoke-DCOM|Invoke-Kerberoast|Invoke-SessionGopher)'

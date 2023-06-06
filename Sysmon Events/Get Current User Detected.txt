@@ -1,0 +1,8 @@
+// Title of Detection:  Get Current User Detected
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  this alerts us to the use of a command that can identify the currently on logged user which legitimate user should already know that
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)whoami'

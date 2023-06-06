@@ -1,0 +1,7 @@
+// Title of Detection:   ordinal Rundll32  execution
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  An ordinal is the numeric position of the exported Function in the DLL Export Address table. We have had success detecting this by looking for rundll32.exe executing DLL export functions by ordinal, which are denoted by #. We detect this simply by looking for rundll32 process execution with command lines matching a regular expression for ordinal calls. While this is a legitimate way to execute a DLL, it's fairly rare. 
+// References (if available):   page 109  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and Image matches regex @'(?i)\\rundll32\.exe$' and '\\.*\.dll,#\d'

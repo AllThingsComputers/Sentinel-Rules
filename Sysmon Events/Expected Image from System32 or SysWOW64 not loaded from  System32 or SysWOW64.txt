@@ -1,0 +1,7 @@
+// Title of Detection: Expected Image from System32 or SysWOW64 not loaded from  System32 or SysWOW64
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  This may detect a malicious file masquerading as a trusted loaded module. You can add more.
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and OriginalFileName matches regex (Insert regex of every System32 and Syswow Process here) and not(Image matches regex @"\\(System32|SysWOW64)\\")

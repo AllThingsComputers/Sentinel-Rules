@@ -1,0 +1,7 @@
+// Title of Detection:  network Connection initiated by non-whitelisted binary
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: This will detect when for if example MS word spawns cmd.exe then net.exe to  start a network connection,. Can maybe chain together PIDs to link each process 
+// References (if available):    https://dmcxblue.gitbook.io/red-team-notes/detection/initial-access
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 3 and not(Image matches regex ‘(Processes that are Allowed To Make Net Connections)’)

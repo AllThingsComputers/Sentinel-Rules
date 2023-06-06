@@ -1,0 +1,7 @@
+// Title of Detection:   memory dump  via Procdump or Task manager 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  
+// References (if available): https://blog.menasec.net/2019/02/threat-hunting-21-procdump-or-taskmgr.html 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 10 and CallTrace matches regex @'(?i)dbghelp|dbgcore' and TargetImage matches regex @'(?i)Isass'

@@ -1,0 +1,8 @@
+// Title of Detection:  Esentutl Detected
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  
+// References (if available):  https://www.socinvestigation.com/investigation-of-the-malware-persistence-on-defragmented-disk/
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)Esentutl(\.exe)?.* (/y|/v|/d)'

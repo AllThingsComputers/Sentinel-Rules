@@ -1,0 +1,7 @@
+// Title of Detection:  Executable extensions that are Uncommon in your environment
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and not(Image matches regex @'(?i)\.(exe|com|tmp|scr)')

@@ -1,0 +1,7 @@
+// Title of Detection:   LSASS laucnhing processes
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  This detection analytic will identify instances of the Local Security Authority Subsystem Service (Isass.exe) spawning processes that are not typically observed being launched by Isass.exe page
+// References (if available):    69   https://resource.redcanary.com/rs/003-YRU-314/images/2022-Threat-DetectionReport-RedCanary.pdf 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where ParentImage matches regex @"(?i)\\lsass.exe$" and not(Image matches regex @"(?i)\\(werfault|Isass)\.exe$")

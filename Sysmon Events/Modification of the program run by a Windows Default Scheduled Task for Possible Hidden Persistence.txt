@@ -1,0 +1,7 @@
+// Title of Detection: Modification of the program run by a Windows Default Scheduled Task for Possible Hidden Persistence
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   
+// References (if available): https://blog.menasec.net/2019/03/threat-hunting-25-scheduled-tasks-for.html
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 11 and (Image contains "cmd.exe" or Image contains "powershell.exe") and (TargetFilename contains 'aitagent.exe' or TargetFilename contains 'DiagTrackRunner.exe' or TargetFilename contains 'CompatTelRunner.exe' or TargetFilename contains 'acproxy.dll' or TargetFilename contains 'wsqmcons.exe' or TargetFilename contains 'Ipremove.exe' or TargetFilename contains 'srrstr.dll' or TargetFilename contains 'wermgr.exe' or TargetFilename contains 'sdclt.exe' or TargetFilename contains 'appidcertstorecheck.exe' or TargetFilename contains 'AppHostRegistrationVerifier.exe' or TargetFilename contains 'MicTray64.exe' or TargetFilename contains 'usoclient.exe' or TargetFilename contains 'dsregcmd.exe' or TargetFilename contains 'sihclient.exe' or TargetFilename contains 'dimsjob.dll' or TargetFilename contains 'filemodLracengn.dll' or TargetFilename contains 'HotstartUserAgent.dll' or TargetFilename contains 'MsCtfMonitor.dll' or TargetFilename contains 'PlaySndSrv.dll' or TargetFilename contains 'AdobeARM.exe' or TargetFilename contains 'GoogleUpdate.exe')'

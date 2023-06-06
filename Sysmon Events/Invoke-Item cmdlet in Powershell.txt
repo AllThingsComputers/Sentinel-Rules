@@ -1,0 +1,8 @@
+// Title of Detection:  Invoke-Item cmdlet in Powershell
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  A PowerShell command leveraged the Invoke-Item cmdlet
+// References (if available):  n/a
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)Invoke-Item'

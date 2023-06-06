@@ -1,0 +1,8 @@
+// Title of Detection:   modified Apps running scripts to bypass detections 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  An adversary may rename or use a custom powershell or command prompt to run attack scripts scripts to avoid detection. You can expand this and make one for scripts and commands
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where isnotempty(CommandLine) and not(Image matches regex @"(?i)C:\\Windows\\System32\\.*(cscript.exe|PowerShell.EXE|Wmiprvse.exe|netsh.exe|Wmiprvse.exe|sc.exe|Cmd.Exe|reg.exe|dsregcmd.exe|tasklist.exe|diskpart.exe|ipconfig.exe|netstat.exe|CertUtil.exe|nslookup.exe|net.exe|net1.exe|FINDSTR.EXE|wsmprovhost.exe)") and not(Image matches regex
+@"(?i)(C:\\Users\\|C:\\Windows\\Temp\\).*(.exe)") and Image <> "C:\\Windows\\SysWOW64\\wbem\\WmiPrvSE.exe"

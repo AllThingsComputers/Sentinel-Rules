@@ -1,0 +1,7 @@
+// Title of Detection:   new environment variable seen in Powershell
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: detect The environment variable possibly hiding code but could be legit IT admin activity. 
+// References (if available):   page 4.  https://www.blackhat.com/docs/us-17/thursday/us-17-Bohannon-Revoke-Obfuscation-PowerShell-Obfuscation-Detection-And%20Evasion-Using-Science-wp.pdf 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and Image endswith "powershell.exe" and '(?i)\$env:.*[^(ComputerName)]'

@@ -1,0 +1,7 @@
+// Title of Detection: MSHTA parenage detected
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  MSHTA a powerful tool to get the code Executed, compatible with JScript and VBScript
+// References (if available):     https://dmcxblue.gitbook.io/red-team-notes/detection/execution/mshta-detection 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and ParentImage contains @'mshta.exe'

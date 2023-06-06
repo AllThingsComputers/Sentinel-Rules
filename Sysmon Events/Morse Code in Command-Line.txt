@@ -1,0 +1,8 @@
+// Title of Detection: Morse Code in Command-Line 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Adversaries can utilise Morse code for text obfuscation
+// References (if available):  n/a
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(\b(-\.\.\.|-\.-\.|\.\.-\.|--\.-|\.\.\.-|-\.\.-|--\.\.|\.---|\.-\.\.|-\.-\.|-\.-\.|-\.-\.|-\.\.-)\b.*){2,}'
