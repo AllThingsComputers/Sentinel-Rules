@@ -1,0 +1,8 @@
+// Title of Detection:  PowerShell.value.toString() utilised
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: this has legit IT admin usage but also circumvent detections of malicious commands
+// References (if available):    https://www.trustedsec.com/blog/circumventing-encodedcommand-detection-powershell/
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)\.value\.toString\(\)'

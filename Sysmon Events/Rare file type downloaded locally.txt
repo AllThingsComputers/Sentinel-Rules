@@ -1,0 +1,7 @@
+// Title of Detection:  Rare file type downloaded locally
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: Extensions associated with legacy Office documents (e.g., DOC instead of DOCX) Attachments with unknown file extensions that are capable of executing code or mounting disks (e.g., ISO or IMG) Archive file attachments not common within your organization (e.g., RAR or ACE)have any of these spawned another malicious process. This could be from phishing emails
+// References (if available):     https://resource.redcanary.com/rs/003-YRU-314/images/2020-Threat-Detection-Report.pdf   
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 11 and TargetFilename matches regex and @"(?i)\\downloads\\.*\.(doc|iso|rar|ace|img)$"

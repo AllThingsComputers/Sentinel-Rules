@@ -1,0 +1,7 @@
+// Title of Detection:  Possible ADS file marker via file modifications
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  watch for file modifications that contain a colon, as this is the standard ADS marker.
+// References (if available):    https://redcanary.com/blog/using-alternate-data-streams-bypass-user-account-controls
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where  (EventID == 7 and OriginalFileName matches regex @"(?i)(:|ads)") or (EventID == 3 and Image endswith "notepad.exe" and not(ipv4_is_private(tostring(DestinationIp)))) or (EventID == 1 and "(?i)C:\\.* (ads)")

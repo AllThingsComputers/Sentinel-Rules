@@ -1,0 +1,8 @@
+// Title of Detection:  Powershell downgrade Command
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  the latest version is 5 ID: T1562.010 anything else maybe be a Powershell downgrade
+// References (if available):  n/a 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)powershell(\.exe)? -v[ersion]{0,6) [1-4]'

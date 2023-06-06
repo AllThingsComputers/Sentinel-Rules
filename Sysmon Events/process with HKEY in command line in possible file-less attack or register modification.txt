@@ -1,0 +1,7 @@
+// Title of Detection:  process with HKEY in command line in possible file-less attack or register modification
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: This detection may indicate file-less attack called code stored in reg key. Look out for any recent changes in reg in your environment
+// References (if available): https://redcanary.com/blog/detecting-all-the-things-with-limited-data/  
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and "(?i)HKCR|HKCU|HKLM|HKU|HKCC|HKEY_CLASSES_ROOT|HKEY_CURRENT_USER|HKEY_LOCAL_MACHINE|HKEY_USERS|HKEY_CURRENT_CONFIG"

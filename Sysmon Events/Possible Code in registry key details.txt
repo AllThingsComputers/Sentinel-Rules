@@ -1,0 +1,7 @@
+// Title of Detection:  Possible Code in registry key details
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: 
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where  EventID in (12, 13, 14) and TargetObject matches regex @"(?i)(javascript|IEX|Invoke-Expression|pything|cmd|bat|ps1|psm1|exe)"

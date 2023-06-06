@@ -1,0 +1,7 @@
+// Title of Detection: Possible Memory  Dump File 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  This can detect .dmp files that could potentially be memory dump files. though can be caused by app crashes  
+// References (if available):  https://www.deepinstinct.com/blog/lsass-memory-dumps-are-stealthier-than-ever-before 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID in (11, 12) and ((TargetFilename matches regex @"(?i).*\.dmp$") or (TargetObject matches regex @"(?i).*\.dmp$" and not(TargetObject matches regex @"(?i)(crash)")))

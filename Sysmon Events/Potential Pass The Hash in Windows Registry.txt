@@ -1,0 +1,7 @@
+// Title of Detection:  Potential Pass The Hash in Windows Registry
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   
+// References (if available): https://posts.specterops.io/pass-the-hash-is-dead-long-live-localaccounttokenfilterpolicy-506c25a7c167 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID in (12, 13, 14) and TargetObject contains @"HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\FilterAdministratorToken" or (TargetObject contains @"HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\LocalAccountTokenFilterPolicy" and TargetObject contains "1")

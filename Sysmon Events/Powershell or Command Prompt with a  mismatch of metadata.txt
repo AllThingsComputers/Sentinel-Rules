@@ -1,0 +1,7 @@
+// Title of Detection:  Powershell or Command Prompt with a  mismatch of metadata 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:    
+// References (if available):   https://malwarereversing.blogspot.com/2019/10/file-renamingtechnique-does-not-evade.html
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and (("(?i)invoke|executionpolicy" and not(Image @"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" and Description == @'WIndows PowerShell' and Product == @"Microsoft® Windows® Operating System" and Company == 'Microsoft Corporation' and OriginalFileName == @"PowerShell.EXE")) or ("echo" and not(Description @"Windows Command Processor" and Image @"C:\Windows\System32\cmd.exe" and Product == @"Microsoft® Windows®  == @"Microsoft Operating System" and Company == @"Microsoft Corporation" and OriginalFileName =~ @"Cmd.Exe")))

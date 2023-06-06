@@ -1,0 +1,8 @@
+// Title of Detection: PubPrn for System Script Proxy Execution
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  identification and exploitation of vulnerable scripts such as pubprn.vbs. can in future add more vulnerable scripts to the regex
+// References (if available):   https://attack.mitre.org/techniques/T1216/001/
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)pubprn\.vbs'

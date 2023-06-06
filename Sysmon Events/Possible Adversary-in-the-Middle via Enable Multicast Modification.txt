@@ -1,0 +1,7 @@
+// Title of Detection:  Possible Adversary-in-the-Middle via Enable Multicast Modification
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Monitor HKLM\Software\Policies\Microsoft\Windows NT\DNSClient for changes to the "EnableMulticast" DWORD value. A value of "O" indicates LLMNR is disabled.  
+// References (if available): https://attack.mitre.org/techniques/T1557/ 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID in (12, 13, 14) and TargetObject matches regex @"(?i)(HKEY_LOCAL_MACHINE|HKLM)\\Software\\Policies\\Microsoft\\Windows NT\\DNSClient\\EnableMulticast" and TargetObject != 'DWORD (0x00000000)''

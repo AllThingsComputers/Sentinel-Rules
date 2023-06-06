@@ -1,0 +1,7 @@
+// Title of Detection:  Process Execution from UAC bypass-able directories 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Because many users can execute anything within %APPDATA%, user space and temp without tripping User Account Control (UAC), binaries and their corresponding processes are always scrutinized. any other spaces. exclusions are likely needed 
+// References (if available):  https://docs.microsoft.com/en-us/windows/security/identity-protection/user-account-control/user-account-control-overview
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and Image matches regex @"(?i)\\(users|appdata|temp)\\

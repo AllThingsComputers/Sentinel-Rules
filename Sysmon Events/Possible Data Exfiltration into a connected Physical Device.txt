@@ -1,0 +1,7 @@
+// Title of Detection:  Possible Data Exfiltration into a connected Physical Device
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Adversaries may attempt to exfiltrate data via a physical medium, such as a removable drive. In certain circumstances, such as an air-gapped network compromise, exfiltration could occur via a physical medium or device introduced by a user.  
+// References (if available): https://attack.mitre.org/techniques/T1052/
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and CommandLine matches regex '(?i)move|copy|mv|cp' and '(?i)[a-z]:\\.*\\' and not("(?i)[c|d]:\\. *\\")

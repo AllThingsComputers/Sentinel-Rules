@@ -1,0 +1,7 @@
+// Title of Detection: PsExec Usage seen in registry key
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: false positive may be IT admins but psexec has fallen out of favour with IT admins
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID in (12, 13, 14) and TargetObject matches regex @'(?i)software\\sysinternals\\psexec\\eulaaccepted'

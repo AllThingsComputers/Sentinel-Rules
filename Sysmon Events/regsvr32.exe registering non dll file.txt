@@ -1,0 +1,7 @@
+// Title of Detection:  regsvr32.exe registering non dll file
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: Note - mostly it should only reg dll files
+// References (if available):   https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf   page 83  
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID in (12, 13, 14) and Image endswith "\\regsvr32.exe" and TargetObject matches regex @"(?i)^C:\\.*" and not(TargetObject matches regex @"(?i)^C:\\.*\.dll$")

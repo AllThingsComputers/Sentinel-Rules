@@ -1,0 +1,7 @@
+// Title of Detection: Potentially Illegitimate Svchost.exe (service host)
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  This detects 4 irregularities a seen in the link 
+// References (if available): https://www.socinvestigation.com/important-windows-processes-for-threat-hunting/
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where (Image matches regex @"(?i)svchost\.exe" and isnotempty(ParentImage) and ParentImage != "-" and not(ParentImage matches regex @"(?i)\\services\.exe$")) or (Image matches regex @"(?i)svchost.exe" and not(Image matches regex @"(?i)(\\System32\\svchost.exe|\\SysWOW64\\svchost.exe)")) or (Image matches regex @"(?i)svchost\.exe" and isnotempty(CommandLine) and not(" -k ")) or (Image matches regex @"(?i)svchost\.exe" and LogonId != "0x3e7")

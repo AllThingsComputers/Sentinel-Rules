@@ -1,0 +1,8 @@
+// Title of Detection:  Pfx Certificate Exported
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Detects the certutil command that can export certificates from the local certificate store and steal private keys from compromised machines
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)certutil(\.exe)?.*-ExportPFX'

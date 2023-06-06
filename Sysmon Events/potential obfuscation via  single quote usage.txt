@@ -1,0 +1,8 @@
+// Title of Detection:  potential obfuscation via  single quote usage
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: it is not expected to see white space on both sides of a quote character. You could detect when there's just 1 space but that would be noisy I Imagine
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex "(?i)\s\'\s"

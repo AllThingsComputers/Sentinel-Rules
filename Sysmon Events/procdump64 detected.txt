@@ -1,0 +1,7 @@
+// Title of Detection:   procdump64 detected
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   
+// References (if available): https://pentestlab.blog/2021/05/24/dumping-rdp-credentials/
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where (EventID == 11 and Image matches regex @"(?i)\\procdump64.exe$" and TargetFilename ends with ".dmp") or (EventID == 1 and Image matches regex @"(?i)\\procdump64.exe$")

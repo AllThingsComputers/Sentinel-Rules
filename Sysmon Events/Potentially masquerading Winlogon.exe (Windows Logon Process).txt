@@ -1,0 +1,7 @@
+// Title of Detection: Potentially masquerading Winlogon.exe (Windows Logon Process)
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  This detects several irregularities as seen in the link. Tthere's more in the link with  logonui.exe 
+// References (if available):   https://www.socinvestigation.com/important-windows-processes-for-threat-hunting/
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where (process path matches regex @"(?i)Winlogon\.exe" and isnotempty(ParentImage) and ParentImage != '-' and not(ParentImage matches regex @"(?i)\\smss\.exe$")) or (Image matches regex @"(?i)Winlogon\.exe" and not(Image matches regex @"(?i)\\System32\\Winlogon\.exe")) or (Image matches regex @"(?i)Winlogon.exe" and LogonId != "0x3e7") or (Image matches regex @'(?i)Winlogin\.exe|Winlloggon\.exe|Windowslogon\.exe)')

@@ -1,0 +1,7 @@
+// Title of Detection:   Possible Squiblydoo attack
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Regsvr32, web address and scrobj.dll in command line To catch that outlier we could either look for instances of regsvr32 that have the '/i' option passed, or search for the '*.sct' extension in the CLI. I would probably go with the '/i' option. It's likely to be a little more noisy, but if someone used a file with a different extension, we'd still have a good chance of seeing the activity. 
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where  EventID "(?i)(\b((www|http|\.com|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|scrobj.dll|Regsvr32)\b.*){3}"
