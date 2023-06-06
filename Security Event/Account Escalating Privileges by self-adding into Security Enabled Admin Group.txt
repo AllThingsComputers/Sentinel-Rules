@@ -1,0 +1,8 @@
+// Title of Detection:   Account Escalating Privileges by self-adding into Security Enabled Admin Group
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Account Performing the Action is the Account, The Person Added is the MemberName, the Group they were Added To is TargetUserName
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID in (4728, 4732, 4756) and TargetUserName contains "adm" and MemberName contains SubjectUserName
+

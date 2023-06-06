@@ -1,0 +1,7 @@
+// Title of Detection:   Scheduled Task using Powershell or Command Prompt
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: for persistence or legit IT admin activity
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID == 4698 and (EventData contains "powershell" or Event Data contains "cmd.exe")

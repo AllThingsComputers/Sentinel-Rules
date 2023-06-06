@@ -1,0 +1,7 @@
+// Title of Detection:    Downgraded Powershell
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  note - the latest powershell version is 5
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+Event
+| where EventID == 4103 and Event Data matches regex @'(?i)powershell.exe.* Engine Version = [1-4]\.\d'

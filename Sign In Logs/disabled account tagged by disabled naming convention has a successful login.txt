@@ -1,0 +1,7 @@
+// Title of Detection:  disabled account tagged by disabled naming convention has a successful login
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: 
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SigninLogs
+| where Identity contains (disabled Account Naming Convention) and ResultType == '0'

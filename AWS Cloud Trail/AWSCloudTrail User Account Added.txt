@@ -1,0 +1,7 @@
+// Title of Detection:  AWSCloudTrail User Account Added
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: The UserCreated is found in the RequestParameters
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+AWSCloudTrail
+| where  EventName "CreateUser'

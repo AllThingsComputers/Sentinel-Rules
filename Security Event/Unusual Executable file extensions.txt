@@ -1,0 +1,7 @@
+// Title of Detection:   Unusual Executable file extensions
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: 
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID in (4697,7045) and not(ServiceFileName matches regex @'(?i)\.(exe|sys)'

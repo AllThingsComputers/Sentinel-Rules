@@ -1,0 +1,7 @@
+// Title of Detection:  Vulnerable Service with parent process services.exe
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: Hunt for the new process creation along with the below-mentioned process path and the parent process needs to be "services.exe"  
+// References (if available): https://www.socinvestigation.com/hunting-for-suspect-windows-services-mind-map 
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID == 4688 and NewProcessName matches regex @"(?i)(c:\\users\\|C:\\programdata\\)" and ParentProcessName matches regex @'\\services\.exe$'

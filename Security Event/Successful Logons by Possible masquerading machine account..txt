@@ -1,0 +1,7 @@
+// Title of Detection:    Successful Logons by Possible masquerading machine account. 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: //Event ID 4624 and logon types (2,10,7) and account name like svc_*pr internal service accounts, Possible interactive logon from a service account.  
+// References (if available): https://www.socinvestigation.com/threat-hunting-with-windows-event-ids-4625-4624 
+// The Logic of the Detection or Query Begins Below This Line 
+SecurityEvent
+| where EventID == 4624 and LogonType in (10, 2, 7) and TargetAccount contains "svc" or TargetAccount contains 'service'

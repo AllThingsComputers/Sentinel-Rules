@@ -1,0 +1,7 @@
+// Title of Detection:   Flow of Event Telemetry Blocking detection response
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   
+// References (if available): https://www.socinvestigation.com/the-flow-of-event-telemetry-blocking-detection-response
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID == 4688 and ((((NewProcessName endswith @'\logman.exe') and (CommandLine contains 'query' or CommandLine contains 'update' or CommandLine contains 'EventLog')) or (NewProcessName endswith @'\powershell.exe' and (CommandLine contains 'Remove-EtwTraceProvider' or Command Line contains 'AutologgerName' or CommandLine contains 'EventLog' or CommandLine contains 'Set-EtwTraceProvider' or CommandLine contains 'Property')) or NewProcess Name endswith @'\wpr.exe'))

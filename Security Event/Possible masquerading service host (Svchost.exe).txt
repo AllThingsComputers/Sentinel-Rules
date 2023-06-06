@@ -1,0 +1,7 @@
+// Title of Detection:    Possible masquerading service host (Svchost.exe)
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: This detects 4 irregularities as seen in the link  
+// References (if available): https://www.socinvestigation.com/important-windows-processes-for-threat-hunting 
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where (NewProcessName matches regex @"(?i)svchost\.exe$" and isnotempty(ParentProcessName) and ParentProcessName != "-" and not(ParentProcessName matches regex @"(?i)\\services\.exe$") ) or (NewProcessName matches regex @"(?i)svchost\.exe$" and not(NewProcessName matches regex @"(?i)\\System32\\svchost\.exe$") )or( NewProcessName matches regex @"(?i)svchost.exe" and isnotempty(CommandLine) and not(CommandLine matches regex @" -k"))or(NewProcessName matches regex @"(?i)svchost.exe" and Account !~ "NT AUTHORITY\\SYSTEM")

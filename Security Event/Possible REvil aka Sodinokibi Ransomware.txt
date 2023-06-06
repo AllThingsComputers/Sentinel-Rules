@@ -1,0 +1,7 @@
+// Title of Detection:   Possible REvil aka Sodinokibi Ransomware
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   this Detects the REvil aka Sodinokibi Ransomware if it masquerades as the Microsoft Malware Protection Engine 
+// References (if available): https://eforensicsmag.com/analyzing-the-revil-ransomware-attack-by-bajrang-mane/ 
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where Process = "MsMpEng.exe" and (ProcessName !startswith "C:\\ProgramData\\Microsoft\\Windows Defender\\" and ProcessName !startswith "C:\\Program Files\\Windows Defender\\" and NewProcessName !startswith "C:\\ProgramData\\Microsoft\\Windows Defender\\" and NewProcessName !startswith "C:\\Program Files\\Windows Defender\\)

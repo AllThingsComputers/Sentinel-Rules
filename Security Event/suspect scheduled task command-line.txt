@@ -1,0 +1,7 @@
+// Title of Detection:    suspect scheduled task command-line
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  
+// References (if available):  https://www.socinvestigation.com/threat-hunting-using-windows-scheduled-task/ 
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID in (4688,4698,4702) and Event Data matches regex @'(?i)(script||wscript|rundll32|wmic|cmd|mshta|powershell)\.exe' and CommandLine !contains '/d'

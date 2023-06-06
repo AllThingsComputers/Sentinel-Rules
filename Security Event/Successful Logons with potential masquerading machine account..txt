@@ -1,0 +1,7 @@
+// Title of Detection:    Successful Logons with potential masquerading machine account. 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Event Id 4624 with logon types (10,2), Type 2 ( A user logged on to this computer) and account name has ends with $, Example: ItSupport$, Possible fake machine account.  
+// References (if available): https://www.socinvestigation.com/threat-hunting-with-windows-event-ids-4625-4624/ 
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID == 4624 and LogonType in (10, 2) and TargetAccount endswith "$

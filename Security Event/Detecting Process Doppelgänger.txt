@@ -1,0 +1,7 @@
+// Title of Detection:   Detecting Process Doppelgänger
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: Detecting Process Doppelgänging using event 4985 
+// References (if available):  https://blog.menasec.net/2019/02/threat-hunting-24-detecting-process.html 
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID == 4985 and Subject Logonld <> "0x3e7" and not(ProcessName matches regex @"(?i)c:\\(windows\\system32\\svchost|windows\\system32\\Isass|windows\\servicing\\TrustedInstaller|windows\\system32\\poqexec|windows\\winSxS\\.*\\TiWorker|Windows\\System32\\inetsrv\\InetMgr|Program Files\\Update Services\\Tools\\WsusUtil)\.exe")'

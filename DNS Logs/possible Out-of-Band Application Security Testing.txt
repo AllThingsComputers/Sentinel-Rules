@@ -1,0 +1,7 @@
+// Title of Detection: possible Out-of-Band Application Security Testing
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  
+// References (if available): https://www.socinvestigation.com/out-of-band-application-security-testing-detection-and-response/ 
+// The Logic of the Detection or Query Begins Below This Line
+DNSLogs
+| where  (Name contains '.interact.sh' or Name contains '.oast.pro' or Name contains '.oast.live' or Name contains '.oast.site' or Name contains '.oast.online' or Name contains '.oast.fun' or Name contains '.oast.me' or Name contains '.burpcollaborator.net' or Name contains '.oastify.com' or Name contains '.canarytokens.com' or Name contains '.requestbin.net' or Name contains '.dnslog.cn')

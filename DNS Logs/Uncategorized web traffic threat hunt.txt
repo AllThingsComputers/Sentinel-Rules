@@ -1,0 +1,7 @@
+// Title of Detection:  Uncategorized web traffic threat hunt
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: if traffic is Uncategorized then it could or could not be malicious or could be a newly formed address not yet classified which is something attacks do they create new addresses all the time  
+// References (if available): https://www.socinvestigation.com/threat-hunting-using-proxy-logs-soc-incident-response-procedure 
+// The Logic of the Detection or Query Begins Below This Line
+DNSLogs
+| where  Categories contains "Uncategorized"

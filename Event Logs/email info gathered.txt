@@ -1,0 +1,7 @@
+// Title of Detection:    email info gathered 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: Monitor for execution of commands and arguments associated with enumeration or information gathering of email addresses and accounts such as Get-AddressList, Get- GlobalAddressList, and Get-OfflineAddressBook.   
+// References (if available):  https://attack.mitre.org/datasources/DS0017/#Command%20Execution 
+// The Logic of the Detection or Query Begins Below This Line
+Event
+| where EventID == 4104 and Rendered Description matches regex @'(?i)Get-AddressList|Get-GlobalAddressList|Get-OfflineAddressBook'

@@ -1,0 +1,7 @@
+// Title of Detection:    Kerberoasting Conditions
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  
+// References (if available): https://redcanary.com/blog/marshmallows-and-kerberoasting 
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID == 4769 and EventData matches regex @'(0x40810000|0x40800000|0x40810010)'

@@ -1,0 +1,8 @@
+// Title of Detection:   Reversals or Right-to-Left Override Unicode Characters in filename
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  You can add more unicode and reverse extensions.
+// References (if available):  https://redcanary.com/blog/right-to-left-override
+// The Logic of the Detection or Query Begins Below This Line
+OfficeActivity
+| where SourceFileName matches regex
+@'(?i)(U\+202E|\\u202E|U\+202D|\\U202D|U\+200E|\\U200E|((xcod|cod|slx)\.(exe|ism|tab|dmc)$))'

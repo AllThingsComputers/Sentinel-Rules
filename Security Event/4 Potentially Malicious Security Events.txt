@@ -1,0 +1,7 @@
+// Title of Detection:   4 Potentially Malicious Security Events
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: Event 1102 is logged when the audit log is cleared which is an loC.Event ID 1006 occurs when Windows Defender sees potential malware and Event 1007 is when Windows Defender performed an action to protect your system from malware. Event 1125 triggers when group policies fail to apply which could indicate a security weakness
+// References (if available):  https://kb.eventtracker.com/evtpass/evtpages/EventId_1006_Microsoft-Windows-WindowsDefender_63293.asp
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID in (1102, 1006, 1007, 1125)

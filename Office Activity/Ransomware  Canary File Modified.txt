@@ -1,0 +1,7 @@
+// Title of Detection:   Ransomware  Canary File Modified
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection: canary files are saved in a directory and wait for it to be modified. I've seen success with these tools in preventing unknown variants of ransomware
+// References (if available):  https://redcanary.com/blog/how-to-prevent-ransomware/
+// The Logic of the Detection or Query Begins Below This Line
+OfficeActivity
+| where Operation "FileRenamed" and SourceFileName == ‘CanaryFileName.txt’ and DestinationFileName != SourceFileExtension

@@ -1,0 +1,7 @@
+// Title of Detection:    WMI SOC investication - dead end
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  //    dead end
+// References (if available): https://www.socinvestigation.com/windows-management-instrumentation-attacks-detection-response/
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID in (4688, 5860, 4648, 5658, 5859, 5861) and Process =~ "WMIC.exe"

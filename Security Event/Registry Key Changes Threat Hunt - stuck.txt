@@ -1,0 +1,6 @@
+// Title of Detection:    Registry Key Changes Threat Hunt - stuck
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   // needs more work clearly
+// References (if available): https://www.socinvestigation.com/monitor-modified-registry-keys-possible-windows-event-id
+// The Logic of the Detection or Query Begins Below This Line
+EventID == 4657  

@@ -1,0 +1,7 @@
+// Title of Detection:    File Extension modified into an Executable 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection: this rule detects the above but excludes link and url as transforming a link to a url is common 
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+OfficeActivity
+| where  Operation =~ "FileRenamed" and DestinationFile Extension has_any (Common Executables) and DestinationFileExtension != SourceFileExtension and (SourceFileExtension != "Ink" and DestinationFileExtension != "url")
