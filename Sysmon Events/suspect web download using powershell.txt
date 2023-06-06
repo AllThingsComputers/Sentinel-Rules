@@ -1,0 +1,8 @@
+// Title of Detection: suspect web download using powershell
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Very suspect if downloadfile is to a temporary/non standard location (temp or appdata) or in combination with execution (invoke-expression) or in the presence of an external url/IP. 
+// References (if available):  P67  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)powershell.* (downloadstring|downloaddata|downloadfile|"WebClient"|Invoke-WebRequest|Invoke-Item)'

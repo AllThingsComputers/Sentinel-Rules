@@ -1,0 +1,7 @@
+// Title of Detection:   suspect network connections 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Other LOLBINS such as mshta.exe, csc.exe, msbuild.exe, or regsvr32.exe making external network connections to URLS ending with an executable or image extension, suspect domains, and/or unusual IP addresses are inherently suspect and warrant monitoring.
+// References (if available):    p67  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 3 and Image matches regex @"(?i)\\(mshta|csc|msbuild/regsvr32)\.exe$

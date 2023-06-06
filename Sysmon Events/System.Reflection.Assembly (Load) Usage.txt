@@ -1,0 +1,8 @@
+// Title of Detection:  System.Reflection.Assembly (Load) Usage
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  System.Reflection.Assembly (Load) are indicators of in-memory execution similar to Invoke-Expression
+// References (if available):  https://www.gigasheet.com/post/threat-hunting-for-malicious-powershell-usage-in-gigasheet
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)System.Reflection.Assembly (Load)'

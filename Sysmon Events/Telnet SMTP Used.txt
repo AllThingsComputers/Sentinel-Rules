@@ -1,0 +1,8 @@
+// Title of Detection:  Telnet SMTP Used 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Adversaries may steal data by exfiltrating it over an unencrypted network protocol other than that of the existing command and control channel. The data may also be sent to an alternate network location from the main command and control server.
+// References (if available):    https://www.shellhacks.com/send-email-smtp-server-command-line/   https://www.ietf.org/rfc/rfc2821.txt 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)telnet.* (SMTP|25)'

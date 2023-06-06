@@ -1,0 +1,8 @@
+// Title of Detection: suspect caret not used to escape special characters in  obfuscation
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  In the Windows Command Shell, the caret (^) character is an escape character. When it precedes special characters, like the pipe (|) character or file redirection operators (<>), those special characters will be treated as normal characters. When the caret symbol precedes non-special characters, nothing special happens; it is effectively ignored. 
+// References (if available):    page 17  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf  
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)(\^[\w\d]|[\w\d]\^)'

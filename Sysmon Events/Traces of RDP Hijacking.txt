@@ -1,0 +1,7 @@
+// Title of Detection:  Traces of RDP Hijacking
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  This detects indicators of possible RDP hijacking  
+// References (if available):  https://blog.menasec.net/2019/02/of-rdp-hijacking-part1-remote-desktop.html 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 13 and (TargetObject contains "LastLoggedOn" or TargetObject contains "dontdisplaylastusername" or TargetObject contains @"RDP-tcp\3389")

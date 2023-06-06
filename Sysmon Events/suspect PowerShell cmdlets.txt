@@ -1,0 +1,7 @@
+// Title of Detection:   suspect PowerShell cmdlets
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   
+// References (if available):   https://www.echotrail.io/blog/hunting-on-sysmon-data/ 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where Image contains "powershell" and (CommandLine contains "DownloadString" or CommandLine contains "DownloadFile" or CommandLine contains "iex" or CommandLine contains "invoke-expression")'

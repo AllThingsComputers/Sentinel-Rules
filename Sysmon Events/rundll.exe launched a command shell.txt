@@ -1,0 +1,7 @@
+// Title of Detection:   rundll.exe launched a command shell
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   this shouldn't happen under normal operation
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and ParentImage contains "rundll32.exe" and Image matches regex @"(?i)\\(cmd|powershell|cscript|jsscript|wscript)\.exe"

@@ -1,0 +1,7 @@
+// Title of Detection: Suspiciously long data length in Registry Key
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   This can be an indicator of  Fileless Malware being stored
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 13 and strlen(TargetObject) > 300 and not(TargetObject matches regex (Reg Key Details Exclusions))

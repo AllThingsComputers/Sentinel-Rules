@@ -1,0 +1,8 @@
+// Title of Detection:  Scheduled Task Create in Command Prompt
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Adversaries might abuse Task Scheduler to perform task scheduling for initial and/or recurring execution of malicious tasks
+// References (if available):  n/a
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)(SCHTASKS(\.exe)?.* \/(create|delete|end).*)'

@@ -1,0 +1,7 @@
+// Title of Detection:  Unexpected Rundll32 parent process
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  As is the case with most techniques in this report, it's critical that you are able to take stock of what is normal in your environment if you hope to be able to identify what isn't. In the context of Rundll32, you'll want to monitor for executions of rundll32.exe from unusual or untrusted parent processes. This will vary from one organization to another, but some examples of process that usually won't spawn Rundll32 might include:.  add rest of office products 
+// References (if available):   page 25  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID Image contains "rundll.exe" and ParentImage matches regex @"(?i)(winword|outlook|excel|msaccess|Isass|taskeng|winlogon|schtask|wmiprvse|wsmprovhost)\.exe"

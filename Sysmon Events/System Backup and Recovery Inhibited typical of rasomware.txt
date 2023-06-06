@@ -1,0 +1,7 @@
+// Title of Detection:  System Backup and Recovery Inhibited typical of rasomware
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   
+// References (if available): https://www.cyborgsecurity.com/cyborg-labs/hunting-ransomware-inhibiting-system-backup-or-recovery
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where (Image has_any ("vssadmin.exe", "bcdedit.exe", "wmic.exe", "powershell.exe", "wbadmin.exe") and CommandLine has_any ("recoveryenabled no", "IgnoreAllFailures", "delete shadows", "delete systemstatebackup", "resize shadowstorage", "_ShadowCopy", "safeboot minimal", "shadowcopy /nointeractive", "shadowcopy delete")) or (Image has_any ("cmd.exe", "powershell.exe") and CommandLine has_any ("vssadmin ", "vssadmin.exe", "bcdedit", "bcdedit.exe", "wmic", "wmic.exe", "wbadmin ", "wbadmin.exe", "Get-WmiObject") and CommandLine has_any ("recoveryenabled no", "IgnoreAllFailures", "delete shadows", "delete systemstatebackup", "resize shadowstorage", "_ShadowCopy", "safeboot minimal", "shadowcopy /nointeractive", "shadowcopy delete"))

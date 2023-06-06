@@ -1,0 +1,7 @@
+// Title of Detection:  Root Certificate Value Set to  suspect value
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   
+// References (if available):  https://posts.specterops.io/code-signing-certificate-cloning-attacks-and-defenses-6f98657fc6ec 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 13 and EventType == "SetValue" and TargetObject matches regex @'(?i)^HKCU\\.*\\ROOT\\.*\\Blob'

@@ -1,0 +1,7 @@
+// Title of Detection: Scripts run from unexpected Location
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: Detects many script types executing from temp or user writeable directories. you can  add more scripts extensions and executables 
+// References (if available):     https://redcanary.com/blog/adversaries-use-scripting-more-than-any-attck-technique-except-powershell/    
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and "(?i)C:.*(\\appdata\\local\\\\USERS\\\\temp\\).*\.(bat|cmd|ps1|psm1|bash|vbe|vbs|js)

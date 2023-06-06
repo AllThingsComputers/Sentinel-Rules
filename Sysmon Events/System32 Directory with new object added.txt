@@ -1,0 +1,7 @@
+// Title of Detection: System32 Directory with new object added
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:this detects  changes to executables in system32 directory that can be performed to hide malicious malware. You can stretch this to any other protected location such as syswow64
+// References (if available): https://www.varonis.com/blog/the-malware-hiding-in-your-windows-system32-folder-part-iii-certutil-and-alternate-data-streams
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 11 and TargetFilename contains "\\System32\\"

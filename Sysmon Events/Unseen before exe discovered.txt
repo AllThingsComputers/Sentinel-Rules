@@ -1,0 +1,7 @@
+// Title of Detection: Unseen before exe discovered 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  This rule will alert to unseen before executables
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and isnotempty(OriginalFileName) and tostring(OriginalFileName) !in~ (list of every common or all executables)

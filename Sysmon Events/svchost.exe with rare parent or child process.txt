@@ -1,0 +1,7 @@
+// Title of Detection:   svchost.exe with rare parent or child process
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: since  svchost.exe is trusted by windows often malware takes advantage of the fact
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and (Image matches regex @"svchost.exe" or ParentImage matches regex @"svchost.exe")

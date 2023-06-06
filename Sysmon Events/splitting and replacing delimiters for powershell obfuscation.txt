@@ -1,0 +1,8 @@
+// Title of Detection:  splitting and replacing delimiters for powershell obfuscation 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Strings can be split by an arbitrary delimiter, and then rejoined: -join ("Ob~~fusca~~ted" -split "~~")- Through the replace operator or the String.Replace() method, strings can be replaced either to remove delimiters, or change the meaning of a string: "System.SafeClass" -replace "Safe","Unsafe" 
+// References (if available): page 7  https://www.blackhat.com/docs/us-17/thursday/us-17-Bohannon-Revoke-Obfuscation-PowerShell-Obfuscation-Detection-And%20Evasion-Using-Science-wp.pdf   
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex (?i)[-\/\\]join.* -split|(-|string\.)replace\(?'

@@ -1,0 +1,7 @@
+// Title of Detection:  URL shortener detected
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Adversaries will use this to disguise the actual URL. False positives are legit activity. You can also convert this to work in DNS logs
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 3 and DestinationHostname matches regex @'(?i)bitly|shorturl|shorturl|freeshortenerurl|goo\.by'

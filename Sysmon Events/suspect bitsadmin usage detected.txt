@@ -1,0 +1,7 @@
+// Title of Detection:   suspect bitsadmin usage detected
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: An adversary can use this for data transfer  
+// References (if available): https://attack.mitre.org/techniques/T1197/ 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and ParentImage contains "bitsadmin.exe" and "(?i)[-\\\/](create|addfile|transfer|upload|setnotifycmdline|SetNotifyFlags|SetMinRetryDelay|SetCustomHeaders|Resume)|[/list /allusers /verbose|www|http|\.com|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"

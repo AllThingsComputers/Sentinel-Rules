@@ -1,0 +1,7 @@
+// Title of Detection:   Unexpected location of Windows Side by Side Image
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and OriginalFileName =~ "TiWorker.exe" and Image !endswith OriginalFileName or not(Image matches regex @"(?i)C:\\Windows\\WinSxS\\")

@@ -1,0 +1,7 @@
+// Title of Detection:  suspect processes threat hunt
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:    threat hunt
+// References (if available): https://www.socinvestigation.com/hunting-for-suspect-windows-services-mind-map  
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID in (1, 13) and OriginalFileName matches regex @'(?i)^(cmd|powershell|cscript|rundll32|regsvr32|regsvcs|regasm|wmic)\.exe$''

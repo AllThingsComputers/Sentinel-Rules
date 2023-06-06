@@ -1,0 +1,8 @@
+// Title of Detection:   Suspect Scheduled task Frequency
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  This may be for persistence. monitor for tasks that spawn at seemingly strange intervals. For example, something like /sc minute /mo 20, which means that the task will run every 20 minutes.
+// References (if available): page 17  https://resource.redcanary.com/rs/003-YRU-314/images/2020-Threat-Detection-Report.pdf 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and Image matches regex @"(?i)\\(schtasks|at|taskeng)\.exe$" and ("(?i)[-\\/\.](SC ONCE|xml|exe|ps1|psm1|bat|cmd|vbs|vbe)" or not(Image matches regex
+@"c:\\windows\\(system32|syswow64)\\") or Image matches regex @"(?i)(\\appdata\\|\\windows\\tasks\\)") or (EventID == 1 and Image matches regex @"(?i)\\schtasks\.exe" and not(Description in ("Task Scheduler Configuration Tool", "Task Scheduler COM API") and FileVersion contains "WinBuild" and Product == "Microsoft® Windows® Operating System" and Company == "Microsoft Corporation")) or (EventID == 1 and Image matches regex @"(?i)\\(schtasks|at|taskeng)\.exe$") and (ParentImage matches regex @"(?i)\\(PowerShell|cmd)\.exe$" or LogonId != "0x3e7"

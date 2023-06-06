@@ -1,0 +1,8 @@
+// Title of Detection: suspect Powershell AssignedAccess Module Cmdlets in  Powershell
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   for Get -AssignedAccess and Clear-AssignedAccess
+// References (if available):  https://learn.microsoft.com/en-us/powershell/module/assignedaccess/?view=windowsserver2019-ps
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)(Get|Clear)-AssignedAccess'

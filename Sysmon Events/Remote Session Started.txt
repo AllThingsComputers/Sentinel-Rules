@@ -1,0 +1,8 @@
+// Title of Detection: Remote Session Started
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Adversaries cause  Remote Sessionw via using mstc to connect to target machines. In future can narrow to include public IPs only or create an Sysmon Event ID 3 mstsc version
+// References (if available):  n/a 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)mstc(.exe)?'

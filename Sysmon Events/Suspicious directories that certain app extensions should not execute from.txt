@@ -1,0 +1,7 @@
+// Title of Detection:   Suspicious directories that certain app extensions should not execute from
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   
+// References (if available): https://redcanary.com/blog/how-to-prevent-ransomware/
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and Image matches regex @"(?i)(\\users\\appdata\\local\\temp|\\users\\appdata\\local|\\users\\appdata|\\users\\appdata\\roaming|\\program data)\\.*\.(ade|adp|ani|bas|bat|chm|cmd|com|cpl|crt|hlp|ht|hta|inf|ins|ispljar|job|js|jse|Ink|mda|mdb|mde|mdz|msc|msi|msp|mst|ocx|pcd|ps1|reg|scr|sct|shs|svg|url|vb|vbe|vbs|wbk|wsc|ws|wsf|wsh|exe|pif|pub)$"

@@ -1,0 +1,8 @@
+// Title of Detection:  reversal obfuscation in powershell #2
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Strings can be reversed through several mechanisms   PowerShell's array slicing operator  (-join "detacsufb0" [9..0]),
+// References (if available):  page 6  https://www.blackhat.com/docs/us-17/thursday/us-17-Bohannon-Revoke-Obfuscation-PowerShell-Obfuscation-Detection-And%20Evasion-Using-Science-wp.pdf  
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex  "(?i)(([-\/\\join|[\d* ?\.\. ?\d*]).*){2,}'
