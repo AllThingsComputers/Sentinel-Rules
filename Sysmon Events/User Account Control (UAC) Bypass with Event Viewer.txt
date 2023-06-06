@@ -1,0 +1,7 @@
+// Title of Detection:   User Account Control (UAC) Bypass with Event Viewer
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   
+// References (if available): https://pentestlab.blog/2017/05/02/uac-bypass-event-viewer/ 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and Image matches regex @"(?i)\\cmd\.exe$" and ParentImage matches regex @"(?i)\\eventvwr\.exe$"

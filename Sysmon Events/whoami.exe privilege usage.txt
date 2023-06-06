@@ -1,0 +1,8 @@
+// Title of Detection:  whoami.exe privilege usage
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Opening the cmd.exe and checking my current Privilege with whoami /priv. It will list down the privilege names and the state. Whoami execution soon after logon is suspect
+// References (if available):  https://www.socinvestigation.com/how-to-detect-privilege-escalation-attacks-and-uac-bypass-on-windows/
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex  '(?i)whoami /priv'

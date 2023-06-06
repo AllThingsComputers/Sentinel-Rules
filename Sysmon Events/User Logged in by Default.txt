@@ -1,0 +1,8 @@
+// Title of Detection: User Logged in by Default
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Actors are also known to create additional users on compromised systems to maintain access. In some instances we have seen threat actors add registry entries that allow them to automatically log in when a machine is restarted  
+// References (if available):  https://www.socinvestigation.com/ransomware-how-attackers-are-breaching-corporate-networks
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)(reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows NT\CurrentVersion\\Winlogon\" /v DefaultUserName /t REG_SZ /d .* /f|reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\" /v AutoAdminLogon /t REG_SZ /d 1/f)'

@@ -1,0 +1,8 @@
+// Title of Detection: User Account Control (UAC) bypassed in the Registry  
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  This is by Registry Modification.   
+// References (if available): https://www.cyborgsecurity.com/cyborg-labs/threat-hunt-deep-dives-user-account-control-bypass-via-registry-modification/
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)(Classes\\AppX82a6gwre4fdg3bt635tn5ctqjf8msdd2\\Shell\\open\\command|Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\control\.exe)'

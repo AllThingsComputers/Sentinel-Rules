@@ -1,0 +1,8 @@
+// Title of Detection: wevtutil's Commands frequently used by threat actors
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   
+// References (if available): https://www.socinvestigation.com/ransomware-how-attackers-are-breaching-corporate-networks/ 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)wevtutil.* cl (system|security|application)'

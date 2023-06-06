@@ -1,0 +1,7 @@
+// Title of Detection: Windows Console History Deleted in Registry Editor
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: Identifies when a user attempts to delete console history in RegEdit. An adversary may clear the command history of a compromised account to conceal the actions undertaken during an intrusion.  
+// References (if available):  https://www.thewindowsclub.com/view-save-clear-command-history-windows 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where TargetObject matches regex @"(?i)HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\RunMRU\\.*" and EventType in~ ("SetValue", "DeleteValue", "DeleteKey")

@@ -1,0 +1,6 @@
+// Title of Detection: Windows Defender Disabled
+This rule detects attempts to disable Windows Defender. no results. Weird 
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID in (12, 13) and TargetObject matches regex @"(?i)\\Policies\\Microsoft\\Windows Defender\\.*DisableAntiSpyware" and TargetObject matches regex @'(?i)DWORD \(0x00000001\)'

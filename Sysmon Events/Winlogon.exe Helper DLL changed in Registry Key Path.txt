@@ -1,0 +1,8 @@
+// Title of Detection: Winlogon.exe Helper DLL changed in Registry Key Path
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: Winlogon.exe is a Windows component responsible for actions at logon/logoff as well as the secure attention sequence (SAS) triggered by Ctrl-Alt-Delete. Registry entries in HKLM\Software[Wow6432 Node] Microsoft\Windows NT\CurrentVersion\Winlogon\ and
+HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\ are used to manage additional helper programs and functionalities that support Winlogon. Malicious modifications to these Registry keys may cause Winlogon to load and execute malicious DLLs and/or executables.
+// References (if available):  https://attack.mitre.org/techniques/T1547/004/
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID in (12, 13) and TargetObject matches regex @"(?i)CurrentVersion\\Winlogon" and EventType in ("SetValue", "CreateKey", "DeleteKey", "DeleteValue")

@@ -1,0 +1,7 @@
+// Title of Detection:  Windows Defender Realtime Monitoring Disabled
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  
+// References (if available):  https://redcanary.com/blog/defense-evasion-why-is-it-so-prominent-how-can-you-detect-it/
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and Image matches regex @"(?i)(powershell|pwsh)\.exe" and "Set-MpPreference -DisableRealtimeMonitoring \$true"

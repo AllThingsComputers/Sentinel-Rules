@@ -1,0 +1,7 @@
+// Title of Detection:w3wp.exe Child Process
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   https://redcanary.com/blog/detecting-sharepoint-attacks-via-worker-process-activity/  
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where  EventID == 1 and ParentImage endswith "\\w3wp.exe'

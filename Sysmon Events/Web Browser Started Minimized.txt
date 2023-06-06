@@ -1,0 +1,8 @@
+// Title of Detection:  Web Browser Started Minimized
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: detects whether the edge, Chrome or Internet Explorer browsers—which are used to download files from the Internet—have been minimised.
+// References (if available):  https://twitter.com/mrd0x/status/1478234484881436672?s=12 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)(Start Process (msedge|chrome|iexplore}(\.exe)? -WindowStyle Minimized)|(start \/min (msedge|chrome|iexplore))'

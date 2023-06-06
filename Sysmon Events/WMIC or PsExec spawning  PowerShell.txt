@@ -1,0 +1,7 @@
+// Title of Detection:  WMIC or PsExec spawning  PowerShell
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and Image matches regex @"(?i)(Powershell|pwsh)\.exe$" and ParentImage matches regex @'(?i)(WMIC|PsExec)\.exe$'
