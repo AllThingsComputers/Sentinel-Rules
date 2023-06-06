@@ -1,0 +1,7 @@
+// Title of Detection:   connection to proxy using netsh
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  This will alert to the use of living of the land attacker techniques in windows. You should check if it connects to a proxy. Mostly a CDN or microsoft IP etc will be fine from the sample datasets
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 3 and Image matches regex @'(?i)\\netsh.exe'

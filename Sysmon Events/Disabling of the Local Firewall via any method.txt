@@ -1,0 +1,7 @@
+// Title of Detection:  Disabling of the Local Firewall via any method
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: This detects when the local firewall is disabled whether via GUI, script or Registry Editor. In reg edit this happens when enable firewall is set to dword 1
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 13 and TargetObject matches regex @"(?i)HKLM\\SYSTEM\\CurrentControlSet\\Services\\SharedAccess\\Parameters\\FirewallPolicy\\(Standard|Domain|Public)Profile\\EnableFirewall" and TargetObject matches regex @'DWORD \(0x00000001\)'

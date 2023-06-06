@@ -1,0 +1,8 @@
+// Title of Detection:  Admin Account or Server Deleted From Domain
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Adversaries may interrupt availability of system and network resources by inhibiting access to accounts utilised by legitimate users. Accounts may be deleted, locked, or manipulated (ex: changed credentials) to remove access to accounts. '(?i)net (user (user (Use your admin account name format here)|computer (your computer name format here)) \/del(ete)?'
+// References (if available):  https://attack.mitre.org/techniques/T1531/
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex  @(?i)net (user .*admin.* |computer .*1234.*\$) \/del(ete)?'

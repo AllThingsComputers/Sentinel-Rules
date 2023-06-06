@@ -1,0 +1,8 @@
+// Title of Detection: Command prompt with non-interactive execution
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: The detects the command that will this means the command prompt window runs then closes immediately to avoid detection by the user
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)(Exit|move nul 2>&0|Exit \/b)$'

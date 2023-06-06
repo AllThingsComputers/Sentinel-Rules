@@ -1,0 +1,8 @@
+// Title of Detection:  Automated Collection Command-Line
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Once established within a system or network, an adversary may use automated techniques for collecting internal data.
+// References (if available): https://attack.mitre.org/tactics/TA0009/
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)dir \".*\.(doc|docx|xls|xlsx|ppt|pptx|rtf|pdf|txt)\" \/s'

@@ -1,0 +1,7 @@
+// Title of Detection:   CACTUSTORCH detection
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  CACTUSTORCH is a JavaScript and VBScript shellcode launcher. At its core It makes use of JavaScript to invoke objects deserialization (bring it back to memory) and load an arbitrary .NET v2/3.5 assembly (base64 encoded within the script itself) from memory then it creates a remote thread to launch execution. 
+// References (if available):   https://blog.menasec.net/2019/02/threat-hunting-detecting-cactustorch.html 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 8 and Image matches regex @'(?i)((.*system32\\(cscript.*|.*wscript.*|.*mshta.*))|(.*winword.*|.*excel.*|.*powerpoint.*))' and TargetImage matches regex @'syswow64'

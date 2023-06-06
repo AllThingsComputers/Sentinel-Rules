@@ -1,0 +1,8 @@
+// Title of Detection: Bundlore or Honeybee used for Exfiltration
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Bundlore or Honeybee used for Exfiltration. Honeybee performs data exfiltration is accomplished through the following command-line command: from (- --).txt  and Bundlore uses the curl -s -L- o command to exfiltrate archived data to a URL. 
+// References (if available):   https://attack.mitre.org/techniques/T1020/   https://attack.mitre.org/techniques/T1048
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)from (- --).txt|curl -s -L-o'

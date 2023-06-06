@@ -1,0 +1,8 @@
+// Title of Detection: Base64 Usedin Command-Line
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Adversaries can utilise base64 code for obfuscation. 
+// References (if available): https://gist.github.com/Netesttest3x0/6af876ee72b51676c82a2db8d2cd3639 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '\b(JAB|TVq|SUVY|SQBFAF|SQBuAH|PAA|cwBhA|aWV4|aQBIA|R2V0|dmFy|dgBhA|dXNpbm|H4sIA|Y21k|IAB|cAB|hAH|Qzpc|Yzpc|UEs|ey)\b.*){2,}'

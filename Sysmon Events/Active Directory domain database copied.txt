@@ -1,0 +1,8 @@
+// Title of Detection: Active Directory domain database copied
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Adversaries may try to access or create a copy of the Active Directory domain database to steal credential information.  this works for Powershell or cmd.exe
+// References (if available):     https://www.technig.com/creating-active-directory-snapshots . 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)(ntdsutil(\.exe)? snapshot create)'

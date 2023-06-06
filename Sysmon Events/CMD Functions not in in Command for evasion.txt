@@ -1,0 +1,7 @@
+// Title of Detection:  CMD Functions not in in Command for evasion
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: This will detects alternate cmd hosts that are potentially bypassing detections by searching for  cmd prompt only commands. You can add more commands or more executables
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where  CommandLine contains @'ping' and (Image !endswith @'cmd.exe')

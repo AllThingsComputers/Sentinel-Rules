@@ -1,0 +1,7 @@
+// Title of Detection:   Detecting Unexpected Core Windows Binaries Parent processes
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  
+// References (if available):  https://digitalforensicsurvivalpodcast.com/2019/04/14/dfsp-165-windows-core-processes/ 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and (ParentImage != "-" and ((Image endswith "\\smss.exe" and ParentImage !endswith "\\SYSTEM.exe") or (Image endswith "\\taskhost.exe" and ParentImage !endswith "\\services.exe") or (Image ends with "\\Isass.exe" and ParentImage !endswith "\\wininit.exe") or (Image endswith "\\iexplore.exe" and ParentImage !endswith "\\explorer.exe") or (Image endswith "\\explorer.exe" and ParentImage !endswith "\\userinit.exe") or (Image endswith "\\Ism.exe" and ParentImage !endswith "\\wininit.exe") or (Image endswith "\\svchost.exe" and ParentImage !endswith "\\services.exe") or (Image endswith "\\services.exe" and ParentImage !endswith "\\wininit.exe") or (Image endswith "\\Isaiso.exe" and ParentImage !endswith "\\wininit.exe") or (Image endswith "\\taskhostex.exe" and ParentImage !endswith "\\services.exe") or (Image endswith "\\taskhostw.exe" and ParentImage !endswith "\\services.exe")))

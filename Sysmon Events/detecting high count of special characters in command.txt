@@ -1,0 +1,7 @@
+// Title of Detection:  detecting high count of special characters in command
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  could be suspect of malware or legit admin activity. add more scripting tools
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and ((Image endswith @"\cmd.exe" and countof(tostring(CommandLine), @'[`~!@#\$%\^&\*\(\)_\|\+\-=\?;:\",\<>\{\}\[\]\\\/]', "regex") > 99) or (Image ends with @"\powershell.exe" and countof(tostring(CommandLine), @'[`~!@#\$%\^&\*\(\)_\|\+\-=\?;:\",\<>\{\}\[\]\\\/]'; "regex") > 249)) 

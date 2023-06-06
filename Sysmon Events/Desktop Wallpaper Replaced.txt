@@ -1,0 +1,7 @@
+// Title of Detection: Desktop Wallpaper Replaced
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  An adversary may deface systems internal to an organisation in an attempt to intimidate or mislead users.
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and ('(?i)reg add "HKEY_CURRENT_USER\Control Panel\Desktop" /v Wallpaper /t REG_SZ /d.* /f' or ParentCommandLine matches regex @'(?i)reg add "HKEY_CURRENT_USER\Control Panel\Desktop" /v Wallpaper /t REG_SZ /d.* /f'')

@@ -1,0 +1,7 @@
+// Title of Detection:  New script or exe file generated
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:    You can add more scripts and Execuatbles here.
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 11 and TargetFilename matches regex @"(?i)\.(ps1|psm1|bat|cmd|exe)$”

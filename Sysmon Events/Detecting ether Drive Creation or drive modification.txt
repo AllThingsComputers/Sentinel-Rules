@@ -1,0 +1,7 @@
+// Title of Detection:  Detecting either Drive Creation or drive modification
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Monitor for newly assigned drive letters or mount points to a data storage device that may attempt to exfiltrate data over a USB connected  and physical device.  
+// References (if available):  https://attack.mitre.org/datasources/DS0016/#Drive%20Modification 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where (EventID == 11 and TargetFilename !startswith "C:\\") or (EventID == 1 and Image !startswith "C:\\")

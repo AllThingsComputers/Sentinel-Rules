@@ -1,0 +1,8 @@
+// Title of Detection: Command-line used for downloads
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Attackers may use Command-line for download of tools or scripts. Possibly use GET in future detection.
+// References (if available):    n/a 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)(wget (https?:\/\/|www\.).*\..*)'

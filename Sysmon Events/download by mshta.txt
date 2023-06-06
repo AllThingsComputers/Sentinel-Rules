@@ -1,0 +1,8 @@
+// Title of Detection:  download by mshta
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Adversaries may use mshta.exe download malicious tools/files.  
+// References (if available):  https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1059.001/T1059.001.md  https://attack.mitre.org/techniques/T1218/005/
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)cmd(\.exe) \/c \"mshta(\.exe) javascript:a=GetObject.*\.Exec\(\);close\(\)\"'

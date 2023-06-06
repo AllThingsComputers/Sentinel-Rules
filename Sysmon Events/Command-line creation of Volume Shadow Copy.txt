@@ -1,0 +1,8 @@
+// Title of Detection:  Command-line creation of Volume Shadow Copy
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   Adversaries may try to access or create a Volume Shadow copy  
+// References (if available): https://attack.mitre.org/datasources/DS0005/   https://krypted.com/windows-server/shadow-copy-from-the-command-line/ 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)vssadmin create shadow \/for=C'

@@ -1,0 +1,7 @@
+// Title of Detection: Detection of Right- to-Left Override Unicode Characters or Reversals  in Command-Line
+ // Description of the Detection: In future you could develop a file name version in sysmon and security events version 
+// References (if available): https://redcanary.com/blog/right-to-left-override/ 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)(U\+202E|\\u202E|U\+202D|\\U202D|U\+200E|\\U200E|xcod\.exe|xcod\.ism|xcod\.tab|xcod\.dmc)'

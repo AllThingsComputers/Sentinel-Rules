@@ -1,0 +1,8 @@
+// Title of Detection:  Command to Store File within an Alternate Data Stream
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: Files are stored in ADS (alternative data stream) like Astaroth malware does. 
+// References (if available): https://www.minitool.com/partition-disk/alternate-data-streams.html
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex '(?i)((echo.*> :ads .*)|(Echo.*>host.*:ads.*))'

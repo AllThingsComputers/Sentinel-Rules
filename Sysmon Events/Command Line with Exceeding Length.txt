@@ -1,0 +1,7 @@
+// Title of Detection:  Command Line with Exceeding Length
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  An abnormally long command line is worth checking for complex malicious attacks/payloads
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where (strlen(CommandLine) > 1500 or strlen(ParentCommandLine) > 1500)

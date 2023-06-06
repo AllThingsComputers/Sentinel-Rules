@@ -1,0 +1,7 @@
+// Title of Detection:   diskshadow detected for possible dump
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  System binaries like diskshadow.exe can be used to dump the ntds.dit database which is normally locked. this contains the active directory domain database
+// References (if available):  https://attack.mitre.org/techniques/T1003/003/
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and Image matches regex @"(?i)\\diskshadow\.exe$" and CommandLine contains "ntds.dit
