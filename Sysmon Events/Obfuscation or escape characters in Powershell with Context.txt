@@ -1,0 +1,11 @@
+// Title of Detection:  Obfuscation or escape characters in Powershell with Context
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection: Obfuscation is a big problem and this can detect malicious strings that are obscured via the splitting commands, parameters or inserting extra characters that are disregarded PowerShell but not common detection rules. This finds usage of the characters ^, +, $, and % where you can judge if these characters in the surrounding context have been used with malicious intent to obfuscate malicious command. FP can be legitimate usage. For further development you can expand to task scheduler commands etc
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line 
+Sysmon
+| where Image matches regex @"(powershell|pwsh)" and CommandLine matches regex @'[\^\+\$\%]'
+| extend extractedCommandLineOnly = extract_all(@'([\^\+\$\%]{1})', tostring(CommandLine))
+| extend extractedContextCommandLine5onEachSide = extract_all(@'((?i). {5}[\^\+\$\%].{5}){1}', tostring(CommandLine))
+| extend extractedContextCommandLine15onEachSide = extract_all(@'((?i).{15}[\^\+\$\%].{15}){1}',
+tostring(CommandLine)) // Please whitelist of context safe code seen before

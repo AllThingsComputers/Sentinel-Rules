@@ -1,0 +1,10 @@
+// Title of Detection:  Process creating file in unexpected location or unexpected filename
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  Can include exclusions and from the link there are there more spin off this idea using different EID
+// References (if available): p94  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 11
+| extend split = split(TargetFilename, @'\')
+| extend realfilename = split[-1], realdirectory = array_slice(split, 0, 3)
+| summarize count() by tostring(Image), tostring(realdirectory), tostring(realfilename)

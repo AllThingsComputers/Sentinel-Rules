@@ -1,0 +1,25 @@
+// Title of Detection:   Rare or Never Seen Sysmon EventID Logged
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:   This requires a watchlist of every event ID from this table and one of  rare event IDs
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let time_until = 1d;
+let SentinelWatchlistOfEveryEIDEver = (GetWatchlist('AllSeenEventIDsFromSysmon')
+| project SearchKey);
+let rarewatchlist = (
+GetWatchlist('WatchlistOfRareSysmonEventIDs')
+| project SearchKey);
+let EveryEventIDSinceWatchlistCreation = (Sysmon
+| where TimeGenerated between (datetime(2022-07-19T20:00:00).. ago(time_until))
+| summarize by EventID);
+let RecentRareEventIDs = (Sysmon
+| where TimeGenerated between (ago(90d).. ago(time_until))
+| summarize count() by EventID
+| where count_ <= 1); // can adjust this for sensitivity of rare
+Sysmon
+| where TimeGenerated >= ago(1h)
+| extend NewEvent = iff(EventID !in (SentinelWatchlistOfEveryEIDEver) and EventID !in (EveryEventIDSinceWatchlistCreation), "EID is New", "EID is Not New")
+| extend RareEvent = iff(EventID in (rarewatchlist) or EventID in (RecentRareEventIDs), "EID is Rare", "EID is Not Rare")
+| where NewEvent == "EID is New" or RareEvent == "EID is Rare"
+| project-reorder NewEvent, RareEvent
+

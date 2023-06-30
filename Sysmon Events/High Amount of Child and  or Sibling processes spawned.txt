@@ -1,0 +1,12 @@
+// Title of Detection:  High Amount of Child and  or Sibling processes spawned
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  malware often creates a high number of processes
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let veryActiveParents = Sysmon
+| where EventID == 1
+| summarize dcount(tostring(ProcessId)) by tostring(process_parent_id)
+| where dcount_ProcessId > 120;
+Sysmon
+| where EventID == 1
+| where process_parent_id in (veryActiveParents)

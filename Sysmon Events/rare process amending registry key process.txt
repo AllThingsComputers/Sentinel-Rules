@@ -1,0 +1,16 @@
+// Title of Detection:  rare process amending registry key process
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  This may be a sign of malware or legitimate activity
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let rareprocessamendingregkey = (
+Sysmon
+| where TimeGenerated between (ago(100d).. ago(1d))
+| where EventID == 12
+| summarize count() by sentence = strcat(tostring(Image), tostring(TargetObject))
+); 
+Sysmon
+| where TimeGenerated >= ago(1d)
+| where EventID == 12
+| extend sentence = strcat(tostring(Image), tostring(TargetObject))
+| where sentence !in (rareprocessamendingregkey)

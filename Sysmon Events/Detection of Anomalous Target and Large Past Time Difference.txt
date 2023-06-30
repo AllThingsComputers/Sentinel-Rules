@@ -1,0 +1,12 @@
+// Title of Detection:  Detection of Anomalous Target and Large Past Time Difference
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection: THis can be done in the future if you get a number based on year
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 2
+| extend NewCreationDateTime = todatetime(CreationUtcTime), PreviousCreationDateTime = todatetime(PreviousCreationUtcTime)
+| extend DateTimeDifference = datetime_diff("day", NewCreationDateTime, PreviousCreationDateTime)
+| where not(TargetFilename matches regex @"(?i)\\temp\\|\\AppData\\")
+| where not(Image matches regex @"(?i)\\temp\\")
+| where TimeDifference != 0

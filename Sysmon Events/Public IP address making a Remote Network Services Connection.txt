@@ -1,0 +1,7 @@
+// Title of Detection: Public IP address making a Remote Network Services Connection
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 3 and technique_name =~ "Remote Services" and (not(ipv4_is_private(tostring(SourceIp)) or SourceIp== "127.0.0.1") or not(ipv4_is_private(tostring(DestinationIp)) or DestinationIp== "127.0.0.1"))

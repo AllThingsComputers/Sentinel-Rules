@@ -1,0 +1,18 @@
+// Title of Detection:  rare parent and child process pairing
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  Can replicate this is security events as well
+// References (if available): https://blog.menasec.net/2021/01/how-to-design-abnormal-child-processes.html
+// The Logic of the Detection or Query Begins Below This Line
+let commonParentChildpairings = (
+Sysmon
+| where TimeGenerated between (ago(100d).. ago(1d))
+| where EventID == 1
+| extend ParentChildStatement = strcat('The parent process of name ', tostring(ParentImage), ' has spawned the child process named ', tostring(ParentImage), ' which is showing as rare')
+| summarize count() by ParentChildStatement
+| where count_ > 2);
+Sysmon
+| where TimeGenerated > ago(1d)
+| where EventID == 1
+| extend ParentChildStatementNew =  strcat('The parent process of name ', tostring(ParentImage), ' has spawned the child process named ', tostring(ParentImage), ' which is showing as rare')
+| summarize count() by ParentChildStatementNew
+| where ParentChildStatementNew !in (commonParentChildpairings)

@@ -1,0 +1,13 @@
+// Title of Detection:  Creation of network connections with zero command-line arguments
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection: 
+// References (if available):   p86  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf 
+// The Logic of the Detection or Query Begins Below This Line
+let processRegex =
+@"(?i)\\(rundll32|svchost|msiexec|werfault|searchprotocolhost|gpupdate|regsvr32|svchost|msiexec)\.exe$";
+let ZeroCommandLineArguements = 
+Sysmon
+| where EventID == 1 and Image matches regex (processRegex) and CommandLine !contains " "
+| summarize by tostring(ProcessId);
+Sysmon
+| where EventID == 3 and ProcessId in (ZeroCommandLineArguements)

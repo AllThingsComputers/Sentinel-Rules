@@ -1,0 +1,9 @@
+// Title of Detection:  Multiple instances of a core processes at same time
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  certain core processes singletons and should only be one running at a time if theres any more this could be fake
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where TimeGenerated > ago(5m) and EventID == 1 and OriginalFileName matches regex @"(?i)\\(System|wininit|Isass|Ism|services|Isaiso)\.exe$" // these are protected core services
+// summarize dcount(tostring(ProcessId)) by tostring(OriginalFileName), Computer 
+| where dcount_ProcessId >= 2

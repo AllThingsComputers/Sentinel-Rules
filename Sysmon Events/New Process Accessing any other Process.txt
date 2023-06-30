@@ -1,0 +1,13 @@
+// Title of Detection: New Process Accessing any other Process
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  This is Event ID 10 Sysmon 
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let SeenProcess= Sysmon
+| where TimeGenerated between (datetime(2019-01-01T12:00:00).. ago(1d))
+| summarize by tostring(Image);
+Sysmon
+| where EventID == 10
+| where Image <> "C:\\Windows\\system32\\wsmprovhost.exe" // wsmprovhost.exe is a Windows Remote Powershell session, when you enter a remote session, you create on the server a process called wsmprovhost.exe
+| summarize count() by tostring(Image)
+| where tostring(Image) !in~ (SeenProcess) 

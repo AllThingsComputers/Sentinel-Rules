@@ -1,0 +1,14 @@
+// Title of Detection:  rarely modified reg keys has value changed
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection: 
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let frequentlymodifiedregkeypathvalues = (Sysmon
+| where TimeGenerated between (ago(100d).. ago(1d))
+| where EventID == 13
+| summarize count() by tostring(TargetObject)
+);
+Sysmon
+| where TimeGenerated >= ago(1d)
+| where EventID == 13
+| where tostring(TargetObject) !in (frequentlymodifiedregkeypathvalues)

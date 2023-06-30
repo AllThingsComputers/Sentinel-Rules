@@ -1,0 +1,15 @@
+// Title of Detection:  uncommon module loaded
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:   This may be a sign of malware or legitimate activity
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let newmoduleloaded = (
+Sysmon
+| where TimeGenerated between (ago(100d).. ago(1d))
+| where EventID == 7
+| summarize count() by tostring(ImageLoaded)
+| where count_ > 1); 
+Sysmon
+| where TimeGenerated >= ago(1d)
+| where EventID == 7
+| where tostring(ImageLoaded) !in (newmoduleloaded)

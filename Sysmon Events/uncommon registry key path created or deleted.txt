@@ -1,0 +1,15 @@
+// Title of Detection:  uncommon registry key path created or deleted
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  This may be a sign of malware or legitimate activity
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let registrykeypathseenbefore = (
+Sysmon 
+| where TimeGenerated between (ago(100d).. ago(1d))
+| where EventID == 12
+| summarize count() bytostring(TargetObject)
+);
+Sysmon
+| where TimeGenerated >= ago(1d)
+| where EventID == 12
+| where tostring(TargetObject) !in (registrykeypathseenbefore)

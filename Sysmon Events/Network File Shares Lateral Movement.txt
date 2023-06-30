@@ -1,0 +1,11 @@
+
+// Title of Detection:  Network File Shares Lateral Movement
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection: 
+// References (if available):  https://blog.menasec.net/2020/08/new-trick-to-detect-lateral-movement.html
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID in (3, 11) // 3 is network connection. 11  is file created
+| where Image =~ "System" and SourcePort == 445
+| summarize dcount(EventID)
+| where dcount_EventID >= 2 

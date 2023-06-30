@@ -1,0 +1,12 @@
+// Title of Detection:  Renamed Windows Process
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection: an adversary may rename a Windows Process to Stage Data Theft using Scripting Utilities. this is done by seeing when the same process has multiple hashes suggest one is masquerading 
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let processNameWithTwoHashes = 
+Sysmon
+| where EventID == 1
+| summarize dcount(hash_imphash) by tostring(Image)//alternate is /tostring(OriginalFileName)
+| where dcount_hash_imphash >= 2;
+Sysmon 
+| where CommandLine matches regex  "(?i)(-r |-rename|-Ren|Rename-Item|rename)" and CommandLine has_any (processNameWithTwoHashes)  //  this will detect when an process name with at least two unique IMP hashes has had at least 1 renamed 

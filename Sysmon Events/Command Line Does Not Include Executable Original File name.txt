@@ -1,0 +1,9 @@
+// Title of Detection:  Command Line Does Not Include Executable Original File name
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  an adversary may rename executable
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1
+| extend NoExtensionOriginalFileName = extract(@"[^\]*', 0, tostring(OriginalFileName))
+| where CommandLine !contains NoExtensionOriginalFileName

@@ -1,0 +1,16 @@
+// Title of Detection:  Sysmon Remote Windows Service Creation  and Recon 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection: 
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let Registry_value_modifications = Sysmon
+| where EventID == 13
+| where TargetObject startswith @"HKLM\System\CurrentControlSet\services\"
+| extend Registry_value_modifications_Time = TimeGenerated; 
+Sysmon 
+| where EventID == 3
+| extend NetworkConnectionTime = TimeGenerated
+| where tostring(SourceIp) != tostring(DestinationIp) and toint(SourcePort) >= 49152 and toint(DestinationPort) >= 49152 and Image endswith @"\services.exe" and SourceIp != '-' and DestinationIp != '-'
+| join kind-inner (Registry_value_modifications) on Computer // happening inside 1 min and same ComputerName.
+| where NetworkConnectionTime >= Registry_value_modifications_Time 
+| where datetime_diff('minute', Registry_value_modifications_Time, NetworkConnectionTime) <= 1 

@@ -1,0 +1,7 @@
+// Title of Detection: New Pipe Detected
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: Malware may use named pipes for interprocess communication. tailor exclusions to your environment. the below worked for my sample dataset
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID in (17, 18) and not(PipeName =~ "<exclusion here>" and Image =~ "C:\\Windows\\system32\\svchost.exe")

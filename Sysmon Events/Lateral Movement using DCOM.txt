@@ -1,0 +1,7 @@
+// Title of Detection: Lateral Movement using DCOM 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:   Shell Windows & Shell BrowserWindow
+// References (if available):  https://blog.menasec.net/2019/02/threat-hunting-18-lateral-movement-via.html
+// The Logic of the Detection or Query Begins Below This Line
+(union isfuzzy=true(SecurityEvent 
+| where EventID == 5158 and * contains "explorer.exe" and toint(SourcePort) >= 49152)

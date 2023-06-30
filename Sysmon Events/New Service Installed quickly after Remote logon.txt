@@ -1,0 +1,14 @@
+// Title of Detection:  New Service Installed quickly after Remote logon
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection: 
+// References (if available): https://www.socinvestigation.com/hunting-for-suspect-windows-services-mind-map
+// The Logic of the Detection or Query Begins Below This Line
+let connectionEvent = Sysmon
+| where EventID == 3
+| where Image endswith "\\services.exe" and toint(SourceIp) != toint(DestinationIp) and SourcePort >= 49152 and DestinationPort >= 49152 and isnotempty(SourceIp) and isnotempty(DestinationIp)
+| extend ConnectionAllowedTime = TimeGenerated;
+let regkeyEvent = Sysmon
+| where EventID == 13 and TargetObject contains "HKLM\\System\\CurrentControlSet\\services";
+connectionEvent
+| join kind=inner (regkeyEvent) on Computer
+|  where datetime_diff('minute', TimeGenerated, ConnectionAllowed Time) <= 2

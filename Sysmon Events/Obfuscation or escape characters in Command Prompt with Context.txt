@@ -1,0 +1,12 @@
+// Title of Detection: Obfuscation or escape characters in Command Prompt with Context
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  Attackers can utilise obfuscation to avoid detection. For further development you can expand to task scheduler commands etc
+// References (if available): https://www.wietzebeukema.nl/blog/windows-command-line-obfuscation 
+// The Logic of the Detection or Query Begins Below This Line
+Sysmon
+| where OriginalFileName matches regex @"(?i)(^cmd\.exe)"
+| extend TheCommand = split(CommandLine, "cmd.exe\",1)
+| where TheCommand matches regex @"[\*\\]'
+| extend extractedCommandLine = extract_all(@'([\*\\]{1})', tostring(TheCommand))
+| extend extractedContextCommandLine5characters = extract_all(@'((?i).{5}[\*\\].{5}){1}', tostring(TheCommand)}
+| extend extractedContextCommandLine15characters = extract_all(@'((?i); {15}[\*\\].{15}}{1}', tostring(TheCommand)) // Please whitelist of context safe code seen before

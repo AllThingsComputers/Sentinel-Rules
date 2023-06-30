@@ -1,0 +1,16 @@
+// Title of Detection:  Command Line with High Amount of Ascii non-alphanumeric characters 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  a decent amount of USB worm activity wherein an exe executes in conjunction with a command line containing non-alphanumeric or otherwise unusual command-line. fp is legit admin activity characters. seen with Gamarue
+// References (if available):  p23  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where CommandLine matches regex @"(?i)[-_#~<>]"
+| extend minus = countof(tostring(CommandLine), "-")
+| extend underscore = countof(tostring(CommandLine), "_")
+| extend hash = countof(tostring(CommandLine), "#")
+| extend tilde = countof(tostring(CommandLine), "~") 
+| extend lessinequality = countof(tostring(CommandLine), "<")
+| extend moreinequality = countof(tostring(CommandLine), ">")
+| extend Total = minus + underscore + hash + tilde + lessinequality + moreinequality 
+| project-reorder TimeGenerated, Computer, UserName, EventID, Image, CommandLine, minus, underscore, hash, tilde, lessinequality, moreinequality, Total 
+| sort by Total desc❘ where Total >= 10

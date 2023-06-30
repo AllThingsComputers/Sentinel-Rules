@@ -1,0 +1,13 @@
+// Title of Detection:  ZIP file with Javascript Initiating external netconn
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  This detection analytic regularly identifies the initial execution and network connections from a SocGholish JavaScript payload extracted from a ZIP file p
+// References (if available): 51-52  https://resource.redcanary.com/rs/003-YRU-314/images/2022-Threat-DetectionReport-RedCanary.pdf 
+// The Logic of the Detection or Query Begins Below This Line
+let processcreate = Sysmon
+| where EventID == 1 and Image endswith "wscript.exe" and CommandLine matches regex "(?i)\.zip\.js"
+| extend PID = tostring(ProcessId);
+let netconn = Sysmon
+| where EventID == 3 and Image endswith "wscript.exe" and not(ipv4_is_private(tostring(DestinationIp)))
+| extend PID = tostring(ProcessId);
+processcreate
+| join kind-inner (netconn) on PID

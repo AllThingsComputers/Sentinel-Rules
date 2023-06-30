@@ -1,0 +1,15 @@
+// Title of Detection:  Abnormally High Powershell Obfuscation and Escape characters in Command
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where Image contains "powershell"
+| where CommandLine has_any ('^','+','$','%')
+| extend dollar = countof(tostring(CommandLine), "$")
+| extend percent = countof(tostring(CommandLine), "%")
+| extend hat = countof(tostring(CommandLine), "^")
+| extend plus = countof(tostring(CommandLine), "+")
+| extend TotalChar = dollar + percent + hat + plus 
+| project-reorder TimeGenerated, Computer, UserName, EventID, Image, CommandLine, hat, plus, dollar, percent, TotalChar 
+| sort by TotalChar desc ❘ where TotalChar >= 4

@@ -1,0 +1,9 @@
+// Title of Detection:  High Volume of Files Deleted 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:  Event ID 23: FileDelete (File Delete archived). Event ID 26: FileDeleteDetected (File Deleted) You could amend this rule to only certain protected directories.
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID in (23, 26)
+| summarize count() by Computer
+| where count_ > 100

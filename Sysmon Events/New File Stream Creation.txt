@@ -1,0 +1,14 @@
+// Title of Detection:  New File Stream Creation 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  could be a sign of malware or legit activity. this is done by new hashes seen
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let FileStreamCreationHash = (Sysmon
+| where TimeGenerated between (ago(180d).. ago(1d))
+| where EventID == 15
+| summarize count() by tostring(hash)
+);
+Sysmon
+| where TimeGenerated >= ago(1d)
+| where EventID = 15
+| where tostring(hash) !in (FileStreamCreationHash)

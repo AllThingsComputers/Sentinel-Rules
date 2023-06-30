@@ -1,0 +1,15 @@
+// Title of Detection:  New Process Detected Generating an Anonymously high Amount of actions
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection: the detects a new process spawning a high number of new process or network connections in a short amount of time. This may be ransomware. 
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let processSysmon = Sysmon
+| where EventID == 1
+| summarize count() by Process = tostring(ParentImage);
+let networkConnectionsSysmon = Sysmon
+| where EventID == 3
+| summarize count() by Process = tostring(Image);
+processSysmon
+| join kind-fullouter (networkConnectionsSysmon) on Process
+| extend Total_networkConnections_and_Processes_spawned = count + count_1
+| where Total_networkConnections_and_Processes_spawned  > 20

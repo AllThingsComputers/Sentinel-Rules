@@ -1,0 +1,9 @@
+// Title of Detection:  High Number of Remote Access Executables used
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:   maybe a failed password bruteforce attempt. Run Every 15 minutes and minimum 10 times
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 1 and Image matches regex @"(?i)\\(mstsc|winrm)\.exe$"
+| summarize count() by Computer
+| where count_ > 10

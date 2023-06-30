@@ -1,0 +1,7 @@
+// Title of Detection:  OS Cred Dump via LSASS
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:      
+// References (if available): https://www.socinvestigation.com/os-credential-dumping-Isass-memory-vs-windows-logs/
+SysmonEvent
+| where EventID == 1 Image matches regex @"(?i)Rundll32\.exe$" and '(?i)(comsvcs.dll .*Minidump|Minidump .*comsvcs.dll)' 
+  

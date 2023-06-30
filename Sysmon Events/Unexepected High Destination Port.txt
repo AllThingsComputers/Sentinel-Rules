@@ -1,0 +1,11 @@
+/ Title of Detection:  Unexepected High Destination Port 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  Adversaries may communicate using a protocol and port paring that are typically not associated. For example,  https over port 8088[1] or port 587[2] as opposed to the traditional port 443. You can can do a lot of port analysis
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID == 3
+| summarize count() by toint(DestinationPort), toint(SourcePort), tostring(DestinationIp), tostring(SourceIp)
+| where not(ipv4_is_private(tostring(DestinationIp)) and ipv4_is_private(tostring(SourceIp)))
+| where DestinationPort > 6000
+// may need to figure out exclusions

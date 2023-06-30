@@ -1,0 +1,7 @@
+// Title of Detection:  Obfuscation or encoding in Registry key details
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  
+// References (if available): https://www.welivesecurity.com/2017/05/15/malicious-registry-keys-reflective-injection/ 
+// The Logic of the Detection or Query Begins Below This Line
+SysmonEvent
+| where EventID in (12, 13) and TargetObject matches regex '(?i)-EncodedCommand' 

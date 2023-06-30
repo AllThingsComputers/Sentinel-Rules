@@ -1,0 +1,13 @@
+// Title of Detection:  detection of PowerShell generating startup shortcuts
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  In current time attackers may utlilise PowerShell to make malicious LNK files and place them in startup locations to gain persistence
+// References (if available):   p54  https://resource.redcanary.com/rs/003-YRU-314/images/2022-Threat-Detection-Report-RedCanary.pdf 
+// The Logic of the Detection or Query Begins Below This Line
+let processcreated = Sysmon
+| where EventID == 1 and Image endswith "powershell.exe" and CommandLine matches regex "(?i)appdata"
+| extend PID = tostring(ProcessId);
+let filecreated = Sysmon
+| where EventID == 11 and Image endswith "powershell.exe" and CommandLine matches regex "(?i)start menu\\programs\\startup\\.*\.lnk"
+| extend PID =tostring(ProcessId); 
+processcreated
+| join kind-inner (filecreated) on PID

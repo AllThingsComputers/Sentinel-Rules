@@ -1,0 +1,14 @@
+
+// Title of Detection:  ThreatIntelligenceIndicator Domain Detected in Sysmon
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let ThreatIntelligenceIndicatorDomain = Threat IntelligenceIndicator
+| where isnotempty(DomainName)
+| where Active == true and ExpirationDateTime > now()
+| summarize by DomainName; 
+Sysmon
+| where EventID in (3,22)
+| where TimeGenerated >= ago(1d)
+| where DestinationHostname has_any (ThreatIntelligenceIndicatorDomain) or dns_query_results has_any (ThreatIntelligenceIndicatorDomain) or dns_query_name in (ThreatIntelligenceIndicatorDomain)

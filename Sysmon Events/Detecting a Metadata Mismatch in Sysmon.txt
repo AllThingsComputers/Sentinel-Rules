@@ -1,0 +1,27 @@
+// Title of Detection: Detecting a Metadata Mismatch in Sysmon
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:   https://malwarereversing.blogspot.com/2019/10/file-renamingtechnique-does-not-evade.html   maybe make full static list
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+(union isfuzzy=true (
+Sysmon
+| where EventID == 1
+| summarize dcount(tostring(Description)) by tostring(FileVersion), tostring(Image), tostring(Product), tostring(OriginalFileName)
+| where dcount_Description >= 2), (
+Sysmon
+| where EventID == 1
+| summarize dcount(tostring(FileVersion)) by tostring(Image), tostring(Description), tostring(Product), tostring(OriginalFileName)
+| where dcount_FileVersion >= 2),(
+Sysmon
+| where EventID == 1
+| summarize dcount(tostring(Product)) by tostring(FileVersion), tostring(Description), tostring(Image), tostring(OriginalFileName)
+| where dcount_Product >= 2), (
+Sysmon
+❘ where EventID == 1
+| summarize dcount(tostring(Image)) by tostring(FileVersion), tostring(Description), tostring(Product), tostring(OriginalFileName)
+| where dcount_Image >= 2), (
+Sysmon
+| where EventID == 1
+| summarize dcount(tostring(file_path)) by tostring(FileVersion), tostring(Description), tostring(Product), tostring(Image)
+| where dcount_file_path >= 2))
+

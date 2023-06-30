@@ -1,0 +1,17 @@
+// Title of Detection:  ThreatIntelligenceIndicator Hashes Detected in Sysmon
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let ThreatIntelligenceIndicatorHashes = ThreatIntelligenceIndicator
+| where isnotempty(FileHashValue)
+| where Active == true and ExpirationDateTime > now()
+| summarize by FileHashValue;
+Sysmon
+| where EventID in (1,7,15)
+| extend HASHSHA256 = hash_sha256
+| extend HASHMD5 = hash_md5
+| extend HASH_EID15 = extract_all(@'(?i)([\w\d]{10,100}}{1}', tostring(hash))
+| extend HASH_EID15_MD5 = HASH_EID15[1]
+| extend HASH_EID15_SHA256 = HASH_EID15[2]
+| where HASHSHA256 in (ThreatIntelligenceIndicatorHashes) or HASHMD5 in (ThreatIntelligenceIndicatorHashes) or HASH_EID15_MD5 in (ThreatIntelligenceIndicatorHashes) or HASH_EID15_SHA256 in (ThreatIntelligenceIndicatorHashes)

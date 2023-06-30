@@ -1,0 +1,13 @@
+// Title of Detection:  rare process that is setting reg value reg keys
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  This may be a sign of malware or legitimate activity
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let processsettingregvalues = (Sysmon
+| where TimeGenerated between (ago(90d).. ago(1d))
+| where EventID == 13
+| summarize count() by tostring(TargetObject)
+);
+Sysmon where TimeGenerated >= ago(1d)
+| where EventID == 13
+| where tostring(TargetObject) !in (processsettingregvalues)

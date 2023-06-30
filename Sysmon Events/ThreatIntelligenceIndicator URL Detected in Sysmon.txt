@@ -1,0 +1,14 @@
+// Title of Detection:  ThreatIntelligenceIndicator URL Detected in Sysmon
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let ThreatIntelligenceIndicatorUrl = ThreatIntelligenceIndicator
+| where isnotempty(Url)
+| where Active == true and ExpirationDateTime > now()
+| take 10000
+| summarize by Url;
+Sysmon
+|  where EventID in (3,22)
+| where TimeGenerated >= ago(60m)
+| where DestinationHostname has_any (ThreatIntelligenceIndicatorUrl) or dns_query_results has_any (ThreatIntelligenceIndicatorUrl) or dns_query_name in (ThreatIntelligenceIndicatorUrl)

@@ -1,0 +1,13 @@
+// Title of Detection:  Suspect MSBuild
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:   
+// References (if available): https://redcanary.com/blog/detection-engineering/
+// The Logic of the Detection or Query Begins Below This Line
+let msbuild = Sysmon
+| where EventID == 1 and ParentImage endswith "MSBuild.exe" and not(Image endswith "csc.exe")
+| extend PID = tostring(ProcessId);
+(union isfuzzy= true (Sysmon
+| where EventID == 3
+| extend PID = tostring(ProcessId)
+| join kind-inner (msbuild) on PID, Computer), (Sysmon
+| where (EventID == 1 and Image endswith "MSBuild.exe" and countof(tostring(CommandLine), @"\s", "regex") < 3) or (EventID == 1 and Image endswith "MSBuild.exe" and ParentImage !endswith "cmd.exe")))
