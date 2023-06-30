@@ -1,0 +1,9 @@
+// Title of Detection: High MFA Failures For the same cause
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+MFAlogs
+❘ summarize count() by username, reason, result
+❘ where result != "success"
+| where count_ >= 7

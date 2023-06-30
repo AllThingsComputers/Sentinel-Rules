@@ -1,0 +1,16 @@
+
+// Title of Detection:  Change of Country in MFA-Auth within a Short Timespan
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  You could try use coordinated but takes more maths
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let timeperiod1 = (
+MFAlogs
+| where TimeGenerated between (ago(12h).. ago(6h))
+| where isnotempty(MFA_device_location));
+let timeperiod2 = (
+MFAlogs
+| where TimeGenerated between (ago(6h).. ago(0s))
+| where isnotempty(MFA_device_location));
+timeperiod1
+| join kind-inner (timeperiod2) on user_name where MFA_device_location != MFA_device_location1 
