@@ -1,0 +1,11 @@
+// Title of Detection:   New Run/RunOnce Scheduled Task
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  Shell-Core EventID 9706/9707/9708 
+// References (if available):  https://blog.menasec.net/2019/02/threat-hunting-20-runrunonce-EventID.html 
+// The Logic of the Detection or Query Begins Below This Line
+Event
+| where EventID in (12, 13)
+| where ParameterXml matches regex @"(?i)HK(LM|CU).*((\\Run\\)|(\\RunOnce\\)).*?<"
+| extend RunRunonce =
+trim_end('<',extract(@"(?i)HK(LM|CU).*((\\Run\\)|(\\RunOnce\\)).*?<", 0, ParameterXml))
+| where not(RunRunonce matches regex @"(?i)(({\w{8}-\w{4}-\w{4}-\w{4}-\w{12}exclusions))") 

@@ -1,0 +1,9 @@
+// Title of Detection: TeamViewer Logging Disabled 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection: could be Defence Evasion after remote access
+// References (if available):  https://blog.menasec.net/2019/11/hunting-for-suspect-use-of.html 
+// The Logic of the Detection or Query Begins Below This Line
+Event
+| where EventID == 13 and EventData contains "teamviewer"
+| where TargetObject matches regex
+@"(?i)teamviewer\\LogincomingConnections|teamviewer\\LogOutgoingConnections|teamviewer\\Log" 
