@@ -1,0 +1,18 @@
+// Title of Detection: Device making multiple connections to RDP or FTP Domains
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let RDPFTPterms = dynamic(["RDP", "Teamviewer", "Remotedesktop", "AnyDesk", "VNC", "GoToMyPC", "Dameware", "FireFTP", "Cyberduck", "WinSCP", "Devolutions","FTP", "Filetransfer", "FileZilla", "Dropbox"]);
+(union isfuzzy=true (
+DNSlogs
+| where Name has_any(RDPFTPterms) ), (
+ProxyLogs
+| where Domain has_any (RDPFTPterms) )) 
+| extend IP = strcat( Internallp, ClientIP)
+| extend DomainAccessed = strcat(Name, Domain)
+| extend Identity = strcat (Policy_Identity, Computer)
+| extend ExternalIP = strcat(IPAddresses, Externallp)
+| sort by IP asc
+❘ summarize count() by IP, Identity, DomainAccessed, ExternalIP, Type, Action
+❘ where count_ >= 5 

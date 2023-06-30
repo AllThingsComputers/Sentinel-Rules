@@ -1,0 +1,19 @@
+// Title of Detection: On the fly New Threat in logs
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection: use TI instead
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let watchlist = (_GetWatchlist('FreshThreats')
+| project SearchKey);
+(union isfuzzy=true (
+DnsEvents
+| where IPAddresses in~ (watchlist) or Name has_any(watchlist)), (
+DNSLogs
+| where Destination_IP in~ (watchlist) or URL has_any(watchlist) ), (
+SigninLogs
+| where IPAddress in~ (watchlist)), (
+OfficeActivity
+| where ClientIP in~(watchlist) ), (SysmonEvent
+| where Hashes has_any(watchlist) ), (
+DNSLogs
+| where Domain has_any(watchlist) or Externallp in~(watchlist) )) 

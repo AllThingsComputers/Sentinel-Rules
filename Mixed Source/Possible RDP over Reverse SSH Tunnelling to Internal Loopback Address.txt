@@ -1,0 +1,12 @@
+// Title of Detection:  Possible RDP over Reverse SSH Tunnelling to Internal Loopback Address 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  this could be RDP over Reverse SSH Tunnelling to Internal Loopback Address 
+// References (if available): https://blog.menasec.net/2019/02/threat-hunting-25-rdp-over-reverse-ssh.html 
+// The Logic of the Detection or Query Begins Below This Line
+(union isfuzzy=true(SecurityEvent 
+| where EventID == 4624 and LogonType == 10 and IpAddress == "127.0.0.1"
+| where SubjectUserName startswith "Microsoft-WorkstationName
+| where WorkstationName == SubjectDomainName), (
+Event
+| where Source == Windows-TerminalServices-RemoteConnectionManager" and EventID == 1149
+| where Event Data contains "127.0.0.1" or Message contains "127.0.0.1" or ParameterXml contains "127.0.0.1" or Rendered Description contains "127.0.0.1")) 

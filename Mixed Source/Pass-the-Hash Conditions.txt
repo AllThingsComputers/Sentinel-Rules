@@ -1,0 +1,17 @@
+// Title of Detection: Pass-the-Hash Conditions
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection: - On the link there are more account restrictions 
+// References (if available):  https://blog.netwrix.com/2021/11/30/how-to-detect-pass-the-hash-attacks/ 
+// The Logic of the Detection or Query Begins Below This Line
+let SecEvent = (
+SecurityEvent
+| where EventID == 4624 and LogonType == 9 and AuthenticationPackageName == "Negotiate" and LogonProcessName ==  "seclogo"
+| extend TimeString = tostring(TimeGenerated)
+| extend TimeToTheSecond = trim_end("(.{8}).", TimeString));
+let SysEvent = (
+Sysmon
+| where EventID == 10 and RenderedDescription == "Process accessed" and TargetImage == "C:\\Windows\\system32\\lsass.exe"
+| extend TimeString = tostring(TimeGenerated)
+| extend TimeToTheSecond = trim_end("(.{8}).", TimeString)); 
+SecEvent
+| join kind-inner (SysEvent) on TimeToTheSecond 

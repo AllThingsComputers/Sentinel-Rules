@@ -1,0 +1,17 @@
+// Title of Detection:  PsExec execution
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection: This is spotted using event 5145. There’s no target file name that can be -r with no space. Maybe the space character plus the question mark can do password as -pPassword. I've seen it. There a person my rename psexec to sneak by detections
+// References (if available):  https://blog.menasec.net/2019/02/threat-hunting-3-detecting-psexec.html 
+// The Logic of the Detection or Query Begins Below This Line
+let PotentialPrecursor =
+Sysmon
+| where Image contains "powershell"
+| where isnotempty(CommandLine)
+| where CommandLine contains "PsExec" and CommandLine contains "-r" and (CommandLine contains '-stdin' or CommandLine contains '-stdout' or CommandLine contains '-stderr');
+let RenamedService = PotentialPrecursor4Bybpass
+| extend RenamedService1 = extract(@'-r.*', 0, tostring(CommandLine))
+| extend RenamedService2 = tostring(trim_start('-r, RenamedService1))
+| project RenamedService2;
+Event // for any service installs
+| where EventID 7045
+❘ where Rendered Description has_any(RenamedService);
