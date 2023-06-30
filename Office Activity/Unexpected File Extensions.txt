@@ -1,0 +1,7 @@
+// Title of Detection:  Unexpected File Extensions
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection:   Detects any File extension you won’t expect in your environment in one drive/sharepoint
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+OfficeActivity
+| where SourceFileExtension !in ('list', 'every', 'file', 'Extension', 'seen', 'in', 'your', 'environment', 'here')

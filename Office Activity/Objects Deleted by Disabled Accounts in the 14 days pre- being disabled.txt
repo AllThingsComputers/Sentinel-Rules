@@ -1,0 +1,26 @@
+// Title of Detection:  Objects Deleted by Disabled Accounts in the 14 days pre- being disabled
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  destruction of data
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let AccountDisabledLookBack = 1d;
+let DeletionOfDataLookBack = 14d;
+let DeletedOperations = dynamic(['FileRecycled', 'FolderRecycled', 'FolderDeletedFirstStageRecycleBin', 'FileDeletedFirstStageRecycleBin', 'ListItemRecycled', 'FileVersionsAllDeleted', 'FileDeleted', 'Message Deleted']);
+let account_disabled = SecurityEvent
+| where TimeGenerated >= ago(AccountDisabledLookBack)
+| where EventID == 4725
+| where TargetUserName !endswith "$" // removes machine accounts
+| project-rename string Name=TargetUserName | project-reorder string Name | extend lowerName = tolower(string Name); // changed all names to lower case to standardise it
+let content_deleted = OfficeActivity
+| where TimeGenerated >= ago(DeletionOfDataLookBack)
+| where Operation has_any (DeletedOperations)
+| where Userld <> "SHAREPOINT\\system" // was just not containing system
+| project-reorder Userld, Operation, OfficeObjectld
+| extend prefixName=split(Userld, "@", 0)
+| extend string Name=strcat_array(prefixName, prefixName)
+| extend lowerName = tolower(stringName);
+// common column name called string Name and instances of account being deleted and joined both tables on it 
+account_disabled
+| join kind= inner (content_deleted) on lowerName
+| project-keep lowerName, Operation, OfficeObjectld, TimeGenerated project-rename Username_of_disabled_Account=lowerName
+// check file paths being deleted to see if bad intent is there

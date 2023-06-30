@@ -1,0 +1,10 @@
+// Title of Detection:  Microsoft Teams with very High Volume of Links Sent
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  Can indicate spam/phishing
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let LinkSentOperation = dynamic(["MessageCreatedHasLink", "MessageEditedHasLink"]); 
+OfficeActivity
+| where RecordType == "MicrosoftTeams" and Operation in (LinkSentOperation)
+| summarize dcount(DistinctChatsSentLinks, ChatThreadId) by Userld 
+| sort by dcount_DistinctChatsSentLinks desc | where dcount_DistinctChatsSentLinks > 20 // please amend for sensitivity 

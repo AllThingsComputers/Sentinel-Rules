@@ -1,0 +1,7 @@
+// Title of Detection:   Executables Detected
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection: You can add more executables that you wish
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+OfficeActivity
+| where Operation contains "upload" and SourceFileExtension has_any (‘.exe’,’.msi’)

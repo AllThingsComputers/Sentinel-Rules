@@ -1,0 +1,9 @@
+// Title of Detection:  High OfficeObjectld Denied Access
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:   
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+OfficeActivity
+| where TimeGenerated >= ago(1d) and OfficeObjectld contains "< insert URL of access denied page>" 
+| summarize count() by Userld, ClientIP, UserAgent where count_ >= 26 // adjust this as needed to avoid noise
+| sort by count_ 

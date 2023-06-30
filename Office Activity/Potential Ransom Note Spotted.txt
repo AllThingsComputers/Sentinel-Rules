@@ -1,0 +1,13 @@
+// Title of Detection: Potential Ransom Note Spotted
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:   Ransomware variants often will create a Ransom note in every directory it encrypts or all directories. This looks for common file extensions of Ransomnotes that are created or modified with the same name in a minimum of 20 unique folders
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let noteExtensions = dynamic(["DOC", "DOCX", "odt ", "rtf", "TXT", "PDF", "HTM", "HTML", "bmp", "jpeg", "jpg", "png", "tif", "tiff"]); // common ransomware note extensions
+let fileAction = dynamic(["FileModified", "FileRenamed", "FileUploaded", "FileSyncUploadedFull"]);
+OfficeActivity
+| where TimeGenerated >= ago(10m)
+| where Operation has_any (fileAction) and SourceFileExtension has_any (noteExtensions)
+| where Site_Url contains ".sharepoint.com/personal/" and Userid <> "app@sharepoint"
+| summarize count() by Site_Url, SourceFileName  // as it requires an exact match on source file name it means each file counted would be in a different directories
+| where count_ >= 14  // adjust as ransomware leaves a high number of notes for better visibility.   You can whitelist common files like index.html that may appear when  users download from the internet
