@@ -1,0 +1,9 @@
+// Title of Detection: Sentinel Health Check experiencing Non-Successes 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  https://docs.microsoft.com/en-us/azure/sentinel/monitor-data-connector-health
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SentinelHealth
+| where TimeGenerated > ago(1h)
+| summarize TimeGenerated = arg_max(TimeGenerated,*) by SentinelResourceName, SentinelResourceld
+| where Status <> "Success" or Description <> "Data fetch succeeded"
