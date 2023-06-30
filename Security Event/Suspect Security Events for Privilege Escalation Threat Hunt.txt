@@ -1,0 +1,7 @@
+// Title of Detection: Suspect Security Events for Privilege Escalation Threat Hunt
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:   Suspect Security Events Recorded 
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID in (4670, 4672, 4688)

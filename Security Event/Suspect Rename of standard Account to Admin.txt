@@ -1,0 +1,9 @@
+// Title of Detection: Suspect Rename of standard Account to Admin
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  If an adversary renames an existing account to account name to or from the inclusion of adm or admin that could bypass 4781
+// References (if available): https://www.manageengine.com/products/active-directory-audit/account-management-events/event-id-4781.html#:~:text=When%20the%20name%20of%20an,event%20ID%204781%20gets%20logged.
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+SecurityEvent
+| where EventID ==4781 
+| where (OldTargetUserName contains "adm" and NewTargetUserName !contains "adm") or (OldTargetUserName contains "admin" and NewTargetUserName !contains "admin") or (OldTargetUserName !contains "adm" and NewTargetUserName contains "adm") or (OldTargetUserName !contains "admin" and NewTargetUserName contains "admin") 

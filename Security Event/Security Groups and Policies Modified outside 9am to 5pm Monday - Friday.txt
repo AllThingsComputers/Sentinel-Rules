@@ -1,0 +1,20 @@
+// Title of Detection: Security Groups and Policies Modified outside 9am to 5pm Monday - Friday 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:   changes shouldnt happen outside these hours
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID in (4735, 4737, 4755, 4793, 4713, 4719) // Event ID's 4735, 4737, 4755 are Security Enabled Groups Changed, ID'S 4793, 4713, 4719 are for Policy Changes. 
+| where dayofweek(TimeGenerated) between (0d .. 6d)
+| extend the Day = case(dayofweek(TimeGenerated) == '0.00:00:00', "Sunday", dayofweek(TimeGenerated) = '1.00:00:00', "Monday",
+dayofweek(TimeGenerated) == '2.00:00:00', "Tuesday",
+dayofweek(TimeGenerated) == '3.00:00:00', "Wednesday", 
+dayofweek(TimeGenerated) == '4.00:00:00',"Thursday", 
+dayofweek(TimeGenerated) == '5.00:00:00', "Friday", 
+dayofweek(TimeGenerated) == '6.00:00:00', "Saturday",
+strcat("error: ", dayofweek(TimeGenerated)) )
+| extend StringTime = tostring(TimeGenerated)
+| extend Time = extract("[^T]*$",0, String Time)
+| extend OutsideHours = iff(Time startswith "00:" or Time startswith "01:" or Time startswith "02:" or Time startswith "03:" or Time startswith "04:" or Time startswith "05:" or Time startswith "06:" or Time startswith "07:" or Time startswith "08:" or Time startswith "18:" or Time startswith "19:" or Time startswith "20:" or Time startswith "21:" or Time startswith "22:" or Time startswith "23:", "Outside 9am-5pm", "Inside 9am-5pm")
+| where theDay in~ ("Saturday", "Sunday") or OutsideHours == "Outside of 9am-5pm"
+| project-away String Time

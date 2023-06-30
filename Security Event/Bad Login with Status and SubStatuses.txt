@@ -1,0 +1,77 @@
+// Title of Detection: Bad Login with Status and SubStatuses 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:    https://www.alteredsecurity.com/post/fantastic-windows-logon-types-and-where-to-find-credentials-in-them#viewer-agegc  https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4625 Failure reason
+%%2309%%2313% % 2310% % 2304% % 2307% % 2308 %% 2305 The specified user account has expired. (532) %%2309 The specified account's password has expired. (535). % % 2310 Account currently disabled. (531). % % 2311 Account logon time restriction violation. (530) %% 2312 User not allowed to logon at this computer. (533) %%2313 Unknown user name or bad password. (529). %%2307 Account locked out 
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent 
+| where EventID == 4625 // 4625 - An account failed to log on
+| extend PasswordStatus1 = iff(Status =~ "0xC000005E", "There are currently no logon servers available to service the logon request.", "")
+| extend PasswordStatus2 = iff(Status =~ "0xC0000064", "User logon with misspelled or bad user account", "")
+| extend PasswordStatus3 = iff(Status =~ "0xC000006A", "User logon with misspelled or bad password", "")
+| extend PasswordStatus4 = iff(Status =~ "0xC000006D", "The cause is either a bad username or authentication information", "")
+| extend PasswordStatus5 = iff(Status =~ "0xC000006E", "Indicates a referenced user name and authentication information are valid, but some user account restriction has prevented successful authentication (such as time-of-day restrictions).", "")
+| extend PasswordStatus6 = iff(Status =~ "0xC000006F", "User logon outside authorized hours", "")
+| extend PasswordStatus7= iff(Status =~"0xC0000070", "User logon from unauthorized workstation", "")
+| extend PasswordStatus8= iff(Status =~ "0xC0000071", "User logon with expired password", "")
+| extend PasswordStatus9 = iff(Status =~ "0xC0000072", "User logon to account disabled by administrator", "")
+| extend PasswordStatus10= iff(Status =~ "0xC00000DC", "Indicates the Sam Server was in the wrong state to perform the desired operation.", "")
+| extend PasswordStatus11 = iff(Status =~ "0xC0000133", "Clocks between DC and other computer too far out of sync", "")
+| extend PasswordStatus12 = iff(Status =~ "0xC000015B", "The user has not been granted the requested logon type (also called the logon right) at this machine", "")
+| extend PasswordStatus13 = iff(Status =~ "0xC000018C", "The logon request failed because the trust relationship between the primary domain and the trusted domain failed.", "")
+| extend PasswordStatus 14 = iff(Status =~ "0xC0000192", "An attempt was made to logon, but the Netlogon service was not started.", "")
+| extend PasswordStatus15 = iff(Status =~ "0xC0000193", "User logon with expired account", "")
+| extend PasswordStatus16 = iff(Status =~ "0xC0000224", "User is required to change password at next logon", "")
+| extend PasswordStatus17 = iff(Status =~ "0xC0000225", "Evidently a bug in Windows and not a risk", "")
+| extend PasswordStatus18 = iff(Status =~ "0xC0000234", "User logon with account locked", "")
+| extend PasswordStatus 19 = iff(Status =~ "0xC00002EE", "Failure Status: An Error occurred during Logon", "")
+| extend PasswordStatus20 iff(Status =~ "0xC0000413", "Logon Failure: The machine you are logging on to is protected by an authentication firewall. The specified account is not allowed to authenticate to the machine.", "")
+| extend PasswordStatus21 = iff(Status =~ "0x0", "Status OK.", "")
+| extend PasswordStatusText = strcat(PasswordStatus1, PasswordStatus2, PasswordStatus3, PasswordStatus4, PasswordStatus5, PasswordStatus6, PasswordStatus7, PasswordStatus8, PasswordStatus9, PasswordStatus 10, PasswordStatus11, PasswordStatus12, PasswordStatus13, PasswordStatus14, PasswordStatus15, PasswordStatus16, PasswordStatus17, PasswordStatus18, PasswordStatus19, PasswordStatus20, PasswordStatus21)
+| project-away PasswordStatus1, PasswordStatus2, PasswordStatus3, PasswordStatus4, PasswordStatus5, PasswordStatus6, PasswordStatus7, PasswordStatus8, PasswordStatus9, PasswordStatus10, PasswordStatus11, PasswordStatus12, PasswordStatus13, PasswordStatus14, PasswordStatus15, PasswordStatus16, PasswordStatus17, PasswordStatus18, PasswordStatus19, PasswordStatus20, PasswordStatus21
+| extend PasswordSubStatus1 = iff(SubStatus =~ "0xC000005E", "There are currently no logon servers available to service the logon request.", "")
+| extend PasswordSubStatus2 = iff(SubStatus =~ "0xC0000064", "User logon with misspelled or bad user account", "")
+| extend PasswordSubStatus3 = iff(SubStatus =~ "0xC000006A", "User logon with misspelled or bad password", "")
+| extend PasswordSubStatus4 = iff(SubStatus =~ "0xC000006D", "The cause is either a bad username or authentication information", "")
+| extend PasswordSubStatus5 iff(SubStatus =~ "0xC000006E", "Indicates a referenced user name and authentication information are valid, but some user account restriction has prevented successful authentication (such as time-of-day restrictions).", "")
+| extend PasswordSubStatus6 = iff(SubStatus =~ "0xC000006F", "User logon outside authorized hours", "")
+| extend PasswordSubStatus7= iff(SubStatus =~ "0xC0000070", "User logon from unauthorized workstation", "")
+| extend PasswordSubStatus8= iff(SubStatus =~ "0xC0000071", "User logon with expired password", "")
+| extend PasswordSubStatus9 = iff(SubStatus =~ "0xC0000072", "User logon to account disabled by administrator", "")
+| extend PasswordSubStatus10= iff(SubStatus =~ "0xC00000DC", "Indicates the Sam Server was in the wrong state to perform the desired operation.", "")
+| extend PasswordSubStatus11 = iff(SubStatus =~ "0xC0000133", "Clocks between DC and other computer too far out of sync", "")
+| extend PasswordSubStatus12=iff(SubStatus =~ "0xC000015B", "The user has not been granted the requested logon type (also called the logon right) at this machine", "")
+| extend PasswordSubStatus13 = iff(SubStatus =~ "0xC000018C", "The logon request failed because the trust relationship between the primary domain and the trusted domain failed.", "")
+| extend PasswordSubStatus14 = iff(SubStatus =~ "0xC0000192", "An attempt was made to logon, but the Netlogon service was not started.", "")
+| extend PasswordSubStatus15- iff(SubStatus =~ "0xC0000193", "User logon with expired account", "")
+| extend PasswordSubStatus16 = iff(SubStatus =~ "0xC0000224", "User is required to change password at next logon", "")
+| extend PasswordSubStatus17 = iff(SubStatus =~ "0xC0000225", "Evidently a bug in Windows and not a risk", "")
+| extend PasswordSubStatus18 = iff(SubStatus =~ "0xC0000234", "User logon with account locked", "")
+| extend PasswordSubStatus19 = iff(SubStatus =~ "0xC00002EE", "Failure Status: An Error occurred during Logon", "")
+| extend PasswordSubStatus20 = iff(SubStatus =~ "0xC0000413", "Logon Failure: The machine you are logging on to is protected by an authentication firewall. The specified account is not allowed to authenticate to the machine.", "")
+| extend PasswordSubStatus21 = iff(SubStatus =~ "0x0", "Status OK.", "")
+| extend PasswordSubStatusText = strcat(PasswordSubStatus1, PasswordSubStatus2, PasswordSubStatus3, PasswordSubStatus4, PasswordSubStatus5, PasswordSubStatus6, PasswordSubStatus7, PasswordSubStatus8, PasswordSubStatus9, PasswordSubStatus10, PasswordSubStatus11, PasswordSubStatus12, PasswordSubStatus13, PasswordSubStatus14, PasswordSubStatus15, PasswordSubStatus16, PasswordSubStatus17, PasswordSubStatus 18, PasswordSubStatus19, PasswordSubStatus20, PasswordSubStatus21)
+| project-away PasswordSubStatus1, PasswordSubStatus2, PasswordSubStatus3, PasswordSubStatus4, PasswordSubStatus5, PasswordSubStatus6, PasswordSubStatus7, PasswordSubStatus8, PasswordSubStatus9, PasswordSubStatus10, PasswordSubStatus11, PasswordSubStatus12, PasswordSubStatus13, PasswordSubStatus14, PasswordSubStatus15, PasswordSubStatus16, PasswordSubStatus17, PasswordSubStatus18, PasswordSubStatus19, PasswordSubStatus20, PasswordSubStatus21
+| extend LogonTypeInfo1 = iff(LogonType == 0, "Used only by the System account, for example at system startup.", "")
+| extend LogonTypeInfo2 = iff(LogonType == 2, "A user logged on to this computer.", "")
+| extend LogonTypeInfo3 = iff(LogonType == 3, "A user or computer logged on to this computer from the network.", "")
+| extend LogonTypeInfo4 = iff(LogonType == 4, "Batch logon type is used by batch servers, where processes may be executing on behalf of a user without their direct intervention.", "")
+| extend LogonTypeInfo5 = iff(LogonType == 5, "A service was started by the Service Control Manager.", "")
+| extend LogonTypeInfo6 = iff(LogonType == 7, "This workstation was unlocked.", "")
+| extend LogonTypeInfo7 = iff(LogonType == 8, "A user logged on to this computer from the network. The user's password was passed to the authentication package in its unhashed form. The built-in authentication packages all hash credentials before sending them across the network. The credentials do not traverse the network in plaintext 9, "A caller cloned its current token and (also called cleartext).", "")
+| extend LogonTypeInfo8 = iff(Logon Type == 9, "LogonType specified new credentials for outbound connections. The new logon session has the same local identity, but uses different credentials for other network connections.", "")
+| extend LogonTypeInfo9 = iff(Logon Type == 10, "A user logged on to this computer remotely using Terminal Services or Remote Desktop.", "")
+| extend LogonTypeInfo10 = iff(LogonType == 11, "A user logged on to this computer with network credentials that were stored locally on the computer. The domain controller was not contacted to verify the credentials.", "")
+| extend LogonTypeInfo11 = iff(LogonType == 12, "Same as Remote Interactive. This is used for internal auditing.", "")
+| extend LogonTypeInfo12 = iff(LogonType == 13, "Workstation logon.", "") 
+| extend LogonTypeInfo = strcat(LogonTypeInfo1, LogonTypeInfo2, LogonTypeInfo3, LogonTypeInfo4, LogonTypeInfo5, LogonTypeInfo6, LogonTypeInfo7, LogonTypeInfo8, LogonTypeInfo9, LogonTypeInfo10, LogonTypeInfo11, LogonTypeInfo12)
+| project-away LogonTypeInfo1, LogonTypeInfo2, LogonTypeInfo3, LogonTypeInfo4, LogonTypeInfo5, LogonTypeInfo6, LogonTypeInfo7, LogonTypeInfo8, LogonTypeInfo9, LogonTypeInfo10, LogonTypeInfo11, LogonTypeInfo12
+// exclusions below 
+| where LogonTypeName <> "3 - Network"// This typically a background process
+| where Status <> "0xC000010b" and LogonTypeName =~ "11 - Cached Interactive" // The domain controller was not contacted to verify the credentials. 
+| where not(LogonTypeName =~ "5 - Service" and Status =~ "5 - Service" and Status =~ "0xc0000001" and Account "0xC0000001" and Account =~ "-\\-") // a service that fails to log 
+| where not((StatusText =~ "There are currently no logon servers available to service the logon request." or StatusText =~ "User is required to change password at next logon") and SubStatus  =~ "0x0") //logon failure is not user related 
+| where not(StatusText =~"The cause is either a bad username or authentication information" and (SubStatusText "User logon with misspelled or bad password" or SubStatusText =~ "User logon with misspelled or bad user account"))
+| where not(StatusText =~"Indicates the Sam Server was in the wrong state to perform the desired operation." and SubStatusText "Indicates the Sam Server was in the wrong state to perform the desired operation.")
+| project-reorder TimeGenerated, Account, PasswordStatus, PasswordStatusText, PasswordSubStatus, PasswordSubStatusText, Failure Reason, LogonTypeName, LogonTypeInfo
+| sort by Account, PasswordStatus, PasswordSubStatus 

@@ -1,0 +1,7 @@
+// Title of Detection:  failed login to windows device by a disabled account
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+ // Description of the Detection: EID 4768 - A Kerberos authentication ticket (TGT) was requested is when disabled user fails a logon to windows
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID == 4768 and TargetUserName in (list, regex =, let statement or watchlist of disabled or previous users)

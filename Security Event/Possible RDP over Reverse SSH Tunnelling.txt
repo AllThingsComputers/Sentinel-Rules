@@ -1,0 +1,9 @@
+// Title of Detection: Possible RDP over Reverse SSH Tunnelling
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  https://blog.menasec.net/2019/02/threat-hunting-25-rdp-over-reverse-ssh.html 
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID == 5156
+| where sourceport == 3389 or destinationport==3389
+| where ipv4_is_in_range(sourceip,'127.0.0.0/8') or ipv4_is_in_range(destinationip,'127.0.0.0/8') 

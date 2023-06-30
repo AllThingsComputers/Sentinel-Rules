@@ -1,0 +1,8 @@
+// Title of Rule: NTLM Logon with non-matching Workstation and Computer accounts
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  
+// References (if available): https://blog.menasec.net/2019/02/threat-hunting-6-hiding-in-plain-sights.html
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID == 4776 and Account endswith "$"
+| where 'Machine != Account

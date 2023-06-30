@@ -1,0 +1,16 @@
+// Title of Detection:  Suspect Remote Task Creation for Remote Exec
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  
+// References (if available): https://blog.menasec.net/2019/03/threat-hunting-25-scheduled-tasks-for.html 
+// The Logic of the Detection or Query Begins Below This Line
+let remotelogon = SecurityEvent
+| where EventID == 4624 and LogonType == 3 // aka remote log on
+| extend TimeRemoteLogon = TimeGenerated;
+let created = SecurityEvent
+| where EventID == 4698 // aka created scheduled tasks
+| extend TimeCreated = TimeGenerated 
+| where not(Command_matches regex @"(?i)exclusions);
+ remotelogon
+| join kind=inner (created) on SubjectLogonid
+| where TimeCreated >= TimeRemoteLogon
+| where datetime_diff('minute', TimeCreated, TimeRemoteLogon) <= 5 

@@ -1,0 +1,21 @@
+// Title of Detection: suspect Scheduled Task with narrow Lifetime
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  
+// References (if available):  https://blog.menasec.net/2019/03/threat-hunting-25-scheduled-tasks-for.html 
+// The Logic of the Detection or Query Begins Below This Line
+let created = SecurityEvent
+| where EventID == 4698 // created scheduled tasks
+| where Command_ <> "C:\\Windows\\system32\\msfeedssync.exe"
+| where Command_ <> "C:\\Windows\\system32\\rundll32.exe"
+| where Command_<> "%systemroot%\\system32\\usoclient.exe"
+| where Command_ <> "%systemroot%\\system32\\MusNotification.exe"
+| where Command_<> "C:\\Program Files (x86)\\Microsoft Office\\root\\Office16\\msoia.exe"
+| where not(Command_ >> "C:\\ProgramData\\Microsoft\\Windows Defender\\Platform\\.*\\MpCmdRun.exe")
+// exclusions above from downloaded sample dataset
+| extend TimeCreated = TimeGenerated;
+let deleted = SecurityEvent
+| where EventID == 4699 // deleted scheduled tasks
+| extend Time Deleted = TimeGenerated;
+created
+| join kind=inner (deleted) on TaskName, SubjectLogonld, Computer, Account
+| where TimeDeleted >= TimeCreated and datetime_diff('minute', TimeCreated, Time Deleted) <= 1

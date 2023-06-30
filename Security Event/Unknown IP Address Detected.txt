@@ -1,0 +1,7 @@
+// Title of Detection: Unknown IP Address Detected
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:   
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where isnotempty(IpAddress) and IpAddress <> "-" and not(IpAddress == "127.0.0.1" or IpAddress == '::1' or IpAddress startswith 'fe80::' or IpAddress startswith 'fc00::')

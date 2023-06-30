@@ -1,0 +1,9 @@
+// Title of Detection:  Suspect Failed Logon Series: 20 Failed Logons of type 3 and 10
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  More than 20 events seen for 4625 and the account types are (3 & 10) and traffic from same network address and account name not has the value $, In this case the hunting case includes Type 3 (A user or computer logged on to this computer from the network) and Type 10 ( A user logged on to this computer remotely using Terminal Services or Remote Desktop )) check target account on all these suspect Failed Logons series
+// References (if available):  https://www.socinvestigation.com/threat-hunting-with-windows-event-ids-4625-4624/
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID == 4625 and LogonType in (3, 10) and TargetAccount !endswith "$"
+| summarize count() by TargetAccount, IpAddress
+| where count_ >= 20

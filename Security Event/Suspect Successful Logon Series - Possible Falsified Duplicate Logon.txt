@@ -1,0 +1,11 @@
+// Title of Detection:  Suspect Successful Logon Series - Possible Falsified Duplicate Logon
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  Event Id 4624 with more than 1 successful logon with logon type in 3, 10 from same account name and different source network address. 
+https://www.socinvestigation.com/threat-hunting-with-windows-event-ids-4625-4624/ 
+needs work and may already have
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID == 4624 and LogonType in (3, 10)
+| summarize dcount(IpAddress) by Account
+| where dcount_IpAddress >= 2

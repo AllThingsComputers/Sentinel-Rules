@@ -1,0 +1,14 @@
+// Title of Detection:  New Service Installed After Network Logon
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  Hunt for network interactive login followed by whenever a new service was installed in the system with the same logonid. Because, whenever a login is initiated, there will be a unique logonid which will be logged in every following winevent log until the session ends.  
+// References (if available): https://www.socinvestigation.com/hunting-for-suspect-windows-services-mind-map/ 
+// The Logic of the Detection or Query Begins Below This Line
+let remotelogonEvent = SecurityEvent
+| where EventID == 4624 and LogonType == 3
+| extend TimeRemoteLogon = TimeGenerated;
+let ServiceInstalledEvent = SecurityEvent
+| where EventID in (7045, 4697)
+| extend Timelnstalled = TimeGenerated;
+remotelogonEvent
+| join kind=inner (ServiceInstalledEvent) on SubjectLogonld 
+| where datetime_diff('minute', Timelnstalled, TimeRemoteLogon) <= 5 and TimeInstalled >= TimeRemoteLogon

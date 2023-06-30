@@ -1,0 +1,15 @@
+// Title of Detection: Pass The Hash 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let partone = (
+SecurityEvent
+| where EventID == 4624 and LogonType == 3 and AuthenticationPackageName == "NTLM");
+let parttwo = (SecurityEvent
+| where EventID == 4672);
+let partthree = (SecurityEvent
+|  where EventID == 4776);
+partone
+| join kind-inner (parttwo) on Account
+| join kind-inner (partthree) on Account

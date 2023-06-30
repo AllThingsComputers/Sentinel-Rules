@@ -1,0 +1,13 @@
+// Title of Detection: New Service Installed soon after Remote logon 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  
+// References (if available): https://www.socinvestigation.com/hunting-for-suspect-windows-services-mind-map/ 
+// The Logic of the Detection or Query Begins Below This Line
+let ConnectionAllowedEvent = SecurityEvent
+| where EventID == 5156
+| where Application endswith "\\services.exe" and SourceAddress!= DestAddress and toint(Source Port) >= 49152 and toint(DestPort) >= 49152 and isnotempty(SourceAddress) and isnotempty(DestAddress)
+| extend ConnectionAllowedTime = TimeGenerated;
+let ServiceInstalledEvent = SecurityEvent
+| where EventID in (7045, 4697);
+ServiceInstalledEvent
+| join kind=inner (ConnectionAllowedEvent) on Computer where datetime_diff('minute', TimeGenerated, ConnectionAllowedTime) <= 2

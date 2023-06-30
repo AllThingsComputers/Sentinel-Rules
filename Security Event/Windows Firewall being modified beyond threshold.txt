@@ -1,0 +1,9 @@
+// Title of Detection: Windows Firewall being modified beyond threshold 
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID in (4954, 4947, 4956, 4950, 4948, 4946) 
+| summarize count() by Account
+| where count_ > 300 // arrange threshold to your appetite

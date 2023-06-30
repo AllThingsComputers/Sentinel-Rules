@@ -1,0 +1,9 @@
+// Title of Detection: Account Enumeration
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  
+// References (if available): https://blog.menasec.net/2019/02/threat-hunting-5-detecting-enumeration.html
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID == 4661 and where not(SubjectAccount matches regex @".*\.*\$")
+| where AccountType <> "Machine" and where Process <> "Isass.exe"
+| where ObjectName matches regex @'^S-1-5-21-.*-(512|502|500|505|519|520|544|551|555).*'

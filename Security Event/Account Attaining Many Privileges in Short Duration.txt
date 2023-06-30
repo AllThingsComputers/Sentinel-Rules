@@ -1,0 +1,11 @@
+// Title of Detection:  Account Attaining Many Privileges in Short Duration
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection:  
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+let EventID = dynamic(["4728", "4732", "4756"]); // Event ID 4728 - A member was added to a security-enabled global group. 4732 A member was added to a security-enabled local group. Event ID 4756 - A member was added to a security- enabled universal group
+SecurityEvent
+| where EventID in (EventID)
+| summarize dcount(TargetAccount) by MemberName | where isnotempty(MemberName) and MemberName != "-"
+| project-rename TotalOfUniqueSecurityGroupsAddedTo = dcount_TargetAccount | sort by
+TotalOfUniqueSecurityGroupsAddedTo desc | where TotalOfUniqueSecurityGroupsAddedTo >= 8

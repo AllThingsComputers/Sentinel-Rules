@@ -1,0 +1,11 @@
+// Title of Detection:  Scheduled Task running programs from unusual directories with script tools
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection: 
+// References (if available): 
+// The Logic of the Detection or Query Begins Below This Line
+SecurityEvent
+| where EventID == 4698 // created scheduled tasks
+| extend d = parse_xml(EventData)
+| where TaskContent matches regex @"(?i)c:\\users\\.*|c:\\programdata\\.*|c:\\windows\\temp\\.*" // suspect locations 
+| where TaskContent matches regex  
+@"(?i)(wscript|rundll32|regsvr32|wmic|cmd|mshta|powershell)\.exe"  // scripting applications 
