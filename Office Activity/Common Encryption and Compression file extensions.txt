@@ -4,4 +4,4 @@
 // References (if available):  https://attack.mitre.org/tactics/TA0010/
 // The Logic of the Detection or Query Begins Below This Line
 OfficeActivity
-| where OfficeObjectld matches regex @’(?i)\.(zip|RAR|Tar\.GZ|7Z|PEA|KGB|XLSE|sdoc|axx|cgp|dc4|dcf|enc|xxe|suf)$’
+| where OfficeObjectld matches regex @'(?i)\.(zip|RAR|Tar\.GZ|7Z|PEA|KGB|XLSE|sdoc|axx|cgp|dc4|dcf|enc|xxe|suf)$'
