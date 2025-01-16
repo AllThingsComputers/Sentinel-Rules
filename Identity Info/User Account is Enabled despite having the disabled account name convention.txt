@@ -1,7 +1,7 @@
 // Title of Detection:  User Account is Enabled despite having the disabled account name convention
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: 
+// Description of the Detection: 
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 IdentityInfo
-| where AccountDisplayName contains (disabled Account Naming Convention or ex person  from environment) and IsAccountEnabled == true
+| where AccountDisplayName contains (disabled Account Naming Convention or ex person from environment for example "xx") and IsAccountEnabled == true
