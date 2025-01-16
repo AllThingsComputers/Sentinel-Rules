@@ -4,4 +4,4 @@
 // References (if available): https://blog.menasec.net/2019/03/initial-access-execution-windows.html 
 // The Logic of the Detection or Query Begins Below This Line
 Event
-| where  EventID in (3, 59, 60) and * matches regex @"(BITS service|Bits-Client|bitsadmin)
+| where EventID in (3, 59, 60) and * matches regex @"(BITS service|Bits-Client|bitsadmin)
