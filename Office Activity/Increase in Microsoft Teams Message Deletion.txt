@@ -1,28 +1,30 @@
 // Title of Detection: Increase in Microsoft Teams Message Deletion
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection: This will trigger when there’s an uncharacteristic increase in ms teams message deletions against their personal baselines so this may be suspicious removal of message
+// Description of the Detection: This will trigger when there’s an uncharacteristic increase in Microsoft Teams message deletions against their personal baselines, potentially indicating suspicious removal of messages.
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
-// setting the variables look back time for deleted messages and the threshold for the baseline and the new deletions
+
+// Setting the variables for lookback time and thresholds for baseline and new deletions
 let baselineLookback = 21d;
 let baselineToRemoveHistoricHighDeleters = 30;
 let recentActivityLookbackTime = 3d;
 let recentActivityMinimumDeletes = 8;
-// baseline list of users who in the lookback period before have known as big deleters in their behaviours so they are whitelisted as they delete all the time 
-let HighMessageDeleters = ( 
+
+// Baseline list of users who are high message deleters over the lookback period (whitelisted)
+let HighMessageDeleters = 
+    OfficeActivity
+    | where TimeGenerated > ago(baselineLookback) and TimeGenerated < ago(recentActivityLookbackTime)
+    | where OfficeWorkload =~ "MicrosoftTeams"
+    | where Operation =~ "MessageDeleted"
+    | summarize count() by UserId
+    | where count_ > baselineToRemoveHistoricHighDeleters;
+
+// Detecting an increase in message deletions outside the baseline for those not in the high-deleter list
 OfficeActivity
-| where TimeGenerated > ago(baselineLookback) and TimeGenerated < ago(recentActivityLookbackTime)
-| where OfficeWorkload =~ "MicrosoftTeams"
-| where Operation =~ "MessageDeleted"
-| summarize count() by Userld
-| where count_> baselineToRemoveHistoricHighDeleters );
-//  is a person deletes over the triggering number of messages per day when they don't normally do so it may be worth looking into
- OfficeActivity
 | where TimeGenerated > ago(recentActivityLookbackTime)
 | where OfficeWorkload =~ "MicrosoftTeams"
 | where Operation =~ "MessageDeleted"
-// and removal of any people who historically delete a lot 
-| where Userld !in (HighMessageDeleters)
-| summarize count() by Userid
-|  where count_> recentActivityMinimumDeletes
+| where UserId !in (HighMessageDeleters)  // Exclude high deleters
+| summarize count() by UserId
+| where count_ > recentActivityMinimumDeletes  // Threshold for recent deletions
 | order by count_
