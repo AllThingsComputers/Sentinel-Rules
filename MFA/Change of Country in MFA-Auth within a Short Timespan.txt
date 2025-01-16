@@ -5,12 +5,18 @@
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 let timeperiod1 = (
-MFAlogs
-| where TimeGenerated between (ago(12h).. ago(6h))
-| where isnotempty(MFA_device_location));
+    MFAlogs
+    | where TimeGenerated between (ago(12h).. ago(6h))
+    | where isnotempty(MFA_device_location)
+    | project user_name, MFA_device_location as MFA_device_location_1, TimeGenerated
+);
 let timeperiod2 = (
-MFAlogs
-| where TimeGenerated between (ago(6h).. ago(0s))
-| where isnotempty(MFA_device_location));
+    MFAlogs
+    | where TimeGenerated between (ago(6h).. ago(0s))
+    | where isnotempty(MFA_device_location)
+    | project user_name, MFA_device_location as MFA_device_location_2, TimeGenerated
+);
 timeperiod1
-| join kind-inner (timeperiod2) on user_name where MFA_device_location != MFA_device_location1 
+| join kind=inner (timeperiod2) on user_name
+| where MFA_device_location_1 != MFA_device_location_2
+| project user_name, MFA_device_location_1, MFA_device_location_2, TimeGenerated
