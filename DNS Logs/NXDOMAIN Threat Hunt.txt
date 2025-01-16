@@ -4,6 +4,6 @@
 // References (if available): https://www.socinvestigation.com/threat-hunting-using-dns-logs-soc-incident-response-procedure/ 
 // The Logic of the Detection or Query Begins Below This Line
 DNSLogs
-| where  ResponseCode == "NXDOMAIN
+| where ResponseCode == "NXDOMAIN"
 | summarize count() by Computer
-| where count_ > 100
+| where count > 100
