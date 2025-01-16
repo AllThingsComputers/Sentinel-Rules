@@ -4,6 +4,7 @@
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 OfficeActivity
-| where TimeGenerated >= ago(1d) and OfficeObjectld contains "< insert URL of access denied page>" 
-| summarize count() by Userld, ClientIP, UserAgent where count_ >= 26 // adjust this as needed to avoid noise
+| where TimeGenerated >= ago(1d) and OfficeObjectld contains "<insert URL of access denied page>" 
+| summarize count() by Userld, ClientIP, UserAgent 
+| where count_ >= 20 // adjust this as needed to avoid noise
 | sort by count_ 
