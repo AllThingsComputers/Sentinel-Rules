@@ -4,4 +4,4 @@
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 OfficeActivity
-| where  Operation =~ "FileRenamed" and DestinationFile Extension has_any (Common Executables) and DestinationFileExtension != SourceFileExtension and (SourceFileExtension != "Ink" and DestinationFileExtension != "url")
+| where Operation =~ "FileRenamed" and DestinationFile Extension has_any (Put_Common_Executables_here) and DestinationFileExtension != SourceFileExtension and (SourceFileExtension != "Ink" and DestinationFileExtension != "url")
