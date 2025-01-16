@@ -4,4 +4,4 @@
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 AWSCloudTrail
-| where Event Name in ("DeleteBucketEncryption", "DeleteRepository", "Backup Deleted", "DeleteRecoveryPoint", "DeleteBackupVault", "DeleteDBCluster")
+| where EventName in ("DeleteBucketEncryption", "DeleteRepository", "Backup Deleted", "DeleteRecoveryPoint", "DeleteBackupVault", "DeleteDBCluster")
