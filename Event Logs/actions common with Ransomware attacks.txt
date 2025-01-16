@@ -4,4 +4,4 @@
 // References (if available): https://redcanary.com/blog/its-all-fun-and-games-until-ransomware-deletes-the-shadow-copies/ 
 // The Logic of the Detection or Query Begins Below This Line
 Event
-| where  Source == "Microsoft-Windows-PowerShell" and Rendered Description matches regex @"(?i)(New-Object System.Net.WebClient\).DownloadString|Download File|pastebin|githubastie.org|pastebin.pl|paste.ulvis.net|paste.scratchbook.ch|privatepaste.com|reviewboard.org|copypastecode.com|aspin.com|zubrag.com|snipt.net|darkcoding.net|codelifter.com|gonet.biz)
+| where Source == "Microsoft-Windows-PowerShell" and Description matches regex @"(?i)(New-Object System.Net.WebClient\).DownloadString|DownloadFile|pastebin|githubastie.org|pastebin.pl|paste.ulvis.net|paste.scratchbook.ch|privatepaste.com|reviewboard.org|copypastecode.com|aspin.com|zubrag.com|snipt.net|darkcoding.net|codelifter.com|gonet.biz)
