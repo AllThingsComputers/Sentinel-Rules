@@ -4,4 +4,4 @@
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 OfficeActivity
-| where Operation contains "upload" and SourceFileExtension has_any (‘.exe’,’.msi’)
+| where Operation contains "upload" and SourceFileExtension has_any ('.exe','.msi')
