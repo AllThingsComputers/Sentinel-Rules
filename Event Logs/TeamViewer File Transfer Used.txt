@@ -4,6 +4,7 @@
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 Event
-| where EventID == 11 // file created event 
+| where EventID == 11 // File created event
 | where EventData contains "teamviewer"
-| where image matches regex @"(?i)(teaMvIEWer|tV)[^\\]*\.eXE$"  and not(TargetFilename matches regex @"(?i)(teaMvIEWer|tV)") 
+| where Image matches regex @"(?i)(teamviewer|tv)[^\\]*\.exe$"
+| where not(TargetFilename matches regex @"(?i)(teamviewer|tv)")
