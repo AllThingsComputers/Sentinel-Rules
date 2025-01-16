@@ -1,7 +1,9 @@
-// Title of Detection:    Dump File Created
+// Title of Detection: Dump File Created
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection: This detects .dmp files that could be memory dump files. though False positives include app crashes.  https://www.deepinstinct.com/blog/lsass-memory-dumps-are-stealthier-than-ever-before
+// Description of the Detection: This detects .dmp files that could be memory dump files. False positives include app crashes. https://www.deepinstinct.com/blog/lsass-memory-dumps-are-stealthier-than-ever-before
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 OfficeActivity
-| where OfficeObjectld matches regex @"(?i).*\.dmp$" and not(OfficeObjectld matches regex (exclusions of noise))
+| where OfficeObjectId matches regex @"(?i).*\.dmp$"
+| where not(OfficeObjectId matches regex @"(?i).*exclusions_pattern_here.*") // Define specific exclusions for noise
+| project TimeGenerated, OfficeObjectId, ActionType, UserId, Computer
