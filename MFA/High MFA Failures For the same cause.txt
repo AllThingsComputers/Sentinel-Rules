@@ -4,6 +4,6 @@
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 MFAlogs
-❘ summarize count() by username, reason, result
-❘ where result != "success"
+| summarize count() by username, reason, result
+| where result != "success"
 | where count_ >= 7
