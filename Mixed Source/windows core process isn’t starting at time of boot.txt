@@ -1,16 +1,19 @@
-// Title of Detection:  windows core process isn’t starting at time of boot
+// Title of Detection: windows core process isn’t starting at time of boot
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection:  core windows processes are meant to start automatically with boot due to them being core processes. but if they start well after the windows boot then they could be the work of an adversary  that has create a false executable masquerading 
+// Description of the Detection: core windows processes are meant to start automatically with boot due to them being core processes. but if they start well after the windows boot then they could be the work of an adversary that has created a false executable masquerading 
 // References (if available): https://digitalforensicsurvivalpodcast.com/2019/04/14/dfsp-165-windows-core-processes
 // The Logic of the Detection or Query Begins Below This Line
+
 let MachineBoot = Event
 | where EventID == 6005
-| summarize by Computer, EventID, RenderedDescription, TimeGenerated project-rename
-| extend MachineBootTime = TimeGenerated;
+| summarize BootTime = min(TimeGenerated) by Computer
+| project Computer, BootTime;
+
 let CoreWindowsProcesses = Sysmon
-| where EventID == 1 and Image matches regex @"(?i)\\(System|smss|wininit|Isass|Ism|services|csrss|Isaiso)\.exe$" // the protected key windows core services
-| summarize arg_min(TimeGenerated, *) by tostring(Image)
-| project-rename ProcessStartTime = TimeGenerated;
-MachineBoot 
-| join kind-fullouter (CoreWindowsProcesses) on Computer
-| where isempty(MachineBootTime)
+| where EventID == 1 and Image matches regex @"(?i)\\(System|smss|wininit|lsass|ism|services|csrss|lsaiso)\.exe$" // Protected key windows core services
+| summarize ProcessStartTime = min(TimeGenerated) by Computer, Image;
+
+MachineBoot
+| join kind=inner (CoreWindowsProcesses) on Computer
+| where ProcessStartTime > BootTime
+| project Computer, BootTime, ProcessStartTime, Image
