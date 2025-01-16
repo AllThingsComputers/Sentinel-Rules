@@ -4,4 +4,4 @@
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 AWSCloudTrail
-| where  AWSCloudRegion !in~ (“Expected”, “AWSCloud”, “Regions”, “here”)
+| where AWSCloudRegion !in~ ("Expected", "AWSCloud", "Regions", "here")
