@@ -1,26 +1,33 @@
-// Title of Detection:  Objects Deleted by Disabled Accounts in the 14 days pre- being disabled
+// Title of Detection: Objects Deleted by Disabled Accounts in the 14 days before being disabled
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection:  destruction of data
-// References (if available): 
+// Description of the Detection: Destruction of data by disabled accounts.
 // The Logic of the Detection or Query Begins Below This Line
+
+// Define the lookback times for account disabling and data deletion
 let AccountDisabledLookBack = 1d;
 let DeletionOfDataLookBack = 14d;
-let DeletedOperations = dynamic(['FileRecycled', 'FolderRecycled', 'FolderDeletedFirstStageRecycleBin', 'FileDeletedFirstStageRecycleBin', 'ListItemRecycled', 'FileVersionsAllDeleted', 'FileDeleted', 'Message Deleted']);
+
+// Define the types of deletion operations to look for
+let DeletedOperations = dynamic(['FileRecycled', 'FolderRecycled', 'FolderDeletedFirstStageRecycleBin', 'FileDeletedFirstStageRecycleBin', 'ListItemRecycled', 'FileVersionsAllDeleted', 'FileDeleted', 'MessageDeleted']);
+
+// Capture accounts that were disabled in the last AccountDisabledLookBack days
 let account_disabled = SecurityEvent
 | where TimeGenerated >= ago(AccountDisabledLookBack)
-| where EventID == 4725
-| where TargetUserName !endswith "$" // removes machine accounts
-| project-rename string Name=TargetUserName | project-reorder string Name | extend lowerName = tolower(string Name); // changed all names to lower case to standardise it
+| where EventID == 4725 // EventID for account disabled
+| where TargetUserName !endswith "$" // Exclude machine accounts
+| project Name = TargetUserName
+| extend lowerName = tolower(Name); // Standardize the names to lowercase
+
+// Capture content deletion events in the last DeletionOfDataLookBack days
 let content_deleted = OfficeActivity
 | where TimeGenerated >= ago(DeletionOfDataLookBack)
-| where Operation has_any (DeletedOperations)
-| where Userld <> "SHAREPOINT\\system" // was just not containing system
-| project-reorder Userld, Operation, OfficeObjectld
-| extend prefixName=split(Userld, "@", 0)
-| extend string Name=strcat_array(prefixName, prefixName)
-| extend lowerName = tolower(stringName);
-// common column name called string Name and instances of account being deleted and joined both tables on it 
+| where Operation has_any(DeletedOperations) // Filter based on the deletion operations
+| where UserId <> "SHAREPOINT\\system" // Exclude system-generated deletions
+| project UserId, Operation, OfficeObjectId
+| extend prefixName = split(UserId, "@", 0) // Get the prefix part of UserId (before the '@')
+| extend Name = tolower(strcat_array(prefixName, "")); // Concatenate and standardize to lowercase
+
+// Join the account_disabled table and content_deleted table on the standardized user name (lowerName)
 account_disabled
-| join kind= inner (content_deleted) on lowerName
-| project-keep lowerName, Operation, OfficeObjectld, TimeGenerated project-rename Username_of_disabled_Account=lowerName
-// check file paths being deleted to see if bad intent is there
+| join kind=inner (content_deleted) on lowerName
+| project Username_of_disabled_Account = lowerName, Operation, OfficeObjectId, TimeGenerated
