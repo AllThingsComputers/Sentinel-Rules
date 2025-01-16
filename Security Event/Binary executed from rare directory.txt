@@ -1,7 +1,7 @@
 // Title of Detection:   Binary executed from rare directory
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  EventID 4688. A new process has been created Processes execution from rare path:, %windows\fonts, %windows\help, %windows\wbem, %windows\addins, %windows\debut, %windows\system32\tasks. Familiar web shell filenames, adversaries running under a system directory (%WINDOWS%, % RECYCLER%) or other unusual locations (the web root). Hunt in 4688 events with commands like net.exe, ipconfig.exe, whoami.exe, nbstats.exe 
+// Description of the Detection:  EventID 4688. A new process has been created Processes execution from rare path:, %windows\fonts, %windows\help, %windows\wbem, %windows\addins, %windows\debut, %windows\system32\tasks. Familiar web shell filenames, adversaries running under a system directory (%WINDOWS%, % RECYCLER%) or other unusual locations (the web root). Hunt in 4688 events with commands like net.exe, ipconfig.exe, whoami.exe, nbstats.exe 
 // References (if available):  https://www.socinvestigation.com/threat-hunting-hypothesis-examples-start-for-a-good-hunt/
 // The Logic of the Detection or Query Begins Below This Line
 SecurityEvent
-| where  Process has_any ("net.exe", "ipconfig.exe", "whoami.exe", "nbstats.exe") and NewProcess Name has_any ("windows\\fonts", "windows\\help", "windows\\wbem", "windows\\addins", "windows\\debut", "windows\\system32\tasks", "RECYCLER")
+| where Process has_any ("net.exe", "ipconfig.exe", "whoami.exe", "nbstats.exe") and NewProcess Name has_any ("windows\\fonts", "windows\\help", "windows\\wbem", "windows\\addins", "windows\\debut", "windows\\system32\tasks", "RECYCLER")
