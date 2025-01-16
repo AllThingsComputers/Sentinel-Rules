@@ -4,4 +4,4 @@
 // References (if available): https://www.socinvestigation.com/threat-hunting-using-proxy-logs-soc-incident-response-procedure/ 
 // The Logic of the Detection or Query Begins Below This Line
 DNSLogs
-| where URL matches regex @'(?i)\.(pdf|exe|doc|etc|png|gif|asp|aspx|bat|chm|hta|jsp|jspx|Ink|php|vbs|war|7z|jar|txt)$'
+| where URL matches regex @"(?i)\.(pdf|exe|doc|etc|png|gif|asp|aspx|bat|chm|hta|jsp|jspx|Ink|php|vbs|war|7z|jar|txt)$"
