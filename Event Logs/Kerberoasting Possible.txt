@@ -4,4 +4,4 @@
 // References (if available):  https://redcanary.com/blog/marshmallows-and-kerberoasting/ 
 // The Logic of the Detection or Query Begins Below This Line
 Event
-| where EventID in (4103, 4104) and Rendered Description matches regex @'(?i)System.IdentityModel.Tokens.KerberosRequestorSecurityToken|invoke-kerberoast'
+| where EventID in (4103, 4104) and RenderedDescription matches regex @'(?i)System.IdentityModel.Tokens.KerberosRequestorSecurityToken|invoke-kerberoast'
