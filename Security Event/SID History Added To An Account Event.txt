@@ -1,7 +1,7 @@
 // Title of Detection: SID History Added To An Account Event
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: detects  Windows event ID 4765 - SID History was added to an account and . Event ID 4766 - An attempt to add SID History to an account failed
+// Description of the Detection: detects  Windows event ID 4765 - SID History was added to an account and . Event ID 4766 - An attempt to add SID History to an account failed
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SecurityEvent
-| where  EventID in (4765, 4766)
+| where EventID in (4765, 4766)
