@@ -4,4 +4,4 @@
 // References (if available): https://eforensicsmag.com/analyzing-the-revil-ransomware-attack-by-bajrang-mane/ 
 // The Logic of the Detection or Query Begins Below This Line
 SecurityEvent
-| where Process = "MsMpEng.exe" and (ProcessName !startswith "C:\\ProgramData\\Microsoft\\Windows Defender\\" and ProcessName !startswith "C:\\Program Files\\Windows Defender\\" and NewProcessName !startswith "C:\\ProgramData\\Microsoft\\Windows Defender\\" and NewProcessName !startswith "C:\\Program Files\\Windows Defender\\)
+| where Process == "MsMpEng.exe" and (ProcessName !startswith "C:\\ProgramData\\Microsoft\\Windows Defender\\" and ProcessName !startswith "C:\\Program Files\\Windows Defender\\" and NewProcessName !startswith "C:\\ProgramData\\Microsoft\\Windows Defender\\" and NewProcessName !startswith "C:\\Program Files\\Windows Defender\\)
