@@ -1,22 +1,22 @@
 // Title of Detection: Detection of Failed Logins by Multiple Users on the Same Device
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection: could  be a  Potential Compromised Device. can also build this in sign in logs for browser log ins
-// References (if available): 
-// The Logic of the Detection or Query Begins Below This Line
+// Description: Potential compromised device. Could also be built in sign-in logs for browser logins
+
 let FailedLaptopLogon = (
-SecurityEvent
-| where Activity == "4771 - Kerberos pre-authentication failed."// 4771 will catch users failing to log into devices etc
-| summarize dcount(TargetAccount) by IpAddress
-| project-rename DistinctFailedUserAccountLogonsPerIP = dcount_TargetAccount // you won't see device names so IP is the next best identifier
-| where DistinctFailedUserAccountLogonsPerIP >= 3 // you can adjust for sensitivity);
+    SecurityEvent
+    | where Activity == "4771 - Kerberos pre-authentication failed." // 4771 will catch users failing to log into devices etc
+    | summarize DistinctFailedUserAccountLogonsPerIP = dcount(TargetAccount) by IpAddress
+    | where DistinctFailedUserAccountLogonsPerIP >= 3 // Sensitivity threshold
+);
+
 let FailedMachineLogon = (
-SecurityEvent
-| where EventID == 4625 and LogonType in (2, 10) //2 = Local Interactive logon at the workstation. 10 = Remote Interactive logon. This is used for RDP-based applications like Terminal Services, Remote Desktop and Remote Assistance.
-| summarize dcount(Account) by Workstation Name
-| project-rename DistinctFailedUserAccountLogonsPerDevice = dcount_Account
-| where DistinctFailedUserAccountLogonsPerDevice >= 3  // you can adjust for sensitivity);
-FailedLaptopLogin
+    SecurityEvent
+    | where EventID == 4625 and LogonType in (2, 10) // 2 = Local Interactive, 10 = Remote Interactive (RDP)
+    | summarize DistinctFailedUserAccountLogonsPerDevice = dcount(Account) by WorkstationName
+    | where DistinctFailedUserAccountLogonsPerDevice >= 3  // Sensitivity threshold
+);
+
+FailedLaptopLogon
 | union FailedMachineLogon
-| extend IPorWorkstationName = strcat(IpAddress, WorkstationName)
-| extend UniqueFailedUserAccountLogons = strcat(DistinctFailedUserAccountLogonsPerIP, Unique FailedUserAccountLogonsPerDevice)
-| project-away WorkstationName, IpAddress, Unique FailedUserAccountLogonsPerIP, DistinctFailedUserAccountLogonsPerDevice
+| extend IPorWorkstationName = coalesce(IpAddress, WorkstationName) // Combine IP and workstation name
+| extend UniqueFailedUserAccountLogons = DistinctFailedUserAccountLogonsPerIP + DistinctFailedUserAccountLogonsPerDevice // Summing the counts of failed logons
+| project TimeGenerated, IPorWorkstationName, UniqueFailedUserAccountLogons
