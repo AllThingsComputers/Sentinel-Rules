@@ -1,13 +1,15 @@
 // Title of Detection: Ticket-Granting-Ticket or Log-Ins from Disabled accounts
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection:   add sign in logs
+// Description of the Detection:   note to self. add sign in logs
 // References (if available): 
-// The Logic of the Detection or Query Begins Below This Line 
+// The Logic of the Detection or Query Begins Below This Line
+
 let IDlogs = IdentityInfo
 | where TimeGenerated between (datetime(2019-01-01T09:00:00).. ago(1h))
 | summarize arg_max(TimeGenerated, *) by AccountName
 | where IsAccountEnabled == false;
+
 SecurityEvent
 | where TimeGenerated >= ago(1h)
-| where Activity =~ "4768 - A Kerberos authentication ticket (TGT) was requested." or EventID in (4624, 4625)
-| where TargetUserName in~ (IDlogs)
+| where Activity == "4768 - A Kerberos authentication ticket (TGT) was requested." or EventID in (4624, 4625)
+| where TargetUserName in (IDlogs | project AccountName)
