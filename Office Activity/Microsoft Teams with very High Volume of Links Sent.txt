@@ -7,4 +7,5 @@ let LinkSentOperation = dynamic(["MessageCreatedHasLink", "MessageEditedHasLink"
 OfficeActivity
 | where RecordType == "MicrosoftTeams" and Operation in (LinkSentOperation)
 | summarize dcount(DistinctChatsSentLinks, ChatThreadId) by Userld 
-| sort by dcount_DistinctChatsSentLinks desc | where dcount_DistinctChatsSentLinks > 20 // please amend for sensitivity 
+| sort by dcount_DistinctChatsSentLinks desc 
+| where dcount_DistinctChatsSentLinks > 10 // please amend for sensitivity 
