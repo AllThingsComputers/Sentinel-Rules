@@ -4,4 +4,7 @@
 // References (if available):    https://attack.mitre.org/techniques/T1529/
 // The Logic of the Detection or Query Begins Below This Line
 Event
-| where EventID == 1074 and Rendered Description contains "has initiated the shutdown" and not(RenderedDescription matches regex (expected Process Shutting Down Computer))
+| where EventID == 1074
+| where Description contains "has initiated the shutdown"
+| where not(Description matches regex @"(expected Process Shutting Down Computer)")
+
