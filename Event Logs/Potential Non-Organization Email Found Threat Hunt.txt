@@ -4,6 +4,6 @@
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 Event
-| where EventData matches regex ([a-zA-Z0-9_-]+@([a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+)'
-| extend PotentialFoundEmailsDomains = extract_all(@'([a-zA-Z0-9._-]+@([a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+)', EventData)
-| where PotentialFoundEmailsDomains !contains "@organization-name.fr" 
+| where EventData matches regex @'([a-zA-Z0-9._-]+@([a-zA-Z0-9_-]+\.)+[a-zA-Z]{2,})'
+| extend PotentialFoundEmailsDomains = extract_all(@'([a-zA-Z0-9._-]+@([a-zA-Z0-9_-]+\.)+[a-zA-Z]{2,})', EventData)
+| where not(array_contains(PotentialFoundEmailsDomains, "@organization-name.fr"))
