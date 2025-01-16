@@ -4,4 +4,4 @@
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SigninLogs
-| where Identity contains (disabled Account Naming Convention) and ResultType == '0'
+| where Identity contains (disabled Account Naming Convention such as xx for xxFirstnameLastname) and ResultType == '0'
