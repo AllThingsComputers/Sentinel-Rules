@@ -2,13 +2,26 @@
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
 // Description of the Detection:  
 // References (if available): 
-The Logic of the Detection or Query Begins Below This Line
-(union isfuzzy=true(VMProcess
-| where CommandLine contains @"\system32\isass.exe" or (Command Line contains "Isass.exe" and CommandLine contains @"C:\" and CommandLine !contains @"\system32\lsass.exe")), (ServiceMapProcess
-| where CommandLine contains @"\system32\isass.exe" or (CommandLine contains "Isass.exe" and CommandLine contains @"C:\" and CommandLine !contains @"\system32\lsass.exe")),(
-SecurityEvent
-| where EventData contains "isass.exe" or EventData contains "Isass.exe"
-| where ProcessName endswith @"\system32\isass.exe" or (ProcessName endswith "Isass.exe" and ProcessName !endswith @"\system32\lsass.exe")),(
-Event
-| where Event Data contains "isass.exe" or Event Data contains "Isass.exe"
-| where Sourcelmage endswith @"\system32\isass.exe" or (Sourcelmage endswith "Isass.exe" and Sourcelmage !endswith @"\system32\lsass.exe"))) 
+// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Executable Process Masquerading as LSASS
+// Authorship & Contact: https://allthingscomputers.medium.com https://twitter.com/allthingshandle https://allthingscomputersblog.wordpress.com/
+// Description of the Detection:
+// References (if available):
+
+// The Logic of the Detection or Query Begins Below This Line
+(union isfuzzy=true
+    (VMProcess
+        | where CommandLine contains @"\system32\isass.exe" 
+        or (CommandLine contains "Isass.exe" and CommandLine contains @"C:\" and CommandLine !contains @"\system32\lsass.exe")),
+    (ServiceMapProcess
+        | where CommandLine contains @"\system32\isass.exe" 
+        or (CommandLine contains "Isass.exe" and CommandLine contains @"C:\" and CommandLine !contains @"\system32\lsass.exe")),
+    (SecurityEvent
+        | where EventData contains "isass.exe" or EventData contains "Isass.exe"
+        | where ProcessName endswith @"\system32\isass.exe" 
+        or (ProcessName endswith "Isass.exe" and ProcessName !endswith @"\system32\lsass.exe")),
+    (Event
+        | where EventData contains "isass.exe" or EventData contains "Isass.exe"
+        | where SourceImage endswith @"\system32\isass.exe" 
+        or (SourceImage endswith "Isass.exe" and SourceImage !endswith @"\system32\lsass.exe"))
+)
