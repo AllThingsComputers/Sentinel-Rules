@@ -4,4 +4,4 @@
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 Event
-| where  (RenderedDescription matches regex@'(?i)(command|shell|execute|script|console|terminal)' or Rendered Description matches regex @(?i)(Bash|Ksh|Fish|Korn|ZOC|Cmder|ConEmu|Mintty)') and not(Rendered Description matches regex (Use a regex of your expected tools in your environment to remove false positives))
+| where (RenderedDescription matches regex@'(?i)(command|shell|execute|script|console|terminal)' or RenderedDescription matches regex @(?i)(Bash|Ksh|Fish|Korn|ZOC|Cmder|ConEmu|Mintty)') and not(RenderedDescription matches regex (Use a regex of your expected tools in your environment to remove false positives))
