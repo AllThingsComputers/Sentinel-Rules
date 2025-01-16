@@ -1,15 +1,20 @@
-// Title of Detection:  Watchlist of IOC seen in dataset
+// Title of Detection: Watchlist of IOC seen in dataset
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
 // Description of the Detection:   
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
+
 let watchlist = (_GetWatchlist('IOC of hashes, IPs and domains')
-|project SearchKey);
-(union isfuzzy=true 
-(SigninLogs
-| where IPAddresses in~(watchlist) or Name has_any(watchlist) ), IPAddress in~(watchlist)),
- (OfficeActivity
-| where ClientIP in~ (watchlist)  ), 
-(SysmonEvent
-| where Hashes has_any(watchlist)) )
+| project SearchKey);
+
+(union isfuzzy=true
+    (SigninLogs
+        | where IPAddresses in~(watchlist) or Name has_any(watchlist)
+    ), 
+    (OfficeActivity
+        | where ClientIP in~(watchlist)
+    ), 
+    (SysmonEvent
+        | where Hashes has_any(watchlist)
+    ))
 | project TimeGenerated, Type_string, DestinationIp, IPAddresses, Destination_IP, IPAddress, ClientIP, URL, Name, Hashes, Domain, Externallp
