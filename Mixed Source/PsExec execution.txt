@@ -4,14 +4,16 @@
 // References (if available):  https://blog.menasec.net/2019/02/threat-hunting-3-detecting-psexec.html 
 // The Logic of the Detection or Query Begins Below This Line
 let PotentialPrecursor =
-Sysmon
-| where Image contains "powershell"
-| where isnotempty(CommandLine)
-| where CommandLine contains "PsExec" and CommandLine contains "-r" and (CommandLine contains '-stdin' or CommandLine contains '-stdout' or CommandLine contains '-stderr');
-let RenamedService = PotentialPrecursor4Bybpass
-| extend RenamedService1 = extract(@'-r.*', 0, tostring(CommandLine))
-| extend RenamedService2 = tostring(trim_start('-r, RenamedService1))
-| project RenamedService2;
+    Sysmon
+    | where Image contains "powershell"
+    | where isnotempty(CommandLine)
+    | where CommandLine contains "PsExec" and CommandLine contains "-r" and (CommandLine contains '-stdin' or CommandLine contains '-stdout' or CommandLine contains '-stderr');
+    
+let RenamedService = PotentialPrecursor
+    | extend RenamedService1 = extract(@'-r.*', 0, tostring(CommandLine))
+    | extend RenamedService2 = tostring(trim_start('-r', RenamedService1))
+    | project RenamedService2;
+
 Event // for any service installs
-| where EventID 7045
-❘ where Rendered Description has_any(RenamedService);
+| where EventID == 7045
+| where RenderedDescription has_any(RenamedService2);
