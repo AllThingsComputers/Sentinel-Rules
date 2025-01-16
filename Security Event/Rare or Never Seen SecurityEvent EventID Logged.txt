@@ -1,24 +1,26 @@
 // Title of Detection: Rare or Never Seen SecurityEvent EventID Logged
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection:   This requires a watchlist of every event ID from this table and one of  rare event IDs
-// References (if available): 
-// The Logic of the Detection or Query Begins Below This Line
+// Authorship & Contact: https://allthingscomputers.medium.com, https://twitter.com/allthingshandle, https://allthingscomputersblog.wordpress.com/
+// Description of the Detection: Detects rare or never-before-seen Event IDs based on watchlists and historical data.
+// References: N/A
+
 let time_until = 1d;
-let SentinelWatchlistOfEveryEIDEver = (_GetWatchlist('AllSeenEventIDsFromSecurityEventsLog')
-| project SearchKey);
-let rarewatchlist = ( _GetWatchlist('RareSecurityEventsEventID')
-| project SearchKey);
-let EveryEventIDSinceWatchlistCreation = (
-SecurityEvent
+let AllSeenEventIDs = _GetWatchlist('AllSeenEventIDsFromSecurityEventsLog')
+| project EventID = tolong(SearchKey);
+let RareEventIDs = _GetWatchlist('RareSecurityEventsEventID')
+| project EventID = tolong(SearchKey);
+let EveryEventIDSinceWatchlistCreation = SecurityEvent
 | where TimeGenerated between (datetime(2022-07-19T20:00:00) .. ago(time_until))
-| summarize by EventID);
-let RecentRareEventIDs = (
-SecurityEvent
-| where TimeGenerated between (ago(90d).. ago(time_until))
+| summarize SeenEventIDs = make_set(EventID);
+let RecentRareEventIDs = SecurityEvent
+| where TimeGenerated between (ago(90d) .. ago(time_until))
 | summarize count() by EventID
-| where count_ <= 1); // can adjust this for sensitivity of rareSecurityEvent
+| where count <= 1 // Adjust for sensitivity
+| project EventID;
+
+SecurityEvent
 | where TimeGenerated >= ago(1h)
-| extend NewEvent = iff(EventID !in (SentinelWatchlistOfEveryEIDEver) and EventID !in (EveryEventIDSinceWatchlistCreation), "EID is New", "EID is Not New")
-| extend RareEvent = iff(EventID in (rarewatchlist) or EventID in (RecentRareEventIDs), "EID is Rare", "EID is Not Rare")
-| where NewEvent "EID is New" or RareEvent == "EID is Rare"
-| project-reorder NewEvent, RareEvent 
+| extend NewEvent = iff(EventID !in (AllSeenEventIDs.EventID) and EventID !in (EveryEventIDSinceWatchlistCreation.SeenEventIDs), "EID is New", "EID is Not New")
+| extend RareEvent = iff(EventID in (RareEventIDs.EventID) or EventID in (RecentRareEventIDs.EventID), "EID is Rare", "EID is Not Rare")
+| where NewEvent == "EID is New" or RareEvent == "EID is Rare"
+| project TimeGenerated, EventID, NewEvent, RareEvent, Computer, Account, AdditionalInfo
+| sort by TimeGenerated desc
