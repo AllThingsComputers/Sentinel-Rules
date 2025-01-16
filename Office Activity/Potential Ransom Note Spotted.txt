@@ -1,13 +1,19 @@
 // Title of Detection: Potential Ransom Note Spotted
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection:   Ransomware variants often will create a Ransom note in every directory it encrypts or all directories. This looks for common file extensions of Ransomnotes that are created or modified with the same name in a minimum of 20 unique folders
+// Description of the Detection: Ransomware variants often create a Ransom note in every directory it encrypts. This looks for common file extensions of Ransom notes created or modified in a minimum of 14 unique folders.
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
-let noteExtensions = dynamic(["DOC", "DOCX", "odt ", "rtf", "TXT", "PDF", "HTM", "HTML", "bmp", "jpeg", "jpg", "png", "tif", "tiff"]); // common ransomware note extensions
+
+// Define common file extensions for ransomware notes
+let noteExtensions = dynamic(["DOC", "DOCX", "odt", "rtf", "TXT", "PDF", "HTM", "HTML", "bmp", "jpeg", "jpg", "png", "tif", "tiff"]); // fixed typo for "odt"
+
+// Define file actions we want to monitor for
 let fileAction = dynamic(["FileModified", "FileRenamed", "FileUploaded", "FileSyncUploadedFull"]);
+
+// Query Office Activity logs for file actions related to ransom notes
 OfficeActivity
-| where TimeGenerated >= ago(10m)
-| where Operation has_any (fileAction) and SourceFileExtension has_any (noteExtensions)
-| where Site_Url contains ".sharepoint.com/personal/" and Userid <> "app@sharepoint"
-| summarize count() by Site_Url, SourceFileName  // as it requires an exact match on source file name it means each file counted would be in a different directories
-| where count_ >= 14  // adjust as ransomware leaves a high number of notes for better visibility.   You can whitelist common files like index.html that may appear when  users download from the internet
+| where TimeGenerated >= ago(10m)  // Adjust the time filter to your needs
+| where Operation has_any(fileAction) and SourceFileExtension has_any(noteExtensions)
+| where Site_Url contains ".sharepoint.com/personal/" and UserId <> "app@sharepoint"  // Exclude system-generated entries
+| summarize count() by Site_Url, SourceFileName  // Count occurrences of file names across different directories
+| where count_ >= 14  // This threshold can be adjusted based on your environment (e.g., ransomware typically leaves many copies of a ransom note)
