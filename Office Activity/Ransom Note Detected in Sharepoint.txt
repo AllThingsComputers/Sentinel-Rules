@@ -4,4 +4,4 @@
 // References (if available):  https://woshub.com/wp-content/uploads/bin/ransomware_extensions.txt
 // The Logic of the Detection or Query Begins Below This Line
 OfficeActivity
-| where SourceFileName matches regex ‘(?i)(HELP DECRYPT.TXT|HELP YOUR FILES.TXT|HELP_TO_DECRYPT_YOUR_FILES.txt|RECOVERY KEY.txt|HELP_RESTORE_FILES.txt|HELP_RECOVER_FILES.txt)’
+| where SourceFileName matches regex '(?i)(HELP DECRYPT.TXT|HELP YOUR FILES.TXT|HELP_TO_DECRYPT_YOUR_FILES.txt|RECOVERY KEY.txt|HELP_RESTORE_FILES.txt|HELP_RECOVER_FILES.txt)'
