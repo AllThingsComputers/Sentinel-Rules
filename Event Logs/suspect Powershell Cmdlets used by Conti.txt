@@ -4,4 +4,4 @@
 // References (if available): https://attack.mitre.org/techniques/T1486 
 // The Logic of the Detection or Query Begins Below This Line
 Event
-| where EventID == 4104 and Rendered Description matches regex @'(?i)CreateloCompletionPort|PostQueuedCompletionStatus|GetQueuedCompletionPort'
+| where EventID == 4104 and Description matches regex @'(?i)CreateloCompletionPort|PostQueuedCompletionStatus|GetQueuedCompletionPort'
