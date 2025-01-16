@@ -3,16 +3,18 @@
 // Description of the Detection:  
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
-let RDPFTPterms = dynamic(["RDP", "Teamviewer", "Remotedesktop", "AnyDesk", "VNC", "GoToMyPC", "Dameware", "FireFTP", "Cyberduck", "WinSCP", "Devolutions","FTP", "Filetransfer", "FileZilla", "Dropbox"]);
-(union isfuzzy=true (
-DNSlogs
-| where Name has_any(RDPFTPterms) ), (
-ProxyLogs
-| where Domain has_any (RDPFTPterms) )) 
-| extend IP = strcat( Internallp, ClientIP)
+let RDPFTPterms = dynamic(["RDP", "Teamviewer", "Remotedesktop", "AnyDesk", "VNC", "GoToMyPC", "Dameware", "FireFTP", "Cyberduck", "WinSCP", "Devolutions", "FTP", "Filetransfer", "FileZilla", "Dropbox"]);
+(union isfuzzy=true 
+    (DNSlogs 
+        | where Name has_any(RDPFTPterms)), 
+    (ProxyLogs 
+        | where Domain has_any(RDPFTPterms))
+)
+| extend IP = strcat(InternalIP, ClientIP)  // Check if 'InternalIP' is correct field name
 | extend DomainAccessed = strcat(Name, Domain)
-| extend Identity = strcat (Policy_Identity, Computer)
-| extend ExternalIP = strcat(IPAddresses, Externallp)
+| extend Identity = strcat(Policy_Identity, Computer)
+| extend ExternalIP = strcat(IPAddresses, ExternalIP)  // Verify field names
 | sort by IP asc
-❘ summarize count() by IP, Identity, DomainAccessed, ExternalIP, Type, Action
-❘ where count_ >= 5 
+| summarize count() by IP, Identity, DomainAccessed, ExternalIP, Type, Action
+| where count_ >= 5
+
