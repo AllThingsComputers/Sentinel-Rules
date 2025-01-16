@@ -1,14 +1,13 @@
-// Title of Detection: Process Ran from users App Data folder
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection:  C :\Users\*\AppData\Local\Temp\*.exe The execution of binaries from the AppData directory is suspicious. To reduce FP this uses user activity and a multiple filter conditions. 
-// References (if available): 
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Process Ran from Users AppData Folder
+// Authorship & Contact: https://allthingscomputers.medium.com, https://twitter.com/allthingshandle, https://allthingscomputersblog.wordpress.com/
+// Description of the Detection: Detects binaries executed from the AppData directory to identify suspicious activity.
+// References: N/A
+
 SecurityEvent
-| extend UsefulColumns = strcat(NewProcessName, ParentProcessName, ProcessName, Event Data_ProcessName)
-| where UsefulColumns has_all ("C:\\Users\\","\\AppData\\Local\\Temp\\", ".exe") // the next lines ascertain if it is running on a server machine or by admin accounts since binaries executed from AppData generally occurs only in these scenarios in the sample dataset
-| extend ExecutedOnAMachine = iff(Computer startswith "Server", "Yes", "No" )
-| extend ExecutedByAdminAccount = iff(Account has_any("adm", "admin"), "Yes", "")
-| extend ExecutedByEventData_AdminSubjectAccount = iff(EventData_SubjectUserName has_any("adm", "admin"), "Yes", "")
-| extend AdminExecuted = strcat(ExecutingByAdminAccount, RunByEventData_AdminSubjectAccount)
-| project-away ExecutedByAdminAccount, RunByEventData_AdminSubjectAccount, UsefulColumns
-| where ExecutingOnAMachine != "Yes" or AdminExecuted != "Yes" 
+| where NewProcessName contains @"C:\Users\" and NewProcessName contains @"\AppData\Local\Temp\" and NewProcessName endswith ".exe"
+| extend ExecutedOnServer = iff(Computer startswith "Server", "Yes", "No")
+| extend ExecutedByAdminAccount = iff(Account contains_any("adm", "admin"), "Yes", "No")
+| extend ExecutedByEventDataAdmin = iff(EventData_SubjectUserName contains_any("adm", "admin"), "Yes", "No")
+| extend AdminExecuted = iif(ExecutedByAdminAccount == "Yes" or ExecutedByEventDataAdmin == "Yes", "Yes", "No")
+| where ExecutedOnServer != "Yes" or AdminExecuted != "Yes"
+| project TimeGenerated, Computer, Account, NewProcessName, ParentProcessName, ProcessName, AdminExecuted, ExecutedOnServer
