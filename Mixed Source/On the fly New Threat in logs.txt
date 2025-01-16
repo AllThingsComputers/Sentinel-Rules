@@ -3,17 +3,29 @@
 // Description of the Detection: use TI instead
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
-let watchlist = (_GetWatchlist('FreshThreats')
-| project SearchKey);
-(union isfuzzy=true (
-DnsEvents
-| where IPAddresses in~ (watchlist) or Name has_any(watchlist)), (
-DNSLogs
-| where Destination_IP in~ (watchlist) or URL has_any(watchlist) ), (
-SigninLogs
-| where IPAddress in~ (watchlist)), (
-OfficeActivity
-| where ClientIP in~(watchlist) ), (SysmonEvent
-| where Hashes has_any(watchlist) ), (
-DNSLogs
-| where Domain has_any(watchlist) or Externallp in~(watchlist) )) 
+let watchlist = (_GetWatchlist('OnTheFlyThreats') | project SearchKey);
+union isfuzzy=true
+    (
+        DnsEvents
+        | where IPAddresses in~ (watchlist) or Name has_any (watchlist)
+    ),
+    (
+        DNSLogs
+        | where Destination_IP in~ (watchlist) or URL has_any (watchlist)
+    ),
+    (
+        SigninLogs
+        | where IPAddress in~ (watchlist)
+    ),
+    (
+        OfficeActivity
+        | where ClientIP in~ (watchlist)
+    ),
+    (
+        SysmonEvent
+        | where Hashes has_any (watchlist)
+    ),
+    (
+        DNSLogs
+        | where Domain has_any (watchlist) or Externallp in~ (watchlist)
+    )
