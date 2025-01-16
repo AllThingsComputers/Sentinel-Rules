@@ -4,4 +4,4 @@
 // References (if available): https://www.socinvestigation.com/ngrok-threat-hunting-detect-hackers-at-the-end-of-the-tunnel
 // The Logic of the Detection or Query Begins Below This Line
 DNSLogs
-| where  Name matches regex @"(tunnel.us.ngrok.com|tunnel.eu.ngrok.com|tunnel.ap.ngrok.com|tunnel.au.ngrok.com|tunnel.sa.ngrok.com|tunnel.jp.ngrok.com|tunnel.in.ngrok.com|.*.ngrok.io)
+| where Name matches regex @"(tunnel.us.ngrok.com|tunnel.eu.ngrok.com|tunnel.ap.ngrok.com|tunnel.au.ngrok.com|tunnel.sa.ngrok.com|tunnel.jp.ngrok.com|tunnel.in.ngrok.com|.*.ngrok.io)
