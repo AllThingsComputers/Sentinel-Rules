@@ -1,12 +1,13 @@
-// Title of Detection:  file name without words
+// Title of Detection:  File Name Without Words (Vowels)
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection:  Can also do no alphabet characters but vowels work. Can expand this to sysmon modules process files, schedule tasks, reg keys as malware does this. even command lines but should be in file created 11 sysmon event. malware creates random file names without words quite often. expect high FP
+// Description of the Detection: This identifies file names without vowels (e.g., random file names often used by malware). It can be expanded to include other factors like Sysmon event logs, command lines, etc.
 // References (if available): 
+
 // The Logic of the Detection or Query Begins Below This Line
 OfficeActivity 
-| where isnotempty(SourceFileName)
-| where isnotempty(SourceFileExtension)
-| extend pathremoval = split(OfficeObjectld, '/',-1)[-1]
-| extend extensionremoval = extract(@'.*\.', 0, tostring(pathremoval))
-| where not(extensionremoval matches regex @"(?i)[aeiou]")
-| project-reorder OfficeObjectld, pathremoval , extensionremoval 
+| where isnotempty(SourceFileName)  // Ensure the file name exists
+| where isnotempty(SourceFileExtension)  // Ensure the file extension exists
+| extend pathremoval = split(OfficeObjectld, '/', -1)[-1]  // Extract the file name from the OfficeObjectId
+| extend extensionremoval = extract(@'.*\.', 0, tostring(pathremoval))  // Extract file extension
+| where not(pathremoval matches regex @"(?i)[aeiou]")  // Filter for file names without vowels (case-insensitive)
+| project-reorder OfficeObjectld, pathremoval, extensionremoval  // Display the relevant columns for analysis
