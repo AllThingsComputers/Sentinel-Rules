@@ -4,4 +4,4 @@
 // References (if available):  https://redcanary.com/blog/how-to-prevent-ransomware/
 // The Logic of the Detection or Query Begins Below This Line
 OfficeActivity
-| where Operation "FileRenamed" and SourceFileName == ‘CanaryFileName.txt’ and DestinationFileName != SourceFileExtension
+| where Operation == "FileRenamed" and SourceFileName == 'CanaryFileName.txt' and DestinationFileName != SourceFileExtension
