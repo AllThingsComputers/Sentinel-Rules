@@ -13,5 +13,5 @@ let serviceinstalled = SecurityEvent
 | where (EventID == 7045 or EventID == 4697)
 | extend serviceinstalledTime = TimeGenerated;
 connection
-| join kind-inner (serviceinstalled) on Computer  // to be inside  2 min and same ComputerName
+| join kind-inner (serviceinstalled) on Computer  // to be inside 2 min and same ComputerName
 | where serviceinstalledTime > connectionTime and where datetime_diff('minute', serviceinstalledTime, connectionTime) <= 2 
