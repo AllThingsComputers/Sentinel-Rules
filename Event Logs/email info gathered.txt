@@ -4,4 +4,4 @@
 // References (if available):  https://attack.mitre.org/datasources/DS0017/#Command%20Execution 
 // The Logic of the Detection or Query Begins Below This Line
 Event
-| where EventID == 4104 and Rendered Description matches regex @'(?i)Get-AddressList|Get-GlobalAddressList|Get-OfflineAddressBook'
+| where EventID == 4104 and Description matches regex @'(?i)Get-AddressList|Get-GlobalAddressList|Get-OfflineAddressBook'
