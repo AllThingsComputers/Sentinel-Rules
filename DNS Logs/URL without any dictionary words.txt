@@ -4,4 +4,4 @@
 // References (if available): http://www.mieliestronk.com/wordlist.html 
 // The Logic of the Detection or Query Begins Below This Line
 DNSLogs
-| where  not(Name has_any (Dictionary)) and strlen(Name) > 50
+| where not(Name has_any (Dictionary)) and strlen(Name) > 50
