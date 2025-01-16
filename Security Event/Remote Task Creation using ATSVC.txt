@@ -4,8 +4,8 @@
 // References (if available): https://blog.menasec.net/2019/03/threat-named-Pipe-hunting-25-scheduled-tasks-for.html   
 // The Logic of the Detection or Query Begins Below This Line
 SecurityEvent
-| where EventID == 5145 and ShareName contains @'\\*\IPCS' and RelativeTargetName=~'atsvc'
+| where EventID == 5145 and ShareName contains @'\\*\IPCS' and RelativeTargetName =~ 'atsvc'
 | where AccessMask in~ ("0x2") or (AccessList2 contains "%%4417" and AccessList contains "%%4416")
 | where not(AccessList has_any("%%4424","%%4423", "%%4420", "%%4419", "%%4418", "%%1538", "%% 1541"))
-| where ObjectType =~ ‘File’
-| where (EventID == 5145 and ShareName matches regex '(?i)\\\.*\IPC$' and RelativeTargetName=~ 'atsvc' and Accesses contains 'WriteData') 
+| where ObjectType =~ 'File'
+| where (EventID == 5145 and ShareName matches regex @'(?i)\\\.*\IPC$' and RelativeTargetName =~ 'atsvc' and Accesses contains 'WriteData') 
