@@ -1,20 +1,22 @@
-// Title of Detection: Security Groups and Policies Modified outside 9am to 5pm Monday - Friday 
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection:   changes shouldnt happen outside these hours
-// References (if available): 
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Security Groups and Policies Modified Outside 9am to 5pm Monday - Friday  
+// Authorship & Contact: https://allthingscomputers.medium.com, https://twitter.com/allthingshandle, https://allthingscomputersblog.wordpress.com  
+// Description of the Detection: Detects modifications to security groups and policies occurring outside normal business hours (9am-5pm, Monday-Friday).  
+// References:  
+
 SecurityEvent
-| where EventID in (4735, 4737, 4755, 4793, 4713, 4719) // Event ID's 4735, 4737, 4755 are Security Enabled Groups Changed, ID'S 4793, 4713, 4719 are for Policy Changes. 
-| where dayofweek(TimeGenerated) between (0d .. 6d)
-| extend the Day = case(dayofweek(TimeGenerated) == '0.00:00:00', "Sunday", dayofweek(TimeGenerated) = '1.00:00:00', "Monday",
-dayofweek(TimeGenerated) == '2.00:00:00', "Tuesday",
-dayofweek(TimeGenerated) == '3.00:00:00', "Wednesday", 
-dayofweek(TimeGenerated) == '4.00:00:00',"Thursday", 
-dayofweek(TimeGenerated) == '5.00:00:00', "Friday", 
-dayofweek(TimeGenerated) == '6.00:00:00', "Saturday",
-strcat("error: ", dayofweek(TimeGenerated)) )
-| extend StringTime = tostring(TimeGenerated)
-| extend Time = extract("[^T]*$",0, String Time)
-| extend OutsideHours = iff(Time startswith "00:" or Time startswith "01:" or Time startswith "02:" or Time startswith "03:" or Time startswith "04:" or Time startswith "05:" or Time startswith "06:" or Time startswith "07:" or Time startswith "08:" or Time startswith "18:" or Time startswith "19:" or Time startswith "20:" or Time startswith "21:" or Time startswith "22:" or Time startswith "23:", "Outside 9am-5pm", "Inside 9am-5pm")
-| where theDay in~ ("Saturday", "Sunday") or OutsideHours == "Outside of 9am-5pm"
-| project-away String Time
+| where EventID in (4735, 4737, 4755, 4793, 4713, 4719)  // Filter for relevant Event IDs
+| extend DayOfWeek = format_datetime(TimeGenerated, "dddd")  // Get the day of the week
+| extend Hour = todatetime(format_datetime(TimeGenerated, "HH"))  // Extract hour of the event
+| extend IsWeekend = DayOfWeek in ("Saturday", "Sunday")  // Identify weekend days
+| extend IsOutsideBusinessHours = Hour < 9 or Hour >= 17  // Identify hours outside 9am-5pm
+| where IsWeekend or IsOutsideBusinessHours  // Only include events outside business hours or on weekends
+| project TimeGenerated, EventID, Activity = case(
+    EventID == 4735, "Security Group Modified",
+    EventID == 4737, "Security Group Member Added/Removed",
+    EventID == 4755, "Security Group Deleted",
+    EventID == 4793, "Policy Change",
+    EventID == 4713, "Audit Policy Changed",
+    EventID == 4719, "System Audit Policy Changed",
+    "Unknown Activity"
+), DayOfWeek, IsWeekend, Hour, AccountName, Computer, SubjectAccount
+| sort by TimeGenerated desc
