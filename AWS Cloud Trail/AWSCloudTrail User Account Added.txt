@@ -4,4 +4,4 @@
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 AWSCloudTrail
-| where  EventName "CreateUser'
+| where EventName == "CreateUser"
