@@ -4,4 +4,4 @@
 // References (if available): https://blog.menasec.net/2021/05/hunting-for-suspect-usage-of.html 
 // The Logic of the Detection or Query Begins Below This Line
 Event
-| where Source == 'Microsoft-Windows-Bits-Client' and not(Rendered Description matches regex @"(?i)fail|cancel")
+| where Source == 'Microsoft-Windows-Bits-Client' and not(Description matches regex @"(?i)fail|cancel")
