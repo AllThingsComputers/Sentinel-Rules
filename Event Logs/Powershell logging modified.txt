@@ -4,4 +4,5 @@
 // References (if available):  https://attack.mitre.org/techniques/T1562/003/  https://attack.mitre.org/techniques/T1562/001/  
 // The Logic of the Detection or Query Begins Below This Line
 Event
-| where EventID == 4104 and Rendered Description matches regex @'(?i)Set-PSReadlineOption|-HistorySaveStyle SaveNothing|Set-PSReadLineOption -HistorySavePath|Set-MpPreference -DisableScriptScanning 1'
+| where EventID == 4104
+| where RenderedDescription matches regex @'(?i)Set-PSReadlineOption.*|-HistorySaveStyle SaveNothing|Set-PSReadLineOption -HistorySavePath|Set-MpPreference -DisableScriptScanning 1'
