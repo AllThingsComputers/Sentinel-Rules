@@ -5,5 +5,4 @@
 // The Logic of the Detection or Query Begins Below This Line
 Event
 | where EventID == 13 and EventData contains "teamviewer"
-| where TargetObject matches regex
-@"(?i)teamviewer\\LogincomingConnections|teamviewer\\LogOutgoingConnections|teamviewer\\Log" 
+| where TargetObject matches regex @"(?i)teamviewer\\LogincomingConnections|teamviewer\\LogOutgoingConnections|teamviewer\\Log" 
