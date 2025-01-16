@@ -4,4 +4,4 @@
 // References (if available): https://attack.mitre.org/datasources/DS0005  https://attack.mitre.org/techniques/T1546/003/ 
 // The Logic of the Detection or Query Begins Below This Line
 Event
-| where EventID == 4104 and Rendered Description contains 'Register- WmiEvent'
+| where EventID == 4104 and Description contains 'Register- WmiEvent'
