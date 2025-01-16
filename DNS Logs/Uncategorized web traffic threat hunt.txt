@@ -4,4 +4,4 @@
 // References (if available): https://www.socinvestigation.com/threat-hunting-using-proxy-logs-soc-incident-response-procedure 
 // The Logic of the Detection or Query Begins Below This Line
 DNSLogs
-| where  Categories contains "Uncategorized"
+| where Categories contains "Uncategorized"
