@@ -3,15 +3,14 @@
 // Description of the Detection:     When we started this we identified the following base strings to look for:  Cross Site Scripting • Iceweasel - Web browser built into Kali Meterpreter Nikto - Vulnerability scanner, Dirb - Directory exploring tool,  Wscript - Windows scriptsJavascriptPythonAlert</script> . make a watchlist of all blacklisted user agents
 // References (if available): https://perishablepress.com/4g-ultimate-user-agent-blacklist/The-Ultimate-User-Agent-Blacklist  , Featuring Over 1200 Bad Bots|Perishable Press https://perishablepress.com/4g-ultimate-user-agent-blacklist
 // The Logic of the Detection or Query Begins Below This Line
-let watchlist = (_GetWatchlist('BlacklistedUserAgents')
-| project SearchKey);
-(union isfuzzy=true (OfficeActivity
-| where UserAgent has_any (watchlist) ), (DNS_proxy
-| where userAgent has_any (watchlist) ), (SigninLogs
-| where UserAgent has_any (watchlist) ), (W3CIISLog
-| where UserAgent has_any (watchlist) ), (AADNonInteractiveUserSignInLogs
-| where UserAgent has_any (watchlist) ))
-| project TimeGenerated, Type, EventType, UserAgent, userAgent
-| extend UserAgentExtended = strcat (UserAgent, UserAgent, userAgent), TypeExtended = strcat(Type, EventType)
-| project TimeGenerated, TypeExtended, UserAgentExtended
-| summarize count() by TypeExtended, UserAgentExtended 
+let watchlist = (_GetWatchlist('BlacklistedUserAgents') | project SearchKey);
+(union isfuzzy=true 
+    (OfficeActivity | where UserAgent has_any (watchlist)),
+    (DNS_proxy | where UserAgent has_any (watchlist)),
+    (SigninLogs | where UserAgent has_any (watchlist)),
+    (W3CIISLog | where UserAgent has_any (watchlist)),
+    (AADNonInteractiveUserSignInLogs | where UserAgent has_any (watchlist))
+)
+| extend UserAgentExtended = strcat(UserAgent, " ", Type, " ", EventType)  // Concatenating necessary fields
+| summarize count() by UserAgentExtended
+| project UserAgentExtended, count_
