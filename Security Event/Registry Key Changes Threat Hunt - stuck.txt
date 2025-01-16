@@ -1,6 +1,18 @@
-// Title of Detection:    Registry Key Changes Threat Hunt - stuck
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:   // needs more work clearly
-// References (if available): https://www.socinvestigation.com/monitor-modified-registry-keys-possible-windows-event-id
-// The Logic of the Detection or Query Begins Below This Line
-EventID == 4657  
+// Title of Detection: Registry Key Changes Threat Hunt  
+// Authorship & Contact: https://allthingscomputers.medium.com, https://twitter.com/allthingshandle, https://allthingscomputersblog.wordpress.com/  
+// Description of the Detection: Detects registry key changes using Event ID 4657. Suspicious changes can indicate potential adversarial activity, such as malware persistence or configuration changes.  
+// References: https://www.socinvestigation.com/monitor-modified-registry-keys-possible-windows-event-id  
+
+let timeFrame = 1d;  // Define the time range for detection  
+SecurityEvent  
+| where TimeGenerated > ago(timeFrame)  
+| where EventID == 4657  
+| extend RegistryKey = tostring(parse_json(EventData).ObjectName),  
+         RegistryOperation = tostring(parse_json(EventData).OperationType),  
+         TargetProcess = tostring(parse_json(EventData).ProcessName),  
+         TargetAccount = tostring(parse_json(EventData).SubjectUserName)  
+| where RegistryKey contains @"HKLM\SOFTWARE" or RegistryKey contains @"HKCU\SOFTWARE"  
+| where RegistryOperation has_any ("SetValue", "DeleteValue", "CreateKey", "DeleteKey")  // Filter for significant operations  
+| summarize Count = count() by RegistryKey, RegistryOperation, TargetProcess, TargetAccount  
+| sort by Count desc  
+| project TimeGenerated, RegistryKey, RegistryOperation, TargetProcess, TargetAccount, Count  
