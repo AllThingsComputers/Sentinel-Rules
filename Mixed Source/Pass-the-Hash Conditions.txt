@@ -4,14 +4,15 @@
 // References (if available):  https://blog.netwrix.com/2021/11/30/how-to-detect-pass-the-hash-attacks/ 
 // The Logic of the Detection or Query Begins Below This Line
 let SecEvent = (
-SecurityEvent
-| where EventID == 4624 and LogonType == 9 and AuthenticationPackageName == "Negotiate" and LogonProcessName ==  "seclogo"
-| extend TimeString = tostring(TimeGenerated)
-| extend TimeToTheSecond = trim_end("(.{8}).", TimeString));
+    SecurityEvent
+    | where EventID == 4624 and LogonType == 9 and AuthenticationPackageName == "Negotiate" and LogonProcessName == "seclogo"
+    | extend TimeToTheSecond = format_datetime(TimeGenerated, 'yyyy-MM-dd HH:mm:ss')
+);
 let SysEvent = (
-Sysmon
-| where EventID == 10 and RenderedDescription == "Process accessed" and TargetImage == "C:\\Windows\\system32\\lsass.exe"
-| extend TimeString = tostring(TimeGenerated)
-| extend TimeToTheSecond = trim_end("(.{8}).", TimeString)); 
+    Sysmon
+    | where EventID == 10 and RenderedDescription == "Process accessed" and TargetImage == "C:\\Windows\\system32\\lsass.exe"
+    | extend TimeToTheSecond = format_datetime(TimeGenerated, 'yyyy-MM-dd HH:mm:ss')
+);
 SecEvent
-| join kind-inner (SysEvent) on TimeToTheSecond 
+| join kind=inner (SysEvent) on TimeToTheSecond
+
