@@ -5,4 +5,4 @@
 // The Logic of the Detection or Query Begins Below This Line
 SecurityEvent
 | where EventID == 4776 and Account endswith "$"
-| where 'Machine != Account
+| where Machine != Account
