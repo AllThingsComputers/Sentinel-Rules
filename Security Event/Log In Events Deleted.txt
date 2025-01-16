@@ -1,23 +1,22 @@
-// Title of Detection:  Log In Events Deleted
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection:    Adversaries may delete interactive log in events to hide the fact they logged in but may forget to delete their interactive log out events in the logs that will be sent to the SIEM. This will alert when there are more log out than log in events would indicate tampering.
-// References (if available): 
-// The Logic of the Detection or Query Begins Below This Line
-let timePeriod= 1d;
-let logon = (SecurityEvent
+// Title of Detection: Log In Events Deleted
+// Authorship & Contact: https://allthingscomputers.medium.com, https://twitter.com/allthingshandle, https://allthingscomputersblog.wordpress.com/
+// Description: Detects potential tampering when logon events are deleted but logoff events are retained.
+// References: 
+
+let timePeriod = 1d;
+
+let logon = SecurityEvent
 | where TimeGenerated > ago(timePeriod)
 | where EventID == 4624 and LogonType == 2 and isnotempty(Account)
-| summarize count() by EventID, Account
-| extend Event4624LogOnCount=count
-| project-away count_;)
-let logoff = (SecurityEvent
+| summarize LogOnCount = count() by Account;
+
+let logoff = SecurityEvent
 | where TimeGenerated > ago(timePeriod)
 | where EventID == 4634 and LogonType == 2 and isnotempty(Account)
-| summarize count() by EventID, Account)
-| extend Event4634LogOffCount=count
-| project-away count_;
+| summarize LogOffCount = count() by Account;
+
 logon
-| join kind-inner (logoff) on Account
-| project-away Account1, EventID, EventID1
-| project-reorder Account, Event4624LogOnCount, Event4634LogOffCount
-| where Event4624LogOnCount == 0 and Event4634LogOffCount> 3; 
+| join kind=fullouter (logoff) on Account
+| extend LogOnCount = coalesce(LogOnCount, 0), LogOffCount = coalesce(LogOffCount, 0)
+| where LogOnCount == 0 and LogOffCount > 3
+| project Account, LogOnCount, LogOffCount;
