@@ -7,5 +7,4 @@ SecurityEvent
 | where EventID == 4698 // created scheduled tasks
 | extend d = parse_xml(EventData)
 | where TaskContent matches regex @"(?i)c:\\users\\.*|c:\\programdata\\.*|c:\\windows\\temp\\.*" // suspect locations 
-| where TaskContent matches regex  
-@"(?i)(wscript|rundll32|regsvr32|wmic|cmd|mshta|powershell)\.exe"  // scripting applications 
+| where TaskContent matches regex @"(?i)(wscript|rundll32|regsvr32|wmic|cmd|mshta|powershell)\.exe"  // scripting applications 
