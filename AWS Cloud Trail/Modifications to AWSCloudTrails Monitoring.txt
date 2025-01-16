@@ -4,4 +4,4 @@
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 AWSCloudTrail
-| where  EventName has_any ("DeleteTrail", "StopLogging", "DeleteFlowLogs", "DeleteEventBus", "Update Trail")
+| where EventName in ("DeleteTrail", "StopLogging", "DeleteFlowLogs", "DeleteEventBus", "Update Trail")
