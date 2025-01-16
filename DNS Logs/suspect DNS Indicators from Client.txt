@@ -3,19 +3,37 @@
 // Description of the Detection:  https://blog.menasec.net/2019/02/threat-hunting-24-microsoft-windows-dns.html 
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
-(union isfuzzy=true(DnsEvents
-| where Eventld in (256, 257) and Name matches regex @'(?i)myip|ipchicken|ipinfo|ipaddr|meineip|meuip|portquiz|portchecktool|ipid|iptools|hostip|canyouseeme'
-| extend Description = "DNS requests to public IP online resolution web services"), (
-DnsEvents
-| where (Name matches @'(?i)country$|stream$|download$|xin$|gdn$|racing$|jetzt$|win$|bid$' or Name
-matches regex regex @"(?i)vip$|ren$|kim$|loan$|mom$|party$|review$|trade$|date$|wang$|accountants$")
-| extend Description = "DNS request to suspect TLDs"), (
-DnsEvents
-| where Eventld in (256,257) and (QueryType == 16 or QueryType 16 or QueryType == 46)
-| extend Description = "DNS TXT or RRSIG Exfiltration"), (
-DnsEvents
-| where Eventld in (256, 257) and (QueryType == 1) and ResultCode == 3
-| extend Description = "Too many NX response from same source IP"),(
-DnsEvents
-| where Event in (257) and strlen(Name) > 80 and QueryType != 249 and not(Name matches regex @"(?i)exclusions|here")
-| extend Description = "DNS requests to Very Long Domain Names")) 
+(union isfuzzy=true
+    (
+        DnsEvents
+        | where EventId in (256, 257) 
+        and Name matches regex @"(?i)myip|ipchicken|ipinfo|ipaddr|meineip|meuip|portquiz|portchecktool|ipid|iptools|hostip|canyouseeme"
+        | extend Description = "DNS requests to public IP online resolution web services"
+    ), 
+    (
+        DnsEvents
+        | where Name matches regex @"(?i)country$|stream$|download$|xin$|gdn$|racing$|jetzt$|win$|bid$|vip$|ren$|kim$|loan$|mom$|party$|review$|trade$|date$|wang$|accountants$"
+        | extend Description = "DNS request to suspect TLDs"
+    ), 
+    (
+        DnsEvents
+        | where EventId in (256, 257) 
+        and QueryType in (16, 46)
+        | extend Description = "DNS TXT or RRSIG Exfiltration"
+    ), 
+    (
+        DnsEvents
+        | where EventId in (256, 257) 
+        and QueryType == 1 
+        and ResultCode == 3
+        | extend Description = "Too many NX response from same source IP"
+    ),
+    (
+        DnsEvents
+        | where EventId == 257 
+        and strlen(Name) > 80 
+        and QueryType != 249 
+        and not(Name matches regex @"(?i)exclusions|here")
+        | extend Description = "DNS requests to Very Long Domain Names"
+    )
+)
