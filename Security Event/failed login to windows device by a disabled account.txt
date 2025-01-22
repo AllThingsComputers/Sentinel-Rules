@@ -1,7 +1,11 @@
-// Title of Detection:  failed login to windows device by a disabled account
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: EID 4768 - A Kerberos authentication ticket (TGT) was requested is when disabled user fails a logon to windows
-// References (if available): 
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Failed Login to Windows Device by a Disabled Account
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/
+// Description of the Detection: Detects failed login attempts (Event ID 4768) to a Windows device by disabled or previously used accounts.
+// References:
+
+let DisabledUsers = dynamic(["DisabledUser1", "DisabledUser2", "DisabledUser3"]); // Replace with actual disabled user names or dynamically fetch from a source
 SecurityEvent
-| where EventID == 4768 and TargetUserName in (list, regex =, let statement or watchlist of disabled or previous users)
+| where EventID == 4768  // A Kerberos authentication ticket (TGT) was requested
+| where TargetUserName in (DisabledUsers) // Match against disabled accounts list
+| project TimeGenerated, TargetUserName, ClientAddress, ServiceName, FailureCode, AdditionalInfo
+| order by TimeGenerated desc
