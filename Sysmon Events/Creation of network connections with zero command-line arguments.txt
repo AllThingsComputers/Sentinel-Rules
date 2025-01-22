@@ -1,13 +1,16 @@
-// Title of Detection:  Creation of network connections with zero command-line arguments
+// Title of Detection: Creation of network connections with zero command-line arguments
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection: 
-// References (if available):   p86  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf 
-// The Logic of the Detection or Query Begins Below This Line
-let processRegex =
-@"(?i)\\(rundll32|svchost|msiexec|werfault|searchprotocolhost|gpupdate|regsvr32|svchost|msiexec)\.exe$";
-let ZeroCommandLineArguements = 
-Sysmon
-| where EventID == 1 and Image matches regex (processRegex) and CommandLine !contains " "
-| summarize by tostring(ProcessId);
-Sysmon
-| where EventID == 3 and ProcessId in (ZeroCommandLineArguements)
+// Description of the Detection: Detects network connections initiated by certain processes (e.g., rundll32, svchost) that are executed without any command-line arguments.
+// References: p86 - https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf
+
+let processRegex = @"(?i)\\(rundll32|svchost|msiexec|werfault|searchprotocolhost|gpupdate|regsvr32)\.exe$";
+let ZeroCommandLineArguments = 
+    SysmonEvent
+    | where EventID == 1 // Process creation events
+    | where Image matches regex processRegex and CommandLine !contains " "
+    | summarize by tostring(ProcessId); // Capture ProcessId for zero-command-line processes
+SysmonEvent
+| where EventID == 3 // Network connection events
+| where ProcessId in (ZeroCommandLineArguments) // Match with processes having zero command-line arguments
+| project TimeGenerated, Computer, UserName, Image, CommandLine, DestinationIp, DestinationPort
+| sort by TimeGenerated desc
