@@ -1,7 +1,12 @@
-// Title of Detection: Email attachment with  Cmd or Powershell in command-line
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  This can be potentially phishing as we would not expect outlook to launch cmd or Powershell 
-// References (if available):   https://www.cyborgsecurity.com/cyborg-labs/hunting-a-phish/ 
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Email attachment with Cmd or Powershell in command-line
+// Authorship & Contact: https://allthingscomputers.medium.com  
+//                        https://twitter.com/allthingshandle  
+//                        https://allthingscomputersblog.wordpress.com/  
+// Description of the Detection: This detection identifies potential phishing activity where Microsoft Outlook launches suspicious processes like cmd or Powershell, which is unexpected behavior.  
+// References: https://www.cyborgsecurity.com/cyborg-labs/hunting-a-phish/  
+
+// Detection Logic:
 SysmonEvent
-| where ParentImage endswith "Outlook.exe" and OriginalFileName matches regex @"^(?i)(Excel|WinWord|POWERPNT|word|powerpoint)\.exe$" and "(powershell|cmd|pwsh|shell|\.(py|ps1|psm1|bat))
+| where ParentImage endswith "Outlook.exe" 
+  and OriginalFileName matches regex @"^(?i)(Excel|WinWord|POWERPNT|word|powerpoint)\.exe$" 
+  and CommandLine has_any ("powershell", "cmd", "pwsh", "shell", ".py", ".ps1", ".psm1", ".bat")
