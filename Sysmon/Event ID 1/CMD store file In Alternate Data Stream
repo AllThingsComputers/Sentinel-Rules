@@ -2,4 +2,4 @@
 // Rule Description:  Storing files in Alternate Data Stream (ADS) similar to Astaroth malware -https://www.minitool.com/partition-disk/alternate-data-streams.html
 Sysmon
 | where EventID == 1
-| where CommandLine matches regex  '(?i)((echo .* > :ads .* )|(echo .* > host .* :ads .*))'
+| where CommandLine matches regex '(?i)((echo .* > :ads .* )|(echo .* > host .* :ads .*))'
