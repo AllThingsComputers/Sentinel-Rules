@@ -4,4 +4,4 @@
 // References (if available):   https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse  
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where  EventID == 1 and Description == "Windows Command Processor" and OriginalFileName != "Cmd.Exe" and Image != @'C:\Windows\System32\cmd.exe'
+| where EventID == 1 and Description == "Windows Command Processor" and OriginalFileName != "Cmd.Exe" and Image != @'C:\Windows\System32\cmd.exe'
