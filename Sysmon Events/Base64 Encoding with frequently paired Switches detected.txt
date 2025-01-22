@@ -1,30 +1,32 @@
-// Title of Detection: Base64 Encoding with frequently paired Switches detected 
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection:  
-// References (if available): https://unit42.paloaltonetworks.com/unit42-pulling-back-the-curtains-on-encodedcommand-powershell-attacks/  https://redcanary.com/threat-detection-report/techniques/powershell 
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Base64 Encoding with Frequently Paired Switches Detected
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/
+// Description of the Detection:
+// References: 
+// - https://unit42.paloaltonetworks.com/unit42-pulling-back-the-curtains-on-encodedcommand-powershell-attacks/
+// - https://redcanary.com/threat-detection-report/techniques/powershell/
+
 Sysmon
 | where Image contains "powershell"
-| extend EncodedCommands iff(CommandLine contains "-enc" or CommandLine contains "-encodedcommand" or CommandLine contains "-ec" or CommandLine contains "-en" or CommandLine contains "-e" or CommandLine contains "-enco", "PowerShell will recognize and accept anything from -e onward, and it will show up outside of the encoded bits. command_line_includes ('-e' || '-en' || '-enc' || '-enco')", "")
-| extend WindowStyleHidden = iff(CommandLine contains "-window hidden" or CommandLine contains "-W Hidden" or CommandLine contains "-windowstyle hidden" or CommandLine contains "-win hidden" or CommandLine contains "-Wind Hidden" or CommandLine contains "-windows hidden" or CommandLine contains "-win hid", "Used to prevent PowerShell from displaying a window when it executes code. The most used variant "-window hidden" is due to the PowerShell command that the previously mentioned Microsoft Word Documents distributing Cerber are using.", "")
-| extend Noninteractive =iff(CommandLine contains "-noni" or CommandLine contains "- noninteractive", "Used to prevent creating an interactive prompt for the user. Used in combination with WindowStyle Hidden to hide signs of execution. For the "-noni" variation, 76% were the generic shellcode injection code and SET, whereas "-Nonl" was PowerShell Empire", "")
-| extend NoProfile = iff(CommandLine contains "-nop" or CommandLine contains "-noprofile", "Prevents PowerShell from loading profile scripts, which get executed on launch, so as to avoid potentially unwanted commands or settings. Similar to the breakdown for NonInteractive, nop" is primarily SET and the generic shellcode injection while "-NoP" is PowerShell Empire.", "") 
-| extend ExecutionPolicyByPass = iff(CommandLine contains "-ep bypass" or CommandLine contains "-exec bypass" or CommandLine contains "-executionpolicy bypass" or CommandLine contains "-exe byPass", "Bypasses the default PowerShell script execution policy (Restricted) and will not block the execution of any scripts or create any prompts. It's interesting to note that the code executed within EncodedCommand parameter does not apply to the execution policy.", "")
-| extend Sta = iff(CommandLine contains "-sta", "Uses single- threaded apartment (now default as of PowerShell 3.0). This parameter was almost exclusively used in PowerShell Empire.", "")
-| extend NoExit = iff(CommandLine contains "-noexit", "Prevents PowerShell from exiting after running the startup commands. This was exclusively used by the PowerWorm malware and was the only parameter used beside EncodedCommand", "")
-| extend Execution PolicyHidden = iff(CommandLine contains "-ep hidden", "This actually isn't a valid policy so PowerShell just ignores it. Every usage of it is related to a script labeled "TXT C2", which attempts to load a DNS TXT Record containing another PowerShell script, similar to PowerWorm. Most likely, the attacker meant to use ByPass here as they already have "-w hidden" later in their command.", "")
-| extend base64 = iff(CommandLine contains "base64", "Base64 encoding isn't inherently suspect, but it's worth looking out for in a lot of environments, and the following pseudo-detection logic can help detect a wide variety of malicious activity", "")
-| extend combinationRedFlags = iff(CommandLine contains "-window hidden -enc" or CommandLine contains "-nop -noni -enc" or CommandLine contains "-NoP -sta -Nonl -W Hidden -Enc" or CommandLine contains "-ep bypass-noni -w hidden -enc" or CommandLine contains "-nop -win hidden-noni -enc" or CommandLine contains "-executionpolicy bypass-windowstyle hidden -enc" or CommandLine contains "-nop -exec bypass -win Hidden -noni -enc", "These are top combinations of switches used with encoded command so are highly suspect", "")
-| extend counting1 = iff(isnotempty(EncodedCommands), +1, +0)
-| extend counting2 = iff(isnotempty(WindowStyleHidden), counting1 +1, counting1 +0)
-| extend counting3- iff(isnotempty(NonInteractive), counting2 +1, counting2 +0)
-| extend counting4 = iff(isnotempty(NoProfile), counting3 +1, counting3 +0)
-| extend counting5 = iff(isnotempty(ExecutionPolicyByPass), counting4 +1, counting4 +0)
-| extend counting6 = iff(isnotempty(Sta), counting5 +1, counting5 +0)
-| extend counting7 = iff(isnotempty(NoExit), counting6+1, counting6 +0)
-| extend counting8 = iff(isnotempty(ExecutionPolicyHidden), counting7 +1, counting7 +0)
-| extend counting9 = iff(isnotempty(base64), counting8 +1, counting8 +0)
-| extend CountOutOf10 = iff(isnotempty(combinationRedFlags), counting9 +1, counting9 +0)
-| project-away counting1, counting2, counting3, counting4, counting5, counting6, counting7, counting8, counting9
-| where (isnotempty(EncodedCommands) or isnotempty(combinationRedFlags) or isnotempty(base64)) or CountOutOf10 >= 5
-| project-reorder TimeGenerated, Computer, UserName, Rendered Description, Image, OriginalFileName, CommandLine, CurrentDirectory, technique_name, phase_name
+| extend EncodedCommands = iff(CommandLine contains "-enc" or CommandLine contains "-encodedcommand" or CommandLine contains "-ec" or CommandLine contains "-en" or CommandLine contains "-e" or CommandLine contains "-enco", "Detected", "")
+| extend WindowStyleHidden = iff(CommandLine contains "-window hidden" or CommandLine contains "-W Hidden" or CommandLine contains "-windowstyle hidden", "Detected", "")
+| extend Noninteractive = iff(CommandLine contains "-noni" or CommandLine contains "-noninteractive", "Detected", "")
+| extend NoProfile = iff(CommandLine contains "-nop" or CommandLine contains "-noprofile", "Detected", "")
+| extend ExecutionPolicyByPass = iff(CommandLine contains "-ep bypass" or CommandLine contains "-exec bypass" or CommandLine contains "-executionpolicy bypass", "Detected", "")
+| extend Sta = iff(CommandLine contains "-sta", "Detected", "")
+| extend NoExit = iff(CommandLine contains "-noexit", "Detected", "")
+| extend ExecutionPolicyHidden = iff(CommandLine contains "-ep hidden", "Detected", "")
+| extend Base64 = iff(CommandLine contains "base64", "Detected", "")
+| extend CombinationRedFlags = iff(CommandLine matches regex @"(?i)-nop.*-noni.*-enc|.*-win.*hidden.*-enc|.*-exec.*bypass.*-enc", "Detected", "")
+| extend CountOutOf10 = 
+    iif(isnotempty(EncodedCommands), 1, 0) +
+    iif(isnotempty(WindowStyleHidden), 1, 0) +
+    iif(isnotempty(Noninteractive), 1, 0) +
+    iif(isnotempty(NoProfile), 1, 0) +
+    iif(isnotempty(ExecutionPolicyByPass), 1, 0) +
+    iif(isnotempty(Sta), 1, 0) +
+    iif(isnotempty(NoExit), 1, 0) +
+    iif(isnotempty(ExecutionPolicyHidden), 1, 0) +
+    iif(isnotempty(Base64), 1, 0) +
+    iif(isnotempty(CombinationRedFlags), 1, 0)
+| where isnotempty(EncodedCommands) or isnotempty(CombinationRedFlags) or isnotempty(Base64) or CountOutOf10 >= 5
+| project TimeGenerated, Computer, UserName, CommandLine, EncodedCommands, WindowStyleHidden, Noninteractive, NoProfile, ExecutionPolicyByPass, Sta, NoExit, ExecutionPolicyHidden, Base64, CombinationRedFlags, CountOutOf10
