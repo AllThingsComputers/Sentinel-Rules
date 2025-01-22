@@ -1,6 +1,6 @@
 // Title of Detection:  HARDRAIN usage in command-line
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  HARDRAIN uses the command cmd.exe /c netsh firewall add port opening TCP 443 "adp" and makes the victim machine function as a proxy server 
+// Description of the Detection:  HARDRAIN uses the command cmd.exe /c netsh firewall add port opening TCP 443 "adp" and makes the victim machine function as a proxy server 
 // References (if available):    https://attack.mitre.org/techniques/T1090 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
