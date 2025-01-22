@@ -1,31 +1,34 @@
 // Title of Detection: Unexpected IP displaying on device
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection:  
-// References (if available): 
-// The Logic of the Detection or Query Begins Below This Line
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/
+// Description of the Detection:
+// References:
+
 let lookbackperiod = 24h;
+
 let PhoneMDMlist = GetWatchlist('PhoneMDMlist')
 | extend UserOnMDM = DisplayName
-| project SerialNo, SearchKey, UserOnMDM);
-let number1 = (
-DNSlog
+| project SerialNo, SearchKey, UserOnMDM;
+
+let number1 = DNSlog
 | where TimeGenerated >= ago(lookbackperiod)
-| where Internallp != "Organization’s Public IP"
-| extend ISPIP = iff(Internallp matches regex @'IP ADDRESS REGEX HERE’, "ISP","")
-| extend isPrivatelP = iff(ipv4_is_private(Internallp), "Private IP", "")
-| extend MobileISPIP = iff(Internallp matches regex @","Orange Mobile","")
-| extend ISP = strcat(isPrivateIP, ISPIP, MobilelSPIP
-| project-away PrivateIP, ISPIP, MOBILEISPIP
-| summarize count() by  Internallp, Identities, ISP extend ExternallPv4= iff(Internallp matches regex @^(([1-9]?\d|[12]\d\d)\.){3}{[1- 9]?\d|[12]\d\d)$", "IPv4","")//0.0.0.0 to 255.255.255.255
-❘ where isnotempty(ExternallPv4)
-| where ISP >> "Private" 
-| where ISP <> "MobileISPIP" 
-| where ISP <> "ISP"
-| extend DeviceName = extract("[^]*$",0, Identities)
-| extend SerialNo = tostring(split(DeviceName , ")", 0)));
+| where InternalIp != "Organization’s Public IP"
+| extend 
+    ISPIP = iff(InternalIp matches regex @"IP ADDRESS REGEX HERE", "ISP", ""),
+    isPrivateIP = iff(ipv4_is_private(InternalIp), "Private IP", ""),
+    MobileISPIP = iff(InternalIp matches regex @"Orange Mobile", "Mobile ISP", "")
+| extend ISP = strcat(isPrivateIP, " ", ISPIP, " ", MobileISPIP)
+| project-away isPrivateIP, ISPIP, MobileISPIP
+| summarize count() by InternalIp, Identities, ISP
+| extend ExternalIPv4 = iff(InternalIp matches regex @"^(([1-9]?\d|[12]\d\d)\.){3}([1-9]?\d|[12]\d\d)$", "IPv4", "")
+| where isnotempty(ExternalIPv4)
+| where ISP !in ("Private IP", "Mobile ISP", "ISP")
+| extend DeviceName = extract("[^]*$", 0, Identities)
+| extend SerialNo = tostring(split(DeviceName, ")", 0));
+
 MainSearch
-| join kind-fullouter (PhoneMDMlist) on SerialNo where isnotempty(Identities)
+| join kind=fullouter (PhoneMDMlist) on SerialNo
+| where isnotempty(Identities)
 | project-away DeviceName, SerialNo, SerialNo1, SearchKey
-| extend UserName = strcat(UserOnMDM, Notes)
-| project-away UserOnMDM, Notes, ISP, ExternallPv4
-| project- reorder UserName,  Internallp, Identities, count_
+| extend UserName = strcat(UserOnMDM, " ", Notes)
+| project-away UserOnMDM, Notes, ISP, ExternalIPv4
+| project-reorder UserName, InternalIp, Identities, count_
