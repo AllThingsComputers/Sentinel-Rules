@@ -1,5 +1,5 @@
 // Rule Name: Create Suspicious Start Minimized Browser 
 // Rule Description: This detects the suspicious minimized start of the web browsers edge, Chrome and Internet explorer whcih can be used to download files from the Internet on the sly https://twitter.com/mrd0x/status/1478234484881436672?s=12
 Sysmon
-| where EventID = 1
-| where CommandLine matches regex  '((?i)Start-Process (msedge|chrome|iexplore)(\.exe)? -WindowStyle Minimized)|(start \/min (msedge|chrome|iexplore))'
+| where EventID == 1
+| where CommandLine matches regex @'((?i)Start-Process (msedge|chrome|iexplore)(\.exe)? -WindowStyle Minimized)|(start \/min (msedge|chrome|iexplore))'
