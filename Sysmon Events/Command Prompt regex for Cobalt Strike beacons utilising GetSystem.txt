@@ -1,7 +1,11 @@
-// Title of Detection:   Command Prompt regex for Cobalt Strike beacons utilising GetSystem
+// Title of Detection: Command Prompt Regex for Cobalt Strike Beacons Utilizing GetSystem
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Adversaries use GetSystem to impersonate a token for the SYSTEM account. This level of access allows an adversary to perform privileged actions beyond that of an administrator . will match C:\Windows\system32\cmd.exe /c echo 92d8cc45954 >; \\.\pipe\446b3 
-// References (if available):   p46  https://resource.redcanary.com/rs/003-YRU-314/images/2022-Threat-Detection-Report-RedCanary.pdf 
-// The Logic of the Detection or Query Begins Below This Line
+// Description of the Detection: Detects adversaries using the "GetSystem" method via cmd.exe to impersonate a SYSTEM token.
+// References: 
+// - https://resource.redcanary.com/rs/003-YRU-314/images/2022-Threat-Detection-Report-RedCanary.pdf
+
 SysmonEvent
-| where Image endswith "\\cmd.exe" and '(?i)echo\s+[0-9a-f]{11}\s+\>\;?\s+\\\\\.\\pipe\\[0-9a-f]{6}'
+| where EventID == 1
+| where Image endswith @"\cmd.exe"
+| where CommandLine matches regex @"(?i)echo\s+[0-9a-f]{11}\s+\>\;?\s+\\\\\.\\pipe\\[0-9a-f]{6}"
+| project TimeGenerated, Computer, UserName, Image, CommandLine, ParentImage
