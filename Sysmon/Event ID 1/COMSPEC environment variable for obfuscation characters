@@ -2,4 +2,4 @@
 // Rule Description:  The COMSPEC environment variable for character value that is the full path to https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/dosfuscation-report.pdf page 13-14
 Sysmon
 | where EventID == 1
-| where CommandLine matches regex  (?i)%COMSPEC(:.*)?%//'
+| where CommandLine matches regex '(?i)%COMSPEC(:.*)?%//'
