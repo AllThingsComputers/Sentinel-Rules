@@ -1,7 +1,14 @@
-// Title of Detection:  Hacker or Red Team PowerShell in Command-Line 
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: from article Detecting Offensive PowerShell Tools  
-// References (if available): https://adsecurity.org/?p=2921
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Hacker or Red Team PowerShell in Command-Line
+// Authorship & Contact: 
+//    https://allthingscomputers.medium.com  
+//    https://twitter.com/allthingshandle  
+//    https://allthingscomputersblog.wordpress.com/  
+// Description of the Detection: 
+//    Detects the use of offensive PowerShell tools or techniques based on keywords commonly associated 
+//    with malicious or red team PowerShell activity, as outlined in the article "Detecting Offensive PowerShell Tools."
+// References: 
+//    https://adsecurity.org/?p=2921  
+
+// Detection Logic:
 Event
-| where RenderedDescription matches regex ‘(?i)(powershell|scriptblock).*(AdjustTokenPrivileges|IMAGE_NT_OPTIONAL_HDR64_MAGIC|Management.Automation.RuntimeException|Microsoft.Win32.UnsafeNativeMethodsReadProcessMemory.Invoke|Runtime.InteropServices|SE_PRIVILEGE_ENABLED|System.Security.Cryptography|System.Reflection.AssemblyName|MiniDump|System.Runtime.InteropServicesminidump|LSA_UNICODE_STRING|MiniDumpWriteDump|PAGE_EXECUTE_READ|Net.Sockets.SocketFlags|Reflection.Assembly.SECURITY_DELEGATION|TOKEN_ADJUST_PRIVILEGES|TOKEN_ALL_ACCESS|TOKEN_ASSIGN_PRIMARY|TOKEN_DUPLICATE|TOKEN_ELEVATION|TOKEN_IMPERSONATE|TOKEN_INFORMATION_CLASS|TOKEN_PRIVILEGES|TOKEN_QUERY|Metasploit|Advapi32.dll|kernel32.dll|msvcrt.dll|ntdll.dll|secur32.dll|user32.dll|KerberosRequestorSecurityToken|CreateDelegate|AmsiUtils|Security.Cryptography.CryptoStream)'
+| where Description matches regex @"(?i)(powershell|scriptblock).*(AdjustTokenPrivileges|IMAGE_NT_OPTIONAL_HDR64_MAGIC|Management\.Automation\.RuntimeException|Microsoft\.Win32\.UnsafeNativeMethodsReadProcessMemory\.Invoke|Runtime\.InteropServices|SE_PRIVILEGE_ENABLED|System\.Security\.Cryptography|System\.Reflection\.AssemblyName|MiniDump|System\.Runtime\.InteropServicesminidump|LSA_UNICODE_STRING|MiniDumpWriteDump|PAGE_EXECUTE_READ|Net\.Sockets\.SocketFlags|Reflection\.Assembly\.SECURITY_DELEGATION|TOKEN_ADJUST_PRIVILEGES|TOKEN_ALL_ACCESS|TOKEN_ASSIGN_PRIMARY|TOKEN_DUPLICATE|TOKEN_ELEVATION|TOKEN_IMPERSONATE|TOKEN_INFORMATION_CLASS|TOKEN_PRIVILEGES|TOKEN_QUERY|Metasploit|Advapi32\.dll|kernel32\.dll|msvcrt\.dll|ntdll\.dll|secur32\.dll|user32\.dll|KerberosRequestorSecurityToken|CreateDelegate|AmsiUtils|Security\.Cryptography\.CryptoStream)"
