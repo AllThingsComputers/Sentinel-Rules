@@ -5,5 +5,4 @@
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
 | where EventID == 1
-| where CommandLine matches regex '(?i)reg add "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters" /v
-AutoShare(Server|Wks) /t REG_DWORD /d 0 /f;
+| where CommandLine matches regex '(?i)reg add "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\LanmanServer\\Parameters" /v AutoShare(Server|Wks) /t REG_DWORD /d 0 /f'
