@@ -2,16 +2,17 @@
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
 // Description of the Detection:  
 // References (if available): https://www.socinvestigation.com/detecting-and-preventing-a-silver-ticket-attack/
-// The Logic of the Detection or Query Begins Below This Line
-let SuccessfulLoginEvents =
-SecurityEvent
-| where TimeGenerated > ago(1h)
-| where EventID == 4769
-| summarize by tolower(TargetUserName); 
+
+let SuccessfulLoginEvents = 
+    SecurityEvent
+    | where TimeGenerated > ago(1h)
+    | where EventID == 4769
+    | summarize SuccessfulUsers = make_set(tolower(TargetUserName));
+
 SecurityEvent 
-| where TimeGenerated between (ago(100d).. ago(1h))
-| where EventID ==  4624 
+| where TimeGenerated between (ago(100d)..ago(1h))
+| where EventID == 4624
 | where isnotempty(TargetUserName)
 | where TicketEncryptionType =~ "0x17"
-| extend BasicName = extract(@"[^@]*", 0, TargetUserName)
-| where BasicName !in~ (SuccessfulLoginEvents)
+| extend BasicName = tolower(extract(@"([^@]*)", 1, TargetUserName))
+| where BasicName !in~ (SuccessfulLoginEvents.SuccessfulUsers)
