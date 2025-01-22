@@ -4,4 +4,4 @@
 // References (if available):     https://blog.menasec.net/2020/09/hunting-local-accounts-and-groups.html 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where  EventID in (12, 13) and EventType =~ "SetValue" and TargetObject matches regex @'(?i)HKLM\\SAM\\SAM\\DOMAINS\\Account\\Users\\Names\\.*\$\\.*'
+| where EventID in (12, 13) and EventType =~ "SetValue" and TargetObject matches regex @'(?i)HKLM\\SAM\\SAM\\DOMAINS\\Account\\Users\\Names\\.*\$\\.*'
