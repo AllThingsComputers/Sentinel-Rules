@@ -1,6 +1,6 @@
 // Title of Detection:   Successful Remote Logon Outside Subnet 
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Event ID 4624 and logon type 10 (Remote Interactive) and source network is not in your organization Subnet. 
+// Description of the Detection:  Event ID 4624 and logon type 10 (Remote Interactive) and source network is not in your organization Subnet. 
 // References (if available): https://www.socinvestigation.com/threat-hunting-with-windows-event-ids-4625-4624  
 // The Logic of the Detection or Query Begins Below This Line
 SecurityEvent
