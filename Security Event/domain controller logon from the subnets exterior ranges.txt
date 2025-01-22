@@ -1,7 +1,15 @@
-// Title of Detection:  domain controller logon from the subnets exterior ranges
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  
-// References (if available): https://blog.menasec.net/2019/02/threat-hunting-6-hiding-in-plain-sights.html 
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Domain Controller Logon from Subnet Exterior Ranges
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/
+// Description of the Detection: Identifies domain controller logons from IP addresses outside of expected ranges.
+// References: https://blog.menasec.net/2019/02/threat-hunting-6-hiding-in-plain-sights.html
+
+let DomainControllerAccounts = dynamic(["DC-Account1", "DC-Account2"]); // Replace with your DC account names
+let InternalIPRanges = dynamic(["10.0.0.0/8", "192.168.0.0/16", "172.16.0.0/12"]); // Replace with your expected IP ranges
 SecurityEvent
-| where  EventID in (4624, 4625) and LogonType == 3 and Account matches regex (insert your Domain controller Account name or its Naming Format if there’s multiple) and not(IpAddress in ("::1","-","127.0.0.1", "fe80::")) and not(IpAddress matches regex (insert your Domain controller  IP Range/s))
+| where EventID in (4624, 4625)  // Successful and failed logons
+| where LogonType == 3          // Network logons
+| where Account in (DomainControllerAccounts)
+| where not(IpAddress in ("::1", "-", "127.0.0.1", "fe80::")) // Exclude loopback and undefined addresses
+| where not(ipv4_is_in_range(IpAddress, InternalIPRanges))    // Exclude known internal IP ranges
+| project TimeGenerated, Account, IpAddress, LogonType, EventID
+| order by TimeGenerated desc
