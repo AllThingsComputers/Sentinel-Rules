@@ -1,8 +1,0 @@
-// Title of Detection: Concatenation Detected - not working
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Concatenation that can be used by attackers so their malicious commands avoid detection logic. works in both Command Prompt and Powershell. kql doesn't like the the mix of single double quotes. check  if cmd or pshell even accepts this. the above solves this.  in Cmd /Powershell
-// References (if available):  n/a
-// The Logic of the Detection or Query Begins Below This Line
-SysmonEvent
-| where EventID == 1
-| where CommandLine matches regex '(\".*\" *?\+ *?\".*\")|(\'.*\' *?\+ *?\'.*\')|(\".*\" *?\+ *?\':*\')|(\'.*\' *?\+ *?\".*\")'

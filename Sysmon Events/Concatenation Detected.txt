@@ -1,0 +1,9 @@
+// Title of Detection: Concatenation Detected
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
+// Description of the Detection: Detects concatenation in commands, which attackers may use to bypass detection logic. Targets both Command Prompt and PowerShell.
+
+SysmonEvent
+| where EventID == 1
+| where CommandLine matches regex @"(\".*\" *\+ *\".*\")|(\'.*\' *\+ *\'.*\')|(\".*\" *\+ *\'.*\')|(\'.*\' *\+ *\".*\")"
+| project TimeGenerated, Computer, UserName, CommandLine, Image
+| sort by TimeGenerated desc
