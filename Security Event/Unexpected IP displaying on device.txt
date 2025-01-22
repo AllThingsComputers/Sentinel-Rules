@@ -1,19 +1,19 @@
 // Title of Detection: Unexpected IP displaying on device
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/
-// Description of the Detection:
+// Description of the Detection: Identifies devices with unexpected IP addresses.
 // References:
 
 let lookbackperiod = 24h;
 
 let PhoneMDMlist = GetWatchlist('PhoneMDMlist')
 | extend UserOnMDM = DisplayName
-| project SerialNo, SearchKey, UserOnMDM;
+| project SerialNo, UserOnMDM;
 
-let number1 = DNSlog
+let DNSLogFiltered = DNSlog
 | where TimeGenerated >= ago(lookbackperiod)
 | where InternalIp != "Organization’s Public IP"
 | extend 
-    ISPIP = iff(InternalIp matches regex @"IP ADDRESS REGEX HERE", "ISP", ""),
+    ISPIP = iff(InternalIp matches regex @"^192\.168\.\d{1,3}\.\d{1,3}$", "ISP", ""), // Replace with actual regex
     isPrivateIP = iff(ipv4_is_private(InternalIp), "Private IP", ""),
     MobileISPIP = iff(InternalIp matches regex @"Orange Mobile", "Mobile ISP", "")
 | extend ISP = strcat(isPrivateIP, " ", ISPIP, " ", MobileISPIP)
@@ -28,7 +28,5 @@ let number1 = DNSlog
 MainSearch
 | join kind=fullouter (PhoneMDMlist) on SerialNo
 | where isnotempty(Identities)
-| project-away DeviceName, SerialNo, SerialNo1, SearchKey
 | extend UserName = strcat(UserOnMDM, " ", Notes)
-| project-away UserOnMDM, Notes, ISP, ExternalIPv4
-| project-reorder UserName, InternalIp, Identities, count_
+| project UserName, InternalIp, Identities, count_
