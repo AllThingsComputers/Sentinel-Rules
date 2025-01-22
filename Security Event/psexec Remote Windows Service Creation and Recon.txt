@@ -1,15 +1,24 @@
-// Title of Detection:  psexec Remote Windows Service Creation and Recon
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection: 
-// References (if available): 
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: PsExec Remote Windows Service Creation and Recon
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/
+// Description of the Detection: Detects suspicious PsExec activity such as remote service creation and reconnaissance.
+// References:
+
 let NetworkShareObjectWrite = SecurityEvent
-| where EventID == 5145 and ShareName matches regex @"\\*\ADMINS|\\*\C$" and AccessList contains "%%4417"
-WriteData extend NetworkShareObjectWrite Time = TimeGenerated;
+| where EventID == 5145 
+| where ShareName matches regex @"\\*\ADMINS|\\*\C$" 
+| where AccessList contains "%%4417" // Specific access type
+| extend NetworkShareObjectWriteTime = TimeGenerated;  // Timestamp for write operation
+
 let NetworkShareObjectSVCCTL = SecurityEvent
-| where EventID == 5145 and ShareName == @'\\*\IPC$' and RelativeTargetName == 'svcctl'
-| extend NetworkShareObjectSVCCTLTime == TimeGenerated;
+| where EventID == 5145
+| where ShareName == @"\\*\IPC$" 
+| where RelativeTargetName == "svcctl"  // Identifying PsExec activity
+| extend NetworkShareObjectSVCCTLTime = TimeGenerated;  // Timestamp for service control operation
+
+// Join the two sets to detect possible PsExec activity based on close timing
 NetworkShareObjectWrite
 | join kind=inner (NetworkShareObjectSVCCTL) on Computer, Account, IpAddress, IpPort
-| where datetime_diff('minute', NetworkShareObjectWriteTime, NetworkShareObjectSVCCTLTime) <= 1
-| where NetworkShareObjectSVCCTLTime >= NetworkShareObjectWriteTime 
+| where datetime_diff('minute', NetworkShareObjectWriteTime, NetworkShareObjectSVCCTLTime) <= 1 // Check if both events occurred within 1 minute
+| where NetworkShareObjectSVCCTLTime >= NetworkShareObjectWriteTime  // Ensure SVCCTL happens after the write event
+| project TimeGenerated, Computer, Account, IpAddress, IpPort, ShareName, RelativeTargetName, NetworkShareObjectWriteTime, NetworkShareObjectSVCCTLTime
+| order by TimeGenerated desc
