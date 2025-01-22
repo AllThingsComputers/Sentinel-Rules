@@ -1,7 +1,10 @@
-// Title of Detection:  Common Compression, Archival and Encryption file extensions 
+// Title of Detection: Common Compression, Archival, and Encryption File Extensions
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Exfiltration consists of techniques that adversaries may use to steal data from your network. Once they've collected data, adversaries often package it to avoid detection while removing it. This can include compression and encryption and more 
-// References (if available):  https://attack.mitre.org/tactics/TA0010/
-// The Logic of the Detection or Query Begins Below This Line
+// Description of the Detection: Detects file creation events with extensions related to compression, archival, or encryption, which may indicate potential exfiltration activities.
+// References: 
+// - https://attack.mitre.org/tactics/TA0010/
+
 SysmonEvent
-| where EventID == 11 and TargetFilename matches regex @'(?i)\.(zip|RARITar.GZ|7Z|PEA|KGB|XLSE|sdoc|axx|cgp|dc4|dcf|enc|xxe|suf)$'
+| where EventID == 11
+| where TargetFilename matches regex @"(?i)\.(zip|rar|tar\.gz|7z|pea|kgb|xls[e]|sdoc|axx|cgp|dc4|dcf|enc|xxe|suf)$"
+| project TimeGenerated, Computer, UserName, TargetFilename, ProcessId, Image
