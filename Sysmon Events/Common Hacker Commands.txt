@@ -1,13 +1,14 @@
 // Title of Detection: Common Hacker Commands
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection: Detects heavy usage of these commands. FP will be IT admin but regular users shouldnt 
-// References (if available): 
-// The Logic of the Detection or Query Begins Below This Line
-let CommonHackerCommands = dynamic(["Tasklist", "net start", "dir", "net use", 'net group", 'net config", "reg", share", 'net view', "type", "net localgroup", "ping", "net user","wmic", "wusa", "netsh advfirewall", "sc", "at", "rundll32", "ipconfig",'net time', "query", "ver", "netstat", "qprocess", "whoami", "systeminfo"]);
+// Description of the Detection: Detects frequent use of commands often associated with reconnaissance or administrative actions. May generate false positives for IT administrators but should not be common for regular users.
+
+let CommonHackerCommands = dynamic(["tasklist", "net start", "dir", "net use", "net group", "net config", "reg", "share", "net view", "type", "net localgroup", "ping", "net user", "wmic", "wusa", "netsh advfirewall", "sc", "at", "rundll32", "ipconfig", "net time", "query", "ver", "netstat", "qprocess", "whoami", "systeminfo"]);
+
 SysmonEvent
-| extend CmdlineAndParentCmdline = pack_all()
-| extend ComputerAndAccount = strcat(Computer, ' logged into the account', user_name)
-| where CmdlineAndParentCmdline has_any (CommonHackerCommands)
-| summarize dcount(NumberOfUniqueCommonHackerCommands = tostring(CmdlineAndParentCmdline)) by ComputerAndAccount // this will tally the total distinct usages of the above commands per account
-| sort by dcount_NumberOfUniqueCommonHackerCommands desc
-| where dcount_NumberOfUniqueCommonHackerCommands >= 6
+| where EventID == 1  // Sysmon EventID 1 for process creation
+| extend CommandLineLowerCase = tolower(CommandLine)  // Case-insensitive matching
+| where CommandLineLowerCase has_any(CommonHackerCommands)
+| summarize TotalCommandsExecuted = count() by Computer, UserName, bin(TimeGenerated, 1h)
+| where TotalCommandsExecuted >= 6  // Threshold for detection
+| sort by TotalCommandsExecuted desc
+| project TimeGenerated, Computer, UserName, TotalCommandsExecuted
