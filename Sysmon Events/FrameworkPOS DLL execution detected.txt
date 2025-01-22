@@ -4,4 +4,4 @@
 // References (if available):    https://redcanary.com/blog/frameworkpos-and-the-adequate-persistent-threat/ 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where (EventID == 1 and CommandLine matches regex "(?i)rundll32.* workerInstance") or (EventID == 1 and ParentImage endswith "services.exe" and Image matches regex @"(cmd|powershell|pwsh)\.exe") or (EventID= 1 and ParentImage endswith "taskeng.exe" and LogonId != "0x3e7")
+| where (EventID == 1 and CommandLine matches regex "(?i)rundll32.* workerInstance") or (EventID == 1 and ParentImage endswith "services.exe" and Image matches regex @"(cmd|powershell|pwsh)\.exe") or (EventID == 1 and ParentImage endswith "taskeng.exe" and LogonId != "0x3e7")
