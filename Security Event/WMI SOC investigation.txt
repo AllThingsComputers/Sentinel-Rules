@@ -1,4 +1,4 @@
-// Title of Detection: WMI SOC Investigation - Dead End
+// Title of Detection: WMI SOC Investigation
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/
 // Description of the Detection: Detects suspicious or malicious usage of Windows Management Instrumentation Command-line (WMIC).
 // References: https://www.socinvestigation.com/windows-management-instrumentation-attacks-detection-response/
