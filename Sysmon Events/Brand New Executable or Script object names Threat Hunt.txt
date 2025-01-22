@@ -4,4 +4,4 @@
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line 
 SysmonEvent
-| where EventID == 11 and TargetFilename matches regex @'(?i)\.(ps1|cmd|bat|psm1|exe)$' and not(TargetFilename matches regex (WhitelistedFilenames.exe|ITadminScript.bat))
+| where EventID == 11 and TargetFilename matches regex @'(?i)\.(ps1|cmd|bat|psm1|exe)$' and not(TargetFilename matches regex '(WhitelistedFilenames.exe|ITadminScript.bat)')
