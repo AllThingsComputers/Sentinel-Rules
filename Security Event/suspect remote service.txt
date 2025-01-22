@@ -1,7 +1,9 @@
-// Title of Detection:  suspect remote service
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  this hunts for the process which attempts an account logon by explicitly specifying that account's credentials along with the process name "sc.exe"  
-// References (if available):   https://www.socinvestigation.com/hunting-for-suspect-windows-services-mind-map 
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Suspect Remote Service
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/
+// Description of the Detection: This hunts for processes which attempt an account logon by explicitly specifying that account's credentials along with the process name "sc.exe".
+// References: https://www.socinvestigation.com/hunting-for-suspect-windows-services-mind-map
+
 SecurityEvent
-| where EventID == 4648 and ProcessName matches regex @"(?i)c:\\windows\\(system32|Syswow64)\\sc.exe" and not(TargetServerName matches regex @'(?i)(localhost]-)')
+| where EventID == 4648 // Account logon event (explicit credentials provided)
+| where ProcessName matches regex @"(?i)c:\\windows\\(system32|Syswow64)\\sc.exe" // Match process path for sc.exe
+| where not(TargetServerName matches regex @"(?i)localhost|127\.0\.0\.1|::1") // Exclude localhost and loopback addresses
