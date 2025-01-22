@@ -1,8 +1,8 @@
 // Title of Detection:    suspect File Read Access in Security Events
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: this could detect a program doing this. 4663-An attempt was made to access an object.  ReadData (or List Directory) and ReadAttributes. add more files to read 
+// Description of the Detection: this could detect a program doing this. 4663-An attempt was made to access an object.  ReadData (or List Directory) and ReadAttributes. add more files to read 
 // References (if available): https://attack.mitre.org/datasources/DS0022/ 
 // The Logic of the Detection or Query Begins Below This Line
 SecurityEvent
 | where EventID == 4663 and (AccessMask in ("0x1", "0x80") or AccessList contains "%%4416" or AccessList contains "%%4423") and ObjectName matches regex
-@"(?i)\\Users\\.*\\AppData\\Local\\Microsoft\\(Vault|Credentials)|//system32//config//SAM
+@"(?i)\\Users\\.*\\AppData\\Local\\Microsoft\\(Vault|Credentials)|//system32//config//SAM"
