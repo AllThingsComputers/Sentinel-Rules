@@ -1,8 +1,8 @@
 // Title of Detection:  Command or Powershell Started minimized in background
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Detects the suspect minimized start running of Command or Powershell to run commands quietly in the background  
+// Description of the Detection:  Detects the suspect minimized start running of Command or Powershell to run commands quietly in the background  
 // References (if available):  www.twitter.com/mrd0x/status/1478234484881436672?s=12  
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
 | where EventID == 1
-| where CommandLine matches regex '(?i) (Start-Process (cmd|powershell|pwsh)(\.exe)? -WindowStyle Minimized)|(start \//min (cmd|powershell|pwsh))'
+| where CommandLine matches regex '(?i)(Start-Process (cmd|powershell|pwsh)(\.exe)? -WindowStyle Minimized)|(start \//min (cmd|powershell|pwsh))'
