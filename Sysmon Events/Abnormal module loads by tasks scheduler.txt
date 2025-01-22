@@ -1,7 +1,12 @@
-// Title of Detection:   Abnormal module loads by tasks scheduler 
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: This  can indicate that a macro is creating or modifying a scheduled task. aka Scheduling tasks without schtask.exe. You can add additional MS office products
-// References (if available):   p45  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf 
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Abnormal Module Loads by Task Scheduler
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/
+// Description of the Detection: This can indicate that a macro is creating or modifying a scheduled task. Scheduling tasks without `schtask.exe`. You can add additional Microsoft Office products.
+// References: p45 https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf
+
 SysmonEvent
-| where EventID == 7 and Image matches regex @'(?i)(winword|outlook|excel|msaccess|Isass|taskeng|winlogon|schtask|wmipryse|wsmprovhost)\.exe" and ImageLoaded matches regex @"(?i)\\Windows\\System32\\taskschd\\.dll'
+| where EventID == 7 // Module load event
+| where Image matches regex @"(?i)(winword|outlook|excel|msaccess|lsass|taskeng|winlogon|schtask|wmiprvse|wsmprovhost)\.exe$" // Matches specific executables
+| where ImageLoaded matches regex @"(?i)\\Windows\\System32\\taskschd\.dll$" // Matches the Task Scheduler module
+| extend ExecutableName = extract(@"[^\\]+$", 0, Image) // Extracts the executable name
+| extend LoadedModule = extract(@"[^\\]+$", 0, ImageLoaded) // Extracts the module name
+| project TimeGenerated, Computer, User, ExecutableName, LoadedModule, Image, ImageLoaded
