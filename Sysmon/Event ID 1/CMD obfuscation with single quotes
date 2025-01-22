@@ -1,5 +1,5 @@
 // Rule Name: CMD obfuscation with single quotes
 // Rule Description:  in obfuscation the command dir c:\"win"d""ow"s" will work fine. As long as the number of quotes per argument is even and there are no more than two subsequent quotes, most programs seem to accept this. https://www.wietzebeukema.nl/blog/windows-command-line-obfuscation // this includes spaces
 Sysmon
-| where EventID = 1
-| where CommandLine matches regex  '(?i)(\'.*\')'
+| where EventID == 1
+| where CommandLine matches regex '(?i)(\'.*\')'
