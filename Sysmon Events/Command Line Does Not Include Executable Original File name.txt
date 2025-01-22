@@ -5,5 +5,5 @@
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
 | where EventID == 1
-| extend NoExtensionOriginalFileName = extract(@"[^\]*', 0, tostring(OriginalFileName))
+| extend NoExtensionOriginalFileName = extract(@"[^\]*", 0, tostring(OriginalFileName))
 | where CommandLine !contains NoExtensionOriginalFileName
