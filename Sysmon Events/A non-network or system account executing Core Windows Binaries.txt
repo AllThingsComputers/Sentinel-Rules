@@ -1,7 +1,11 @@
-// Title of Detection:   A non-network or system account executing Core Windows Binaries
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  It is suspect if not run under network or system account. Some LUIDS are predefined. For example, the LUID for the System account's logon session is always 0x3e7 (999 decimal), the LUID for Network Service's session is 0x3e4 (996), and Local Service's is 0x3e5 (997). Most other LUIDs are randomly generated.   you can add more protected key windows core services 
-// References (if available):   https://digitalforensicsurvivalpodcast.com/2019/04/14/dfsp-165-windows-core-processes/  
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: A Non-Network or System Account Executing Core Windows Binaries
+// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/
+// Description of the Detection: It is suspect if not run under network or system account. Some LUIDs are predefined. For example, the LUID for the System account's logon session is always 0x3e7 (999 decimal), the LUID for Network Service's session is 0x3e4 (996), and Local Service's is 0x3e5 (997). Most other LUIDs are randomly generated. You can add more protected key Windows core services.
+// References: https://digitalforensicsurvivalpodcast.com/2019/04/14/dfsp-165-windows-core-processes/
+
 SysmonEvent
-| where EventID == 1 and Image matches regex @"(?i)\\(System|smss|wininit|Isass|Ism|services|csrss|Isaiso)\.exe" and LogonId !in ("0x3e7", "0x3e5", "0x3e4")
+| where EventID == 1 // Process creation event
+| where Image matches regex @"(?i)\\(system|smss|wininit|lsass|ism|services|csrss|lsaiso)\.exe$" // Matches core binaries
+| where LogonId !in ("0x3e7", "0x3e5", "0x3e4") // Exclude System, Local Service, and Network Service accounts
+| extend SuspiciousBinary = extract(@"[^\\]+$", 0, Image) // Extracts just the binary name
+| project TimeGenerated, Computer, User, LogonId, Image, SuspiciousBinary
