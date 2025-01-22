@@ -13,4 +13,5 @@ SysmonEvent
 | extend moreinequality = countof(tostring(CommandLine), ">")
 | extend Total = minus + underscore + hash + tilde + lessinequality + moreinequality 
 | project-reorder TimeGenerated, Computer, UserName, EventID, Image, CommandLine, minus, underscore, hash, tilde, lessinequality, moreinequality, Total 
-| sort by Total desc❘ where Total >= 10
+| sort by Total desc
+| where Total >= 10
