@@ -4,4 +4,4 @@
 // References (if available): https://www.socinvestigation.com/threat-hunting-with-windows-event-ids-4625-4624/ 
 // The Logic of the Detection or Query Begins Below This Line
 SecurityEvent
-| where EventID == 4624 and LogonType in (10, 2) and TargetAccount endswith "$
+| where EventID == 4624 and LogonType in (10, 2) and TargetAccount endswith "$"
