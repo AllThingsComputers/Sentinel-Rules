@@ -1,7 +1,7 @@
 // Title of Detection:   Unauthenticated Account in Use
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: 
+// Description of the Detection: 
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SecurityEvent
-| where EventID in (4624, 4625) and TargetUserName = 'Guest' and LogonType in (10, 3)
+| where EventID in (4624, 4625) and TargetUserName == 'Guest' and LogonType in (10, 3)
