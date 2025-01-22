@@ -2,4 +2,4 @@
 // Rule Description:  the caret is an escape character that can be obfuscate https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/dosfuscation-report.pdf page 11
 Sysmon
 | where EventID == 1
-| where CommandLine matches regex  '\^//' 
+| where CommandLine matches regex '\^//' 
