@@ -1,7 +1,7 @@
 // Title of Detection:  task manager making an Isass.exe dump file 
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: This may be used for credential access
+// Description of the Detection: This may be used for credential access
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where EventID == 11 and TargetFilename matches regex @'(?i)C:\\Users\\.*\\AppData\\Local\\Temp\\Isass.dmp'
+| where EventID == 11 and TargetFilename matches regex @'(?i)C:\\Users\\.*\\AppData\\Local\\Temp\\lsass.dmp'
