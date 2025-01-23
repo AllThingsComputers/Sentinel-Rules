@@ -1,7 +1,28 @@
-// Title of Detection:   Process executed from appdata folder
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection:  
-// References (if available):  pg114  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Process Executed from AppData Folder
+// Authorship & Contact:
+// - Blog: https://allthingscomputers.medium.com
+// - Twitter: https://twitter.com/allthingshandle
+// - Wordpress: https://allthingscomputersblog.wordpress.com
+//
+// Description of the Detection:
+// This detection identifies processes like `taskeng.exe`, `schtasks.exe`, or `svchost.exe` being executed from the AppData folder, which is commonly associated with suspicious or malicious activity.
+//
+// References (if available):
+// - Page 114 of Red Canary 2021 Threat Detection Report:
+//   https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf
+//
+// Detection Logic Starts Below:
+
 SysmonEvent
-| where EventID == 1 and Image matches regex @"(?i)\\(taskeng|schtasks)\.exe$" and "(?i)Appdata\\Roaming" or (EventID == 1 and Image matches regex @"(?i)\\(taskeng|schtasks|svchost)\.exe$" and ParentImage matches regex @"(?i)Appdata\\Roaming")
+| where EventID == 1 
+    and (
+        // Detect direct execution from AppData
+        (Image matches regex @"(?i)\\(taskeng|schtasks)\.exe$" 
+         and Image contains @"AppData\Roaming"
+        ) 
+        or 
+        // Detect execution with a parent process in AppData
+        (Image matches regex @"(?i)\\(taskeng|schtasks|svchost)\.exe$" 
+         and ParentImage contains @"AppData\Roaming"
+        )
+    )
