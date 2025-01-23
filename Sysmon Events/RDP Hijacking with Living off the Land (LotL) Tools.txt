@@ -1,7 +1,31 @@
-// Title of Detection:  RDP Hijacking with Living off the Land (LotL) Tools
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection:  Process Create and then  Registry key modification double check . Process Create and then  Registry key modification
-// References (if available):   https://www.cyborgsecurity.com/cyborg-labs/living-off-the-land-lotl-rdp-hijacking/ 
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: RDP Hijacking with Living off the Land (LotL) Tools
+// Authorship & Contact:
+// - Blog: https://allthingscomputers.medium.com
+// - Twitter: https://twitter.com/allthingshandle
+// - Wordpress: https://allthingscomputersblog.wordpress.com
+//
+// Description of the Detection:
+// This detection identifies potential RDP hijacking using Living off the Land (LotL) tools by observing process creation (`tscon`) and registry key modifications.
+//
+// References (if available):
+// - Cyborg Labs: Living off the Land (LotL) RDP Hijacking
+//   https://www.cyborgsecurity.com/cyborg-labs/living-off-the-land-lotl-rdp-hijacking/
+//
+// Detection Logic Starts Below:
+
 SysmonEvent
-| where (EventID == 1 and * contains "tscon" and * contains "dest" and (* contains "rdp-tcp" or * contains "console")) or (EventID == 13 and * contains "tscon" and * contains "dest" and (* contains "rdp-tcp" or "console"))
+| where (
+    // Detect process creation for RDP hijacking
+    (EventID == 1 
+     and CommandLine contains "tscon"
+     and CommandLine contains "dest"
+     and (CommandLine contains "rdp-tcp" or CommandLine contains "console")
+    ) 
+    or 
+    // Detect registry key modification related to RDP hijacking
+    (EventID == 13 
+     and Details contains "tscon"
+     and Details contains "dest"
+     and (Details contains "rdp-tcp" or Details contains "console")
+    )
+)
