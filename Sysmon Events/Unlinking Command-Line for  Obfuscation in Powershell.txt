@@ -1,7 +1,7 @@
 // Title of Detection:   Unlinking Command-Line for  Obfuscation in Powershell 
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  With powershell you can affect logging by unlinking the command-line arguments from the code they deliver. An example of this comes from PowerShell's (like most management/ automation programs) ability to consume commands from the Standard Input stream. 
+// Description of the Detection:  With powershell you can affect logging by unlinking the command-line arguments from the code they deliver. An example of this comes from PowerShell's (like most management/ automation programs) ability to consume commands from the Standard Input stream. 
 // References (if available): page 3.  https://www.blackhat.com/docs/us-17/thursday/us-17-Bohannon-Revoke-Obfuscation-PowerShell-Obfuscation-Detection-And%20Evasion-Using-Science-wp.pdf 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where EventID == 1 and Image endswith "powershell.exe" and "(?i)powershell (IEX)?(\$input|-)" and ParentImage endswith "cmd.exe" and ParentCommandLine matches regex @'(?i)powershell (IEX)?(\$input|-)'
+| where EventID == 1 and Image endswith "powershell.exe" and CommandLine matches regex "(?i)powershell (IEX)?(\$input|-)" and ParentImage endswith "cmd.exe" and ParentCommandLine matches regex @'(?i)powershell (IEX)?(\$input|-)'
