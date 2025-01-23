@@ -1,6 +1,6 @@
 // Title of Detection:   PowerShell Hacker Tools and their popular  Cmdlets
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  This detects PowerShell Cmdlets from PowerShell Tools including MimiKatz, PowerSploit, PowerView, Nishang, PowerUp and Empire  
+// Description of the Detection:  This detects PowerShell Cmdlets from PowerShell Tools including MimiKatz, PowerSploit, PowerView, Nishang, PowerUp and Empire  
 // References (if available):  https://adsecurity.org/?p=2921 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
