@@ -9,4 +9,4 @@ Sysmon
 | summarize dcount(hash_imphash) by tostring(Image)//alternate is /tostring(OriginalFileName)
 | where dcount_hash_imphash >= 2;
 Sysmon 
-| where CommandLine matches regex  "(?i)(-r |-rename|-Ren|Rename-Item|rename)" and CommandLine has_any (processNameWithTwoHashes)  //  this will detect when an process name with at least two unique IMP hashes has had at least 1 renamed 
+| where CommandLine matches regex "(?i)(-r |-rename|-Ren|Rename-Item|rename)" and CommandLine has_any (processNameWithTwoHashes)  //  this will detect when an process name with at least two unique IMP hashes has had at least 1 renamed 
