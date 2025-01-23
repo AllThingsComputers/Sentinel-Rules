@@ -4,4 +4,4 @@
 // References (if available):  https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/dosfuscation-report.pdf   page 13 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where (Image matches regex @"(?i)\\cmd.exe$" and '(&|&&|\|\|)') or TargetObject matches regex @'(&|&&|\|\|)'
+| where (Image matches regex @"(?i)\\cmd.exe$" and CommandLine matches regex '(&|&&|\|\|)') or TargetObject matches regex @'(&|&&|\|\|)'
