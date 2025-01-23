@@ -4,4 +4,4 @@
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where EventID == 1 and ParentImage matches regex @'(?i)(EXCEL.EXE|WINWORD.EXE|AdobeARM.exe|AcroRd32.exe|Acrobat.exe|outlook.exe|Teams.exe|POWERPNT. EXE|root\\Office16\\)'
+| where EventID == 1 and ParentImage matches regex @'(?i)(EXCEL.EXE|WINWORD.EXE|AdobeARM.exe|AcroRd32.exe|Acrobat.exe|outlook.exe|Teams.exe|POWERPNT.EXE|root\\Office16\\)'
