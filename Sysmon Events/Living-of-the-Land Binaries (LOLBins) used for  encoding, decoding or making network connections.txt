@@ -1,7 +1,15 @@
-// Title of Detection:   Living-of-the-Land Binaries (LOLBins) used for  encoding, decoding or making network connections
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  
-// References (if available): 
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Living-of-the-Land Binaries (LOLBins) used for encoding, decoding, or making network connections
+// Authorship & Contact:
+//    https://allthingscomputers.medium.com
+//    https://twitter.com/allthingshandle
+//    https://allthingscomputersblog.wordpress.com
+// Description of the Detection: Detects usage of LOLBins such as `cscript`, `wscript`, `jscript`, or similar binaries performing suspicious actions like encoding, decoding, or network connections.
+// References: 
+// Logic of the Detection:
+
 SysmonEvent
-| where EventID == 1 and Image matches regex "(?i)(js|vb|[jcw])script" and '(?i)encode|decode|www|http|\.com|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
+| where EventID == 1 // Process creation
+| where Image matches regex @"(?i)(js|vb|jcw])script" // Target script engines such as `jscript`, `cscript`, and `wscript`
+| where CommandLine contains_any ("encode", "decode", "www", "http", ".com") // Detect commands involving encoding, decoding, or network traffic
+    or CommandLine matches regex @"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}" // Detects IP addresses in the command line
+| extend AdditionalDetails = pack("ProcessName", ProcessName, "CommandLine", CommandLine, "ParentImage", ParentImage)
