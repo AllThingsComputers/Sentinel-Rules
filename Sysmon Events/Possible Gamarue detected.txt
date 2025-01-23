@@ -1,7 +1,11 @@
-// Title of Detection:   Possible Gamarue detected
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  
-// References (if available): pg116  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf 
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Possible Gamarue Detected
+// Authorship & Contact: https://allthingscomputers.medium.com | https://twitter.com/allthingshandle | https://allthingscomputersblog.wordpress.com/
+// Description of the Detection: Detects suspicious usage of `rundll32.exe` with obfuscated command-line patterns often associated with the Gamarue malware family.
+// References (if available): Page 116 - https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf
+
 SysmonEvent
-| where EventID == 1 and Image endswith @"rundll32.exe" and CommandLine matches regex "\\[-~]{25}\.[ -~]{25},[ -~]{25}" and countof(tostring(CommandLine), @'[`~!@#\$%\^&\*\(\)_\|\+\-=\?;:\",\.<>\{\}\[\]\\\/]', "regex") > 38
+| where EventID == 1 // Process creation events
+| where Image endswith @"rundll32.exe" // Target rundll32.exe processes
+| where CommandLine matches regex @"\\[-~]{25}\.[ -~]{25},[ -~]{25}" // Detect obfuscated command-line patterns
+| extend SpecialCharCount = countof(tostring(CommandLine), @"[`~!@#\$%\^&\*\(\)_\|\+\-=\?;:\",\.<>\{\}\[\]\\\/]", "regex") // Count special characters
+| where SpecialCharCount > 38 // Filter for highly obfuscated commands
