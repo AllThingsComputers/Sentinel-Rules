@@ -1,8 +1,8 @@
 // Title of Detection: Single Quote Concatenation Used
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Concatenation that can be used by attackers so their malicious commands avoid detection logic. works in both Command Prompt and Powershell
+// Description of the Detection:  Concatenation that can be used by attackers so their malicious commands avoid detection logic. works in both Command Prompt and Powershell
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
 | where EventID == 1
-| where CommandLine matches regex  "(\'.*\' *?\+ *?\'.*\')"
+| where CommandLine matches regex "(\'.*\' *?\+ *?\'.*\')"
