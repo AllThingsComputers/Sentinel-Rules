@@ -1,7 +1,15 @@
-// Title of Detection:   New Scheduled Task with suspect persistence and no command line options
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  
-// References (if available):  p94  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf 
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: New Scheduled Task with Suspect Persistence and No Command Line Options
+// Authorship & Contact:
+//    https://allthingscomputers.medium.com
+//    https://twitter.com/allthingshandle
+//    https://allthingscomputersblog.wordpress.com
+// Description: Detects creation of new scheduled tasks using `schtasks.exe` or `taskeng.exe` with no command line options. This can be indicative of persistence methods without clear instructions, often seen in malicious activity.
+// References: p94 https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf
+
+// Detection Logic:
 SysmonEvent
-| where EventID == 1 and Image matches regex @"(?i)(schtasks|taskeng)\.exe$" and not("\s[-\/\\]\w+\b")
+| where EventID == 1 // Process creation event
+| where Image matches regex @"(?i)(schtasks|taskeng)\.exe$" // Filter for schtasks.exe or taskeng.exe executions
+| where not(CommandLine matches regex @"\s[-/\\]\w+\b") // Excludes tasks with command line options (i.e., tasks that have arguments such as "/Create" or "/tn")
+| project TimeGenerated, Computer, ParentImage, CommandLine
+| extend AlertDetails = pack("SuspiciousTaskName", CommandLine, "Computer", Computer, "ParentImage", ParentImage)
