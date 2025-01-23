@@ -1,9 +1,16 @@
-// Title of Detection:  Multiple instances of a core processes at same time
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection:  certain core processes singletons and should only be one running at a time if theres any more this could be fake
-// References (if available): 
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Multiple Instances of Core Processes at the Same Time
+// Authorship & Contact:
+//    https://allthingscomputers.medium.com
+//    https://twitter.com/allthingshandle
+//    https://allthingscomputersblog.wordpress.com
+// Description: Detects when multiple instances of core singleton processes are running simultaneously, which may indicate malicious activity or process spoofing.
+// References: None provided
+// Detection Logic:
+
 SysmonEvent
-| where TimeGenerated > ago(5m) and EventID == 1 and OriginalFileName matches regex @"(?i)\\(System|wininit|Isass|Ism|services|Isaiso)\.exe$" // these are protected core services
-// summarize dcount(tostring(ProcessId)) by tostring(OriginalFileName), Computer 
-| where dcount_ProcessId >= 2
+| where TimeGenerated > ago(5m) // Focus on recent events for a near real-time detection
+| where EventID == 1 // Process creation events
+| where OriginalFileName matches regex @"(?i)(System\.exe|wininit\.exe|lsass\.exe|smss\.exe|services\.exe|lsaiso\.exe)$" // Protected core processes
+| summarize InstanceCount = dcount(tostring(ProcessId)) by tostring(OriginalFileName), Computer, bin(TimeGenerated, 1m)
+| where InstanceCount >= 2 // Identify more than one instance of any core process
+| extend AlertDetails = pack("CoreProcess", OriginalFileName, "Computer", Computer, "InstanceCount", InstanceCount)
