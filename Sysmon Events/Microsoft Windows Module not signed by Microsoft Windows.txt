@@ -4,4 +4,4 @@
 // References (if available):   page 43  https://resource.redcanary.com/rs/003-YRU-314/images/2020-Threat-Detection-Report.pdf
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where EventID == 7 and ImageLoaded matches regex @"(?i)\\(syswow64|system32)\\" and module_signature matches regex @"[^(Microsoft Windows)]”
+| where EventID == 7 and ImageLoaded matches regex @"(?i)\\(syswow64|system32)\\" and module_signature matches regex @"[^(Microsoft Windows)]"
