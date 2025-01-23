@@ -4,4 +4,4 @@
 // References (if available): https://blog.menasec.net/2019/02/threat-hunting-18-lateral-movement-via.html
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where event ID 3 and Image endswith "explorer.exe" and SourceIp > 49152
+| where EventID == 3 and Image endswith "explorer.exe" and SourceIp > 49152
