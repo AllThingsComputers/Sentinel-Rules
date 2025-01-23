@@ -4,4 +4,4 @@
 // References (if available): https://blog.menasec.net/2019/02/threat-hunting-21-procdump-or-taskmgr.html 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where EventID == 10 and CallTrace matches regex @'(?i)dbghelp|dbgcore' and TargetImage matches regex @'(?i)Isass'
+| where EventID == 10 and CallTrace matches regex @'(?i)dbghelp|dbgcore' and TargetImage matches regex @'(?i)lsass'
