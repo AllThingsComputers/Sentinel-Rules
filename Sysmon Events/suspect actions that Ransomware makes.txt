@@ -1,7 +1,7 @@
 // Title of Detection:   suspect actions that Ransomware makes
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:   
+// Description of the Detection:   
 // References (if available):  https://redcanary.com/blog/its-all-fun-and-games-until-ransomware-deletes-the-shadow-copies/ 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where (EventID == 3 and Image matches regex @"(?i)(powershell|pwsh)\.exe$" and not(ipv4_is_private(tostring(DestinationIp)))) or (EventID == 1 and Image matches regex @"(?i)Vssadmin\.exe$" and CommandLine contains "resize shadowstorage") or (EventID ==1 and Image matches regex @"(?i)wmic\.exe$" and CommandLine contains "shadowcopy delete") or (EventID == 1 and Image matches regex @"(?i)(powershell|pwsh)\.exe$" and (CommandLine contains "Invoke-ReflectivePEInjection" or CommandLine contains "win32_shadowcopy"))
+| where (EventID == 3 and Image matches regex @"(?i)(powershell|pwsh)\.exe$" and not(ipv4_is_private(tostring(DestinationIp)))) or (EventID == 1 and Image matches regex @"(?i)Vssadmin\.exe$" and CommandLine contains "resize shadowstorage") or (EventID == 1 and Image matches regex @"(?i)wmic\.exe$" and CommandLine contains "shadowcopy delete") or (EventID == 1 and Image matches regex @"(?i)(powershell|pwsh)\.exe$" and (CommandLine contains "Invoke-ReflectivePEInjection" or CommandLine contains "win32_shadowcopy"))
