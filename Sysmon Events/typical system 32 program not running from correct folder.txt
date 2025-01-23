@@ -1,7 +1,9 @@
-// Title of Detection:  typical system 32 program not running from correct folder
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Attackers may run malicious programs names renamed as typical windows processes in order to remain hidden. This rule detects when a typical program name used by Windows is not running out the system 32 folder as expected. This can be expanded to more directories and more different expected windows programs from online. such as winlogon.exe and others not in system32 folder.
+// Title of Detection: Typical System32 Program Not Running from Correct Folder
+// Authorship & Contact: https://allthingscomputers.medium.com | https://twitter.com/allthingshandle | https://allthingscomputersblog.wordpress.com/
+// Description of the Detection: Detects cases where a typical Windows program name (e.g., `winlogon.exe`) is not running from the expected `C:\Windows\System32` folder. Attackers may use this technique to disguise malicious programs as legitimate system processes.
 // References (if available): 
-// The Logic of the Detection or Query Begins Below This Line
+
 SysmonEvent
-| where isnotempty(Image) and isnotempty(OriginalFileName) and Image contains "system32" and OriginalFileName !startswith "C:\\" and OriginalFileName <> "-" and OriginalFileName in~ (System32Programs) and Image !startswith @"C:\Windows\System32\”
+| where isnotempty(Image) and isnotempty(OriginalFileName) // Ensure relevant fields are populated
+| where OriginalFileName in~ ("winlogon.exe", "svchost.exe", "explorer.exe", "lsass.exe", "cmd.exe", "powershell.exe") // Specify expected Windows programs
+| where Image !startswith @"C:\Windows\System32\" // Detect if the program is not running from the expected folder
