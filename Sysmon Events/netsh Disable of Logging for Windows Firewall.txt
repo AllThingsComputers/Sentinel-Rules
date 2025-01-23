@@ -1,6 +1,6 @@
 // Title of Detection: netsh Disable of Logging for Windows Firewall
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  this can hinder DFIR attempts
+// Description of the Detection:  this can hinder DFIR attempts
 // References (if available): https://malwarereversing.blogspot.com/2019/02/enabling-windows-firewall-log.html
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
