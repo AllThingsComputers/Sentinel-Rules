@@ -1,7 +1,62 @@
-// Title of Detection:  Rundll32 being executed from world or user-writable locations
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Bad actors may use Rundll32 to load or write DLLs from world or user-writable directories so this detects that.
-// References (if available):   page 24  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf 
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Rundll32 being executed from world or user-writable locations
+// Authorship & Contact:
+// - Blog: https://allthingscomputers.medium.com
+// - Twitter: https://twitter.com/allthingshandle
+// - Wordpress: https://allthingscomputersblog.wordpress.com
+//
+// Description of the Detection:
+// Detects instances where Rundll32 is executed, or DLLs are loaded, from world- or user-writable directories.
+// This is a common technique used by adversaries to execute malicious code.
+//
+// References (if available):
+// - Page 24, 2021 Threat Detection Report: https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf
+//
+// Detection Logic Starts Below:
+
 SysmonEvent
-| where (EventID == 11 and Image contains "rundll.exe" and TargetFilename matches regex @"(?i)\\APPDATA\\|\\PUBLIC\\|\\ProgramData\\|\\TEMP\\|\\Windows\\system32\\microsoft\\crypto\\rsa\\machine keys|\\Windows\\system32\\tasks_migrated\\microsoft\\windows\\pla\\system\\Windows\\syswow64\\tasks\\microsoft\\windows\\pla\\system\\Windows\\debug\\wia|\\Windows\\system32\\tasks|\\Windows\\syswow64\\tasks)\\Windows\\tasks|\\Windows\\registration\\crmlog|\\Windows\\system32\\com\\dmp|\\Windows\\system32\\fxstmp|\\Windows\\system32\\spool\\drivers\\color|\Windows\\system32\\spool\\printers|\Windows\\system32\\spool\\servers\\Windows\\syswow64\\com\\dmp|\\Windows\\syswow64\\fxstmp|\\Windows\\temp\\Windows\\tracing") or (EventID == 7 and Image contains "rundll.exe" and ImageLoaded matches regex @"(?i)\\APPDATA\\|\\PUBLIC\\|\\ProgramData\\|\\TEMP\\|\\Windows\\system32\\microsoft\\crypto\\rsa\\machine keys|\\Windows\\system32\\tasks_migrated\\microsoft\\windows\\pla\\system\\Windows\\syswow64\\tasks\\microsoft\\windows\\pla\\system\\Windows\\debug\\wia|\\Windows\\system32\\tasks |\\Windows\\syswow64\\tasks|\\Windows\\tasks|\\Windows\\registration\\crmlog|\\Windows\\system32\\com\\dmp|\\Windows\\system32\\fxstmp|\\Windows\\system32\\spool\\drivers\\color|\Windows\\system32\\spool\\printers|\Windows\\system32\\spool\\servers\\Windows\\syswow64\\com\\dmp|\\Windows\\syswow64\\fxstmp|\\Windows\\temp\\Windows\\tracíng")
+| where (EventID == 11 and Image contains "rundll32.exe" and TargetFilename matches regex @'(?i)(
+    \\APPDATA\\|
+    \\PUBLIC\\|
+    \\ProgramData\\|
+    \\TEMP\\|
+    \\Windows\\system32\\microsoft\\crypto\\rsa\\machine keys|
+    \\Windows\\system32\\tasks_migrated\\microsoft\\windows\\pla\\system|
+    \\Windows\\syswow64\\tasks\\microsoft\\windows\\pla\\system|
+    \\Windows\\debug\\wia|
+    \\Windows\\system32\\tasks|
+    \\Windows\\syswow64\\tasks|
+    \\Windows\\tasks|
+    \\Windows\\registration\\crmlog|
+    \\Windows\\system32\\com\\dmp|
+    \\Windows\\system32\\fxstmp|
+    \\Windows\\system32\\spool\\drivers\\color|
+    \\Windows\\system32\\spool\\printers|
+    \\Windows\\system32\\spool\\servers|
+    \\Windows\\syswow64\\com\\dmp|
+    \\Windows\\syswow64\\fxstmp|
+    \\Windows\\temp|
+    \\Windows\\tracing
+)')
+or (EventID == 7 and Image contains "rundll32.exe" and ImageLoaded matches regex @'(?i)(
+    \\APPDATA\\|
+    \\PUBLIC\\|
+    \\ProgramData\\|
+    \\TEMP\\|
+    \\Windows\\system32\\microsoft\\crypto\\rsa\\machine keys|
+    \\Windows\\system32\\tasks_migrated\\microsoft\\windows\\pla\\system|
+    \\Windows\\syswow64\\tasks\\microsoft\\windows\\pla\\system|
+    \\Windows\\debug\\wia|
+    \\Windows\\system32\\tasks|
+    \\Windows\\syswow64\\tasks|
+    \\Windows\\tasks|
+    \\Windows\\registration\\crmlog|
+    \\Windows\\system32\\com\\dmp|
+    \\Windows\\system32\\fxstmp|
+    \\Windows\\system32\\spool\\drivers\\color|
+    \\Windows\\system32\\spool\\printers|
+    \\Windows\\system32\\spool\\servers|
+    \\Windows\\syswow64\\com\\dmp|
+    \\Windows\\syswow64\\fxstmp|
+    \\Windows\\temp|
+    \\Windows\\tracing
+)')
