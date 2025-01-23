@@ -1,7 +1,16 @@
-// Title of Detection:   New Scheduled Task with suspect name
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  
-// References (if available): page 90  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: New Scheduled Task with Suspect Name
+// Authorship & Contact:
+//    https://allthingscomputers.medium.com
+//    https://twitter.com/allthingshandle
+//    https://allthingscomputersblog.wordpress.com
+// Description: Detects the creation of new scheduled tasks with suspicious task names via the `schtasks.exe` utility. This could be indicative of attempts to establish persistence or malicious behavior.
+// References: page 90 https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf
+
+// Detection Logic:
 SysmonEvent
-| where EventID == 1 and Image matches regex @"(?i)\\schtasks\.exe$" and "(?i)/Create.* /tn" and not("(?i)()")
+| where EventID == 1 // Process creation event
+| where Image matches regex @"(?i)\\schtasks\.exe$" // Filtering for schtasks.exe
+| where CommandLine contains "/Create" and CommandLine contains "/tn" // Detect task creation command with task name
+| where CommandLine matches regex @"(?i)(malicious|suspect|evil|exploit|payload|hack)" // Example suspicious task name pattern (e.g., malicious terms)
+| project TimeGenerated, Computer, ParentImage, CommandLine
+| extend AlertDetails = pack("SuspiciousTaskName", CommandLine, "Computer", Computer, "ParentImage", ParentImage)
