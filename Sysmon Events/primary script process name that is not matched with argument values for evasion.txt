@@ -4,4 +4,4 @@
 // References (if available):   https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/dosfuscation-report.pdf  page 7
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where (Image endswith @"(?i)cmd.exe" and "(?i)(powershell|PS )") or (Image endswith @"(?i)powershell.exe" and "(?i)(cmd)")
+| where (Image endswith @"(?i)cmd.exe" and CommandLine matches regex "(?i)(powershell|PS )") or (Image endswith @"(?i)powershell.exe" and "(?i)(cmd)")
