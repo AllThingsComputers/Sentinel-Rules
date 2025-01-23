@@ -1,6 +1,6 @@
 // Title of Detection: Potentially Illegitimate Svchost.exe (service host)
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  This detects 4 irregularities a seen in the link 
+// Description of the Detection:  This detects 4 irregularities a seen in the link 
 // References (if available): https://www.socinvestigation.com/important-windows-processes-for-threat-hunting/
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
