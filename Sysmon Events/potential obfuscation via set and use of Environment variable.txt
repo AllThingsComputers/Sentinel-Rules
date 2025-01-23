@@ -1,9 +1,8 @@
 // Title of Detection: potential obfuscation via set and use of Environment variable 
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  False positives will be legitimate IT admin activity though the set and use of Environment variable can be used to obfuscate in command line
+// Description of the Detection:  False positives will be legitimate IT admin activity though the set and use of Environment variable can be used to obfuscate in command line
 // References (if available):   https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/dosfuscation-report.pdf  page 22
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
 | where EventID == 1
-| where CommandLine matches regex '(?i)(set .*=.*|%.*%|set.* call)' or
-ParentCommandLine matches regex @'(?i)(set .*=.*|%.*%|set.* call)' or TargetObject matches regex @'(?i)(set .*=.*|%.*%|set.* call)'
+| where CommandLine matches regex '(?i)(set .*=.*|%.*%|set.* call)' or ParentCommandLine matches regex @'(?i)(set .*=.*|%.*%|set.* call)' or TargetObject matches regex @'(?i)(set .*=.*|%.*%|set.* call)'
