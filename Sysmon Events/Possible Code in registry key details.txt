@@ -4,4 +4,4 @@
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where  EventID in (12, 13, 14) and TargetObject matches regex @"(?i)(javascript|IEX|Invoke-Expression|pything|cmd|bat|ps1|psm1|exe)"
+| where EventID in (12, 13, 14) and TargetObject matches regex @"(?i)(javascript|IEX|Invoke-Expression|pything|cmd|bat|ps1|psm1|exe)"
