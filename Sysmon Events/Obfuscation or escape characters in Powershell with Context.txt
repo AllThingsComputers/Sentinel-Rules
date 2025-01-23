@@ -7,5 +7,4 @@ Sysmon
 | where Image matches regex @"(powershell|pwsh)" and CommandLine matches regex @'[\^\+\$\%]'
 | extend extractedCommandLineOnly = extract_all(@'([\^\+\$\%]{1})', tostring(CommandLine))
 | extend extractedContextCommandLine5onEachSide = extract_all(@'((?i). {5}[\^\+\$\%].{5}){1}', tostring(CommandLine))
-| extend extractedContextCommandLine15onEachSide = extract_all(@'((?i).{15}[\^\+\$\%].{15}){1}',
-tostring(CommandLine)) // Please whitelist of context safe code seen before
+| extend extractedContextCommandLine15onEachSide = extract_all(@'((?i).{15}[\^\+\$\%].{15}){1}', tostring(CommandLine)) // Please whitelist of context safe code seen before
