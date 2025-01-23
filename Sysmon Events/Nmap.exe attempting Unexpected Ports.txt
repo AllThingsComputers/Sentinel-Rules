@@ -5,4 +5,4 @@
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
 | where EventID == 1
-| where CommandLine matches regex (?i)nmap(\.exe)? -p ?(8(?!0$)(?!0 )|4(?!43$)(?!43 )|[1235679])\d{0,4}.*'
+| where CommandLine matches regex '(?i)nmap(\.exe)? -p ?(8(?!0$)(?!0 )|4(?!43$)(?!43 )|[1235679])\d{0,4}.*'
