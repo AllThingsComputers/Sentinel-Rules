@@ -4,4 +4,4 @@
 // References (if available):  https://docs.microsoft.com/en-us/windows/security/identity-protection/user-account-control/user-account-control-overview
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where EventID == 1 and Image matches regex @"(?i)\\(users|appdata|temp)\\
+| where EventID == 1 and Image matches regex @"(?i)\\(users|appdata|temp)\\"
