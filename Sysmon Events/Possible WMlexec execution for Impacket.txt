@@ -4,4 +4,4 @@
 // References (if available):  p48  https://resource.redcanary.com/rs/003-YRU-314/images/2022-Threat-Detection-Report-RedCanary.pdf
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where ParentImage endswith "\\wmiprvse.exe" and Image endswith "\\cmd.exe" and '(?i)cmd.exe.* \/Q \/c .*\\\\127.0.0.1\\ADMIN\$\\_[0-9]{1,10}\.[0-9]{1,10} 2>&1'   
+| where ParentImage endswith "\\wmiprvse.exe" and Image endswith "\\cmd.exe" and CommandLine matches regex '(?i)cmd.exe.* \/Q \/c .*\\\\127.0.0.1\\ADMIN\$\\_[0-9]{1,10}\.[0-9]{1,10} 2>&1'   
