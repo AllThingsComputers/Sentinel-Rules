@@ -1,6 +1,6 @@
 // Title of Detection: PSExec Clones in use
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  
+// Description of the Detection:  
 // References (if available):  https://redcanary.com/blog/threat-hunting-psexec-lateral-movement/ 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
