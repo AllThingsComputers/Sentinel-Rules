@@ -1,13 +1,34 @@
-// Title of Detection:  Suspect MSBuild
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection:   
-// References (if available): https://redcanary.com/blog/detection-engineering/
-// The Logic of the Detection or Query Begins Below This Line
-let msbuild = Sysmon
-| where EventID == 1 and ParentImage endswith "MSBuild.exe" and not(Image endswith "csc.exe")
-| extend PID = tostring(ProcessId);
-(union isfuzzy= true (Sysmon
-| where EventID == 3
-| extend PID = tostring(ProcessId)
-| join kind-inner (msbuild) on PID, Computer), (Sysmon
-| where (EventID == 1 and Image endswith "MSBuild.exe" and countof(tostring(CommandLine), @"\s", "regex") < 3) or (EventID == 1 and Image endswith "MSBuild.exe" and ParentImage !endswith "cmd.exe")))
+// Title of Detection: Suspect MSBuild
+// Authorship & Contact:
+// - Blog: https://allthingscomputers.medium.com
+// - Twitter: https://twitter.com/allthingshandle
+// - Wordpress: https://allthingscomputersblog.wordpress.com
+//
+// Description of the Detection:
+// Detects potentially malicious use of MSBuild.exe by:
+// - Identifying MSBuild.exe processes with unusual parent-child relationships or command line arguments.
+// - Correlating network activity (EventID 3) with MSBuild.exe.
+//
+// References:
+// - https://redcanary.com/blog/detection-engineering/
+//
+// The Logic of the Detection or Query Begins Below:
+
+let msbuild_processes = Sysmon
+| where EventID == 1 and Image endswith @"\MSBuild.exe" and not(Image endswith @"\csc.exe")
+| extend PID = tostring(ProcessId), Computer;
+
+let suspicious_msbuild_activities = 
+    (Sysmon
+    | where EventID == 3 // Network activity events
+    | extend PID = tostring(ProcessId)
+    | join kind=inner (msbuild_processes) on PID, Computer)
+    union
+    (Sysmon
+    | where EventID == 1 and Image endswith @"\MSBuild.exe" 
+        and (countof(tostring(CommandLine), @"\s", "regex") < 3 // Suspiciously short command line
+        or ParentImage !endswith @"\cmd.exe")); // Unusual parent process
+
+suspicious_msbuild_activities
+| project TimeGenerated, Computer, EventID, Image, CommandLine, ParentImage, TargetFilename, UserName
+| order by TimeGenerated desc
