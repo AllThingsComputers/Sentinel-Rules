@@ -4,4 +4,4 @@
 // References (if available): https://redcanary.com/blog/verclsid-exe-threat-detection/
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where (EventID == 1 and ParentImage matches regex @"(?i)\\Verclsid\.exe" and isnotempty(Image)) or EventID == 3 and Image matches regex @"(?i)\\Verclsid\.exe
+| where (EventID == 1 and ParentImage matches regex @"(?i)\\Verclsid\.exe" and isnotempty(Image)) or EventID == 3 and Image matches regex @"(?i)\\Verclsid\.exe"
