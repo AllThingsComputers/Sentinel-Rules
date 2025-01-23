@@ -12,4 +12,4 @@ Sysmon
 Sysmon
 | where TimeGenerated >= ago(1d)
 | where EventID == 22
-| where tostring(Image) lin (historicalprocessmakingdnsquerys)
+| where tostring(Image) !in (historicalprocessmakingdnsquerys)
