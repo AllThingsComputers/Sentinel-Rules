@@ -1,7 +1,19 @@
-// Title of Detection: SCT file found in windows registry
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  maybe add more exe and scripts. needs way more work
-// References (if available): 
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: SCT File Found in Windows Registry
+// Authorship & Contact:
+// - Blog: https://allthingscomputers.medium.com
+// - Twitter: https://twitter.com/allthingshandle
+// - Wordpress: https://allthingscomputersblog.wordpress.com
+//
+// Description of the Detection:
+// Detects instances where `.sct` files (Windows Script Component files) are referenced in the Windows Registry.
+// This can indicate potentially malicious activity, as adversaries often use `.sct` files to execute scripts.
+//
+// References:
+// - Add relevant references if available.
+//
+// Detection Logic Starts Below:
+
 SysmonEvent
-| where TargetObject contains ".sct" or TargetObject contains ".sct
+| where EventID == 13 // Registry value set
+    and (TargetObject matches regex @"(?i)\.sct$")
+| project TimeGenerated, Computer, TargetObject, Details, UserName, EventID
