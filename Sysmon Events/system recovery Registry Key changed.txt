@@ -1,7 +1,7 @@
 // Title of Detection: system recovery Registry Key changed
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Monitor the registry for changes associated with system recovery features (ex: the creation of HKEY_CURRENT_USER\Software\Policies\Microsoft\PreviousVersions\DisableLocalPage).  
+// Description of the Detection:  Monitor the registry for changes associated with system recovery features (ex: the creation of HKEY_CURRENT_USER\Software\Policies\Microsoft\PreviousVersions\DisableLocalPage).  
 // References (if available): https://attack.mitre.org/techniques/T1490/ 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where EventID in (12, 13, 14) and TargetObject matches regex @"(?i)(HKEY_CURRENT_USER|hkcu)\\Software\\Policies\\Microsoft\\PreviousVersions\\DisableLocalPage'
+| where EventID in (12, 13, 14) and TargetObject matches regex @"(?i)(HKEY_CURRENT_USER|hkcu)\\Software\\Policies\\Microsoft\\PreviousVersions\\DisableLocalPage"
