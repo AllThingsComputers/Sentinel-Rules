@@ -1,7 +1,18 @@
-// Title of Detection: Lateral Movement using DCOM 
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection:   Shell Windows & Shell BrowserWindow
-// References (if available):  https://blog.menasec.net/2019/02/threat-hunting-18-lateral-movement-via.html
-// The Logic of the Detection or Query Begins Below This Line
-(union isfuzzy=true(SecurityEvent 
-| where EventID == 5158 and * contains "explorer.exe" and toint(SourcePort) >= 49152)
+// Title of Detection: Lateral Movement using DCOM
+// Authorship & Contact:
+//    https://allthingscomputers.medium.com
+//    https://twitter.com/allthingshandle
+//    https://allthingscomputersblog.wordpress.com
+// Description of the Detection:
+//    Detects potential lateral movement via DCOM, specifically monitoring the use of ShellWindows and ShellBrowserWindow.
+// References: 
+//    https://blog.menasec.net/2019/02/threat-hunting-18-lateral-movement-via.html
+
+union isfuzzy=true (
+    SecurityEvent
+    | where EventID == 5158 // Indicates a connection allowed by Windows Filtering Platform (WFP)
+    | where Application contains "explorer.exe" // Indicates DCOM activity initiated via explorer.exe
+    | where toint(SourcePort) >= 49152 // Monitors dynamic ports often associated with DCOM
+)
+| extend Details = pack("SourceAddress", IpAddress, "SourcePort", SourcePort, "DestinationAddress", DestinationAddress, "DestinationPort", DestinationPort, "Protocol", Protocol)
+| project TimeGenerated, Computer, Details
