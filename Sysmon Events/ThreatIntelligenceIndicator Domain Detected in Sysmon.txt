@@ -4,7 +4,7 @@
 // Description of the Detection:  
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
-let ThreatIntelligenceIndicatorDomain = Threat IntelligenceIndicator
+let ThreatIntelligenceIndicatorDomain = ThreatIntelligenceIndicator
 | where isnotempty(DomainName)
 | where Active == true and ExpirationDateTime > now()
 | summarize by DomainName; 
