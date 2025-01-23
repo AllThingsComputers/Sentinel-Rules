@@ -1,7 +1,7 @@
 // Title of Detection: scheduled tasks modifications in the Registry
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:   
+// Description of the Detection:   
 // References (if available): https://www.microsoft.com/security/blog/2022/04/12/tarrask-malware-uses-scheduled-tasks-for-defense-evasion 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where  EventID in (12, 13) and TargetObject matches regex @'(?i)\\CurrentVersion\\Schedule\\TaskCache\\(Tree|Tasks)'
+| where EventID in (12, 13) and TargetObject matches regex @'(?i)\\CurrentVersion\\Schedule\\TaskCache\\(Tree|Tasks)'
