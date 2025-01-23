@@ -10,7 +10,7 @@ Sysmon
 | summarize count() by sentence = strcat(tostring(Image), tostring(ImageLoaded))
 ); 
 Sysmon
-❘ where TimeGenerated >= ago(1d)
+| where TimeGenerated >= ago(1d)
 | where EventID == 7
 | extend sentence = strcat(tostring(Image), tostring(ImageLoaded))
 | where sentence !in (processloadingmodule)
