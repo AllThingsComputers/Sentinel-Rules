@@ -4,4 +4,4 @@
 // References (if available):   p52  https://resource.redcanary.com/rs/003-YRU-314/images/2022-Threat-Detection-Report-RedCanary.pdf 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where ParentImage ends with "\\wscript.exe" and Image endswith "\\cmd.exe" and '(?i)whoami/all>>'
+| where ParentImage ends with "\\wscript.exe" and Image endswith "\\cmd.exe" and CommandLine matches regex '(?i)whoami/all>>'
