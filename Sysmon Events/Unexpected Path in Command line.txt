@@ -1,8 +1,22 @@
-// Title of Detection:   Unexpected Path in  Command line 
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: detects Malware Execution  when its from an unusual Path command line
-// References (if available): https://www.socinvestigation.com/detections-of-malware-execution-from-unusual-directories/ 
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Unexpected Path in Command Line
+// Authorship & Contact:
+// - Blog: https://allthingscomputers.medium.com
+// - Twitter: https://twitter.com/allthingshandle
+// - Wordpress: https://allthingscomputersblog.wordpress.com
+//
+// Description of the Detection:
+// Detects malware execution from unusual paths in the command line.
+//
+// References:
+// - https://www.socinvestigation.com/detections-of-malware-execution-from-unusual-directories/
+//
+// The Logic of the Detection or Query Begins Below:
+
 SecurityEvent
-| where Process Name matches regex @'(?i)(wscript|cscript|rundll32|regsvr32|cmstp|RegAsm|installutil|mshta|RegSvcs|powershell|pwsh|cmd)\.exe' and NewProcessName matches regex @'(?i)C:\\(PerfLogs|Users\\Public|Users\\Default|Windows\\Tasks|Intel|AMD\\Temp|Windows\\AppReadiness|Windows\\ServiceState|Windows\\security|Windows\\IdentityCRL|Windows\\Branding|Windows\\csc|Windows\\DigitalLocker|Windows\\en-US|Windows\\wlansvc|Windows\\Prefetch|Windows\\Fonts|Windows\\diagnostics|Windows\\TAPI|\Windows\\INF|Windows\\System32\\Speech|windows\\tracing|windows\\IME|Windows\\Performance|windows\\intel|windows\\ms|Windows\\dot3svc|Windows\\ServiceProfiles|Windows\\panther|Windows\\RemotePackages|Windows\\OCR|Windows\\appcompat|Windows\\apppatch|Windows\\addins|Windows\\Setup|Windows\\Help|Windows\\SKB|Windows\\Vss|Windows\\Web|Windows\\servicing|Windows\\CbsTemp|Windows\\Logs|Windows\\WaaS|Windows\\twain_32|Windows\\ShellExperiences|Windows\\ShellComponents|Windows\\PLA|Windows\\Migration|Windows\\debug|Windows\\Cursors|Windows\\Containers|Windows\\Boot|Windows\\bcastdvr|Windows\\assembly|Windows\\Textinput|Windows\\security|Windows\\schemas|Windows\\SchCache|Windows\\Resources|Windows\\rescache|Windows\\Provisioning|Windows\\PrintDialog|Windows\\PolicyDefinitions|Windows\\media|Windows\\Globalization|Windows\\L2Schemas|Windows\\LiveKernelReports|Windows\\ModemLogs|Windows\\ImmersiveControlPanel|\$Recycle.Bin)\\' and Parent ProcessName matches regex
-@(?i)C:\\(WINDOWS\\System32\\DriverStore\\FileRepository\\.*igfxCUIService.*|Windows\\System32\\spacedeskService\.exe|Program Files\\Dell\\SupportAssistAgent\\SRE\\SRE)\.exe")' and not(ProcessName matches regex @"(?i)rundll32\.exe" and CommandLine matches regex @"(?i)(uxtheme.dll,#64"|PRINTUI.DLL,PrintUIEntry)'
+| where ProcessName matches regex @"(?i)(wscript|cscript|rundll32|regsvr32|cmstp|RegAsm|installutil|mshta|RegSvcs|powershell|pwsh|cmd)\.exe"
+    and NewProcessName matches regex @"(?i)C:\\(PerfLogs|Users\\Public|Users\\Default|Windows\\Tasks|Intel|AMD\\Temp|Windows\\AppReadiness|Windows\\ServiceState|Windows\\security|Windows\\IdentityCRL|Windows\\Branding|Windows\\csc|Windows\\DigitalLocker|Windows\\en-US|Windows\\wlansvc|Windows\\Prefetch|Windows\\Fonts|Windows\\diagnostics|Windows\\TAPI|Windows\\INF|Windows\\System32\\Speech|Windows\\tracing|Windows\\IME|Windows\\Performance|Windows\\intel|Windows\\ms|Windows\\dot3svc|Windows\\ServiceProfiles|Windows\\panther|Windows\\RemotePackages|Windows\\OCR|Windows\\appcompat|Windows\\apppatch|Windows\\addins|Windows\\Setup|Windows\\Help|Windows\\SKB|Windows\\Vss|Windows\\Web|Windows\\servicing|Windows\\CbsTemp|Windows\\Logs|Windows\\WaaS|Windows\\twain_32|Windows\\ShellExperiences|Windows\\ShellComponents|Windows\\PLA|Windows\\Migration|Windows\\debug|Windows\\Cursors|Windows\\Containers|Windows\\Boot|Windows\\bcastdvr|Windows\\assembly|Windows\\Textinput|Windows\\security|Windows\\schemas|Windows\\SchCache|Windows\\Resources|Windows\\rescache|Windows\\Provisioning|Windows\\PrintDialog|Windows\\PolicyDefinitions|Windows\\media|Windows\\Globalization|Windows\\L2Schemas|Windows\\LiveKernelReports|Windows\\ModemLogs|Windows\\ImmersiveControlPanel|\$Recycle.Bin)\\"
+    and ParentProcessName matches regex @"(?i)C:\\(WINDOWS\\System32\\DriverStore\\FileRepository\\.*igfxCUIService.*|Windows\\System32\\spacedeskService\.exe|Program Files\\Dell\\SupportAssistAgent\\SRE\\SRE)\.exe"
+    and not (ProcessName matches regex @"(?i)rundll32\.exe" and CommandLine matches regex @"(?i)(uxtheme.dll,#64|PRINTUI.DLL,PrintUIEntry)")
+
+| project TimeGenerated, Computer, ProcessName, NewProcessName, ParentProcessName, CommandLine
+| order by TimeGenerated desc
