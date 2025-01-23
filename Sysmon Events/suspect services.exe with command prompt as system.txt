@@ -4,4 +4,4 @@
 // References (if available):   pg72  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where Image endswith @'\services.exe' or matches regex @"[-/\\]c\b"
+| where Image endswith @'\services.exe' or CommandLine matches regex matches regex @"[-/\\]c\b"
