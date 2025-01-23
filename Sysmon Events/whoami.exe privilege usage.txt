@@ -5,4 +5,4 @@
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
 | where EventID == 1
-| where CommandLine matches regex  '(?i)whoami /priv'
+| where CommandLine matches regex '(?i)whoami /priv'
