@@ -4,4 +4,4 @@
 // References (if available):   https://labs.jumpsec.com/powershell-jobs/ 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where EventID == 11 and TargetFilename contains "Powershell\\ScheduledJobs”
+| where EventID == 11 and TargetFilename contains "Powershell\\ScheduledJobs"
