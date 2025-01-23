@@ -4,4 +4,4 @@
 // References (if available): pg116  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where EventID == 1 and Image endswith @"rundll32.exe" and "\\[-~]{25}\.[ -~]{25},[ -~]{25}" and countof(tostring(CommandLine), @'[`~!@#\$%\^&\*\(\)_\|\+\-=\?;:\",\.<>\{\}\[\]\\\/]', "regex") > 38
+| where EventID == 1 and Image endswith @"rundll32.exe" and CommandLine matches regex "\\[-~]{25}\.[ -~]{25},[ -~]{25}" and countof(tostring(CommandLine), @'[`~!@#\$%\^&\*\(\)_\|\+\-=\?;:\",\.<>\{\}\[\]\\\/]', "regex") > 38
