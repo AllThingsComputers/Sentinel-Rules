@@ -1,8 +1,33 @@
-// Title of Detection:   Suspect Scheduled task Frequency
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  This may be for persistence. monitor for tasks that spawn at seemingly strange intervals. For example, something like /sc minute /mo 20, which means that the task will run every 20 minutes.
-// References (if available): page 17  https://resource.redcanary.com/rs/003-YRU-314/images/2020-Threat-Detection-Report.pdf 
-// The Logic of the Detection or Query Begins Below This Line
-SysmonEvent
-| where EventID == 1 and Image matches regex @"(?i)\\(schtasks|at|taskeng)\.exe$" and ("(?i)[-\\/\.](SC ONCE|xml|exe|ps1|psm1|bat|cmd|vbs|vbe)" or not(Image matches regex
-@"c:\\windows\\(system32|syswow64)\\") or Image matches regex @"(?i)(\\appdata\\|\\windows\\tasks\\)") or (EventID == 1 and Image matches regex @"(?i)\\schtasks\.exe" and not(Description in ("Task Scheduler Configuration Tool", "Task Scheduler COM API") and FileVersion contains "WinBuild" and Product == "Microsoft® Windows® Operating System" and Company == "Microsoft Corporation")) or (EventID == 1 and Image matches regex @"(?i)\\(schtasks|at|taskeng)\.exe$") and (ParentImage matches regex @"(?i)\\(PowerShell|cmd)\.exe$" or LogonId != "0x3e7"
+// Title of Detection: Suspect Scheduled Task Frequency
+// Authorship & Contact:
+// - Blog: https://allthingscomputers.medium.com
+// - Twitter: https://twitter.com/allthingshandle
+// - Wordpress: https://allthingscomputersblog.wordpress.com
+//
+// Description of the Detection:
+// Detects potentially suspicious or misconfigured scheduled tasks that could be used for persistence or malicious activity.
+// Focuses on tasks executed with unusual intervals (e.g., every 20 minutes) or executed from non-standard locations.
+//
+// References:
+// - Page 17: https://resource.redcanary.com/rs/003-YRU-314/images/2020-Threat-Detection-Report.pdf
+//
+// The Logic of the Detection or Query Begins Below:
+
+Sysmon
+| where EventID == 1 and Image matches regex @"(?i)\\(schtasks|at|taskeng)\.exe$"
+    // Check for unusual intervals or arguments
+    and (CommandLine matches regex @"(?i)[-\\/](SC MINUTE|SC HOURLY|SC DAILY|SC ONCE|/mo \d{1,3})"
+        or CommandLine matches regex @"(?i)(/create|/change|/xml|/query)"
+        or CommandLine matches regex @"(?i)(/tn|/tr).*?\.(exe|ps1|bat|cmd|vbs|vbe)")
+    // Check for non-standard execution locations
+    or not(Image matches regex @"(?i)c:\\windows\\(system32|syswow64)\\")
+    or Image matches regex @"(?i)\\(appdata\\|windows\\tasks\\)"
+    // Additional checks for suspicious parent processes or abnormal logon IDs
+    or (ParentImage matches regex @"(?i)\\(powershell|cmd)\.exe$" and LogonId != "0x3e7")
+    or not(Description in ("Task Scheduler Configuration Tool", "Task Scheduler COM API") 
+        and Product == "Microsoft® Windows® Operating System" 
+        and Company == "Microsoft Corporation"));
+
+Sysmon
+| project TimeGenerated, Computer, EventID, Image, CommandLine, ParentImage, Description, LogonId, UserName
+| order by TimeGenerated desc
