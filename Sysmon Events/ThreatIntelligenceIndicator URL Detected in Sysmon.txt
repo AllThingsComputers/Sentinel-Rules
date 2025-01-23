@@ -9,6 +9,6 @@ let ThreatIntelligenceIndicatorUrl = ThreatIntelligenceIndicator
 | take 10000
 | summarize by Url;
 Sysmon
-|  where EventID in (3,22)
+| where EventID in (3,22)
 | where TimeGenerated >= ago(60m)
 | where DestinationHostname has_any (ThreatIntelligenceIndicatorUrl) or dns_query_results has_any (ThreatIntelligenceIndicatorUrl) or dns_query_name in (ThreatIntelligenceIndicatorUrl)
