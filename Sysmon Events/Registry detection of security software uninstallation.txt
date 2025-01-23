@@ -1,6 +1,6 @@
 // Title of Detection:  Registry detection of security software uninstallation
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:   
+// Description of the Detection:   
 // References (if available):  https://redcanary.com/blog/ooda-loop-improving-detection/ 
 https://www.uvm.edu/~bnelson/computer/windows95/usetheregistrytoremoveitemsfrominstalluninstalllist.html
 // The Logic of the Detection or Query Begins Below This Line
