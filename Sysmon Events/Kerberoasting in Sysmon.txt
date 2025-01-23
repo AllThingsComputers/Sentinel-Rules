@@ -1,8 +1,17 @@
-// Title of Detection:   Kerberoasting in Sysmon
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  
-// References (if available):   https://redcanary.com/blog/marshmallows-and-kerberoasting/
-// The Logic of the Detection or Query Begins Below This Line
-SysmonEvent
-| where (Image endswith "setspn.exe" and "(-T|-Q)") or (Image endswith "powershell.exe" and CommandLine contains "System.IdentityModel.Tokens.KerberosRequestorSecurityToken") or (Image endswith "rubeus.exe" and CommandLine has_all("kerberoast", "tgtdeleg", "rc4opsec"))
+// Title of Detection: Kerberoasting in Sysmon
+// Authorship & Contact:
+//    https://allthingscomputers.medium.com
+//    https://twitter.com/allthingshandle
+//    https://allthingscomputersblog.wordpress.com
+// Description of the Detection: 
+//    Detects potential Kerberoasting activity by monitoring suspicious commands executed via common tools like setspn.exe, PowerShell, and Rubeus.
+// References: 
+//    https://redcanary.com/blog/marshmallows-and-kerberoasting/
 
+SysmonEvent
+| where EventID == 1 // Process Creation Events
+| where 
+    (Image endswith "setspn.exe" and CommandLine has_any("-T", "-Q")) or 
+    (Image endswith "powershell.exe" and CommandLine contains "System.IdentityModel.Tokens.KerberosRequestorSecurityToken") or 
+    (Image endswith "rubeus.exe" and CommandLine has_all("kerberoast", "tgtdeleg", "rc4opsec"))
+| extend AdditionalDetails = pack("ProcessName", ProcessName, "UserName", UserName, "ParentImage", ParentImage)
