@@ -1,7 +1,39 @@
-// Title of Detection:  Powershell or Command Prompt with a  mismatch of metadata 
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:    
-// References (if available):   https://malwarereversing.blogspot.com/2019/10/file-renamingtechnique-does-not-evade.html
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Powershell or Command Prompt with a Mismatch of Metadata
+// Authorship & Contact:
+// - Blog: https://allthingscomputers.medium.com
+// - Twitter: https://twitter.com/allthingshandle
+// - Wordpress: https://allthingscomputersblog.wordpress.com
+//
+// Description of the Detection:
+// This detection identifies instances where PowerShell or Command Prompt is executed with a mismatch of expected metadata, which could indicate potential tampering or misuse.
+//
+// References (if available):
+// - https://malwarereversing.blogspot.com/2019/10/file-renamingtechnique-does-not-evade.html
+//
+// Detection Logic Starts Below:
+
 SysmonEvent
-| where EventID == 1 and (("(?i)invoke|executionpolicy" and not(Image @"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" and Description == @'WIndows PowerShell' and Product == @"Microsoft® Windows® Operating System" and Company == 'Microsoft Corporation' and OriginalFileName == @"PowerShell.EXE")) or ("echo" and not(Description @"Windows Command Processor" and Image @"C:\Windows\System32\cmd.exe" and Product == @"Microsoft® Windows®  == @"Microsoft Operating System" and Company == @"Microsoft Corporation" and OriginalFileName =~ @"Cmd.Exe")))
+| where EventID == 1 
+    and (
+        // Detect suspicious PowerShell executions
+        (CommandLine matches regex @"(?i)invoke|executionpolicy"
+         and not (
+             Image == @"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
+             and Description == @"Windows PowerShell"
+             and Product == @"Microsoft® Windows® Operating System"
+             and Company == @"Microsoft Corporation"
+             and OriginalFileName == @"PowerShell.EXE"
+         )
+        ) 
+        // Detect suspicious Command Prompt executions
+        or (
+            CommandLine matches regex @"echo"
+            and not (
+                Image == @"C:\Windows\System32\cmd.exe"
+                and Description == @"Windows Command Processor"
+                and Product == @"Microsoft® Windows® Operating System"
+                and Company == @"Microsoft Corporation"
+                and OriginalFileName matches regex @"(?i)Cmd\.Exe"
+            )
+        )
+    )
