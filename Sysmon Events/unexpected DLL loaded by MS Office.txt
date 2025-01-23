@@ -1,7 +1,7 @@
 // Title of Detection:  unexpected DLL loaded by MS Office
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Microsoft Office products loading Visual Basic Editor code libraries ("vbe*.dll") into memory is indicative of the use of Visual Basic for Applications (VBA) instead of Visual Basic Scripting (VBS); this provides the ability to interact with COM /objects.
+// Description of the Detection:  Microsoft Office products loading Visual Basic Editor code libraries ("vbe*.dll") into memory is indicative of the use of Visual Basic for Applications (VBA) instead of Visual Basic Scripting (VBS); this provides the ability to interact with COM /objects.
 // References (if available):    page 105  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where  EventID == 7 and Image matches regex @"(?i)(EXCEL.EXE|WINWORD.EXE|AdobeARM.exe|AcroRd32.exe|Teams.exe|Acrobat.exe|outlook.exe|POWERPNT. EXE|root\\Office16\\)" and not(ImageLoaded matches regex @"(?i)Microsoft\\Teams\\|TeamsMeeting Addin|FileSyncShell64.dll|DragExt64.dllZwmiutils.dll") 
+| where EventID == 7 and Image matches regex @"(?i)(EXCEL.EXE|WINWORD.EXE|AdobeARM.exe|AcroRd32.exe|Teams.exe|Acrobat.exe|outlook.exe|POWERPNT. EXE|root\\Office16\\)" and not(ImageLoaded matches regex @"(?i)Microsoft\\Teams\\|TeamsMeeting Addin|FileSyncShell64.dll|DragExt64.dllZwmiutils.dll") 
