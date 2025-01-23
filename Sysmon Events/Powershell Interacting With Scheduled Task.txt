@@ -4,4 +4,4 @@
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where EventID == 1 and Image matches regex @"(?i)powershell\.exe" and "(?i)new-ScheduledTask|Get-ScheduledTask"
+| where EventID == 1 and Image matches regex @"(?i)powershell\.exe" and CommandLine matches regex "(?i)new-ScheduledTask|Get-ScheduledTask"
