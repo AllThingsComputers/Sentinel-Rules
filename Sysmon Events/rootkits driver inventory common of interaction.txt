@@ -4,4 +4,4 @@
 // References (if available): https://redcanary.com/blog/tracking-driver-inventory-to-expose-rootkits/ 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where (EventID == 11 and TargetFilename matches regex @"(?i)c:\\windows\\system32\\drivers\\.*(\.[^(sys|man|tmp|wdf)]$|dmp|dump)") or (EventID == 1 and ParentImage endswith @"\Lsass.exe" and Image endswith "rundll32.exe") or (EventID == 1 and ParentImage endswith @"\rundll32.exe" and Image endswith "msiexec.exe") or (EventID ==1 and Image endswith "msiexec.exe" and "/i.*(http|https):")'
+| where (EventID == 11 and TargetFilename matches regex @"(?i)c:\\windows\\system32\\drivers\\.*(\.[^(sys|man|tmp|wdf)]$|dmp|dump)") or (EventID == 1 and ParentImage endswith @"\Lsass.exe" and Image endswith "rundll32.exe") or (EventID == 1 and ParentImage endswith @"\rundll32.exe" and Image endswith "msiexec.exe") or (EventID ==1 and Image endswith "msiexec.exe" and CommandLine matches regex "/i.*(http|https):")
