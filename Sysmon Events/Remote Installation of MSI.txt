@@ -4,4 +4,4 @@
 // References (if available):   https://redcanary.com/blog/lateral-movement-and-cryptomining/
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where EventID == 1 and ParentImage matches regex @"(?i)msi\.exe" and "(?i)(www|http|\.com|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}).*\.msi"
+| where EventID == 1 and ParentImage matches regex @"(?i)msi\.exe" and CommandLine matches regex @"(?i)(www|http|\.com|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}).*\.msi"
