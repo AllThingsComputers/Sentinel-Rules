@@ -1,7 +1,7 @@
 // Title of Detection:   Process executing with weird command lines
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: this will detect  common scripting commands that are not from expected process paths(aka directories) which could be a renamed utility 
+// Description of the Detection: this will detect  common scripting commands that are not from expected process paths(aka directories) which could be a renamed utility 
 // References (if available): https://redcanary.com/threat-detection-report/techniques/rename-system-utilities
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where EventID == 1 and "(?i)-ExecutionPolicy" and not(Image matches regex @"(?i)^C:\\Windows\\System32\\WindowsPowerShell\\v1\.0\\powershell\.exe$") or ("(?i)echo" and not(Image matches regex @"(?i)^C:\\Windows\\System32\\cmd\.exe$"))
+| where EventID == 1 and CommandLine matches regex @"(?i)-ExecutionPolicy" and not(Image matches regex @"(?i)^C:\\Windows\\System32\\WindowsPowerShell\\v1\.0\\powershell\.exe$") or (CommandLine matches regex @"(?i)echo" and not(Image matches regex @"(?i)^C:\\Windows\\System32\\cmd\.exe$"))
