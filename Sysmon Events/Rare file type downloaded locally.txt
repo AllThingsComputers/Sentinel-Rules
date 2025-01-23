@@ -4,4 +4,4 @@
 // References (if available):     https://resource.redcanary.com/rs/003-YRU-314/images/2020-Threat-Detection-Report.pdf   
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where EventID == 11 and TargetFilename matches regex and @"(?i)\\downloads\\.*\.(doc|iso|rar|ace|img)$"
+| where EventID == 11 and TargetFilename matches regex @"(?i)\\downloads\\.*\.(doc|iso|rar|ace|img)$"
