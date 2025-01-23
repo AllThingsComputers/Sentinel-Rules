@@ -1,7 +1,20 @@
-// Title of Detection:  Important Windows Registry Key Deleted
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Removal of a Registry Key (ex: Windows EventID 4658 or Sysmon EventID 12) . You can  add exclusions of common processes and keys for your environment
-// References (if available): https://attack.mitre.org/datasources/DS0024/   https://attack.mitre.org/techniques/T1562/001/
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Important Windows Registry Key Deleted
+// Authorship & Contact: 
+//    https://allthingscomputers.medium.com  
+//    https://twitter.com/allthingshandle  
+//    https://allthingscomputersblog.wordpress.com/  
+// Description of the Detection: 
+//    Detects the deletion of critical Windows registry keys, such as AMSI providers or Windows Defender settings.
+//    You can add exclusions for common processes or specific keys to reduce false positives.
+// References: 
+//    https://attack.mitre.org/datasources/DS0024/  
+//    https://attack.mitre.org/techniques/T1562/001/  
+
+// Detection Logic:
 SysmonEvent
-| where (EventID == 12 and EventType == "DeleteKey" and TargetObject matches regex @"(?i)\\SOFTWARE\\Microsoft\\AMSI\\Providers|HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows Defender\\") or EventID == 12 and EventType == "DeleteKey
+| where EventID == 12 and EventType == "DeleteKey"
+  and (
+      TargetObject matches regex @"(?i)\\SOFTWARE\\Microsoft\\AMSI\\Providers|HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows Defender\\"
+      or TargetObject matches regex @"(?i)(specific key pattern if needed)"
+  )
+  and ProcessName !in ("trustedprocess1.exe", "trustedprocess2.exe") // Add exclusions for legitimate processes
