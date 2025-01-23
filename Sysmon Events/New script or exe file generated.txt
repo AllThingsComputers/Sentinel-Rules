@@ -4,4 +4,4 @@
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where EventID == 11 and TargetFilename matches regex @"(?i)\.(ps1|psm1|bat|cmd|exe)$”
+| where EventID == 11 and TargetFilename matches regex @"(?i)\.(ps1|psm1|bat|cmd|exe)$"
