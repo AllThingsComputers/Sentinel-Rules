@@ -4,4 +4,4 @@
  // References (if available): https://www.picussecurity.com/resource/blog/picus-10-critical-mitre-attck-techniques-t1060-registry-run-keys-startup-folder https://dmcxblue.gitbook.io/red-team-notes/persistence/registry-keys-startup-folder 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where EventID in (12, 13) and TargetObject matches regex @'(HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Userinit|HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Shell|HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Notify|HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\Control\\Session Manager)
+| where EventID in (12, 13) and TargetObject matches regex @'(HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Userinit|HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Shell|HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\\Notify|HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\Control\\Session Manager)'
