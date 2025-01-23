@@ -4,4 +4,4 @@
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where EventID == 1 and CommandLine contains "/C" and Image !endswith "cmd.exe
+| where EventID == 1 and CommandLine contains "/C" and Image !endswith "cmd.exe"
