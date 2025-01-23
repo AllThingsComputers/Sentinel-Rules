@@ -4,4 +4,4 @@
 // References (if available):  https://redcanary.com/wp-content/uploads/2023/03/2022_ThreatDetectionReport_RedCanary.pdf
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where EventID == 1 and Image endswith "winrar.exe”
+| where EventID == 1 and Image endswith "winrar.exe"
