@@ -4,4 +4,4 @@
 // References (if available):  67  https://resource.redcanary.com/rs/003-YRU-314/images/2022-Threat-DetectionReport-RedCanary.pdf 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where ParentImage endswith "\\explorer.exe" and Image endswith "\\rundll2.exe" and not('(?i)\.dll')
+| where ParentImage endswith "\\explorer.exe" and Image endswith "\\rundll2.exe" and not(CommandLine matches regex @'(?i)\.dll')
