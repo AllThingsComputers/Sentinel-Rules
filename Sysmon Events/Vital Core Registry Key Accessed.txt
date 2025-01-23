@@ -1,8 +1,51 @@
-// Title of Detection:   Vital Core Registry Key Accessed
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: Opening a Registry Key, typically to read the associated value (ex: Windows EventID 4656) 
-Depending on environment the format syntax may be for example  HKEY_Local_Machine or  HKLM
-// References (if available):   https://attack.mitre.org/datasources/DS0024/   https://attack.mitre.org/techniques/T1003/  https://attack.mitre.org/techniques/T1012/  https://attack.mitre.org/techniques/T1614/001  
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Vital Core Registry Key Accessed
+// Authorship & Contact:
+// - Blog: https://allthingscomputers.medium.com
+// - Twitter: https://twitter.com/allthingshandle
+// - Wordpress: https://allthingscomputersblog.wordpress.com
+//
+// Description of the Detection:
+// This query identifies accesses to critical or sensitive registry keys, often indicative of malicious activity.
+// Registry keys related to system configuration, credentials, or security settings are monitored.
+//
+// References:
+// - MITRE ATT&CK Data Sources: https://attack.mitre.org/datasources/DS0024/
+// - MITRE Techniques: T1003, T1012, T1614/001
+//
+// The Logic of the Detection or Query Begins Below:
+
 SecurityEvent
-| where EventID == 4656 and Event Data matches regex @'(?i)HKLM\\SECURITY\\Policy\\Secrets|/system32/config/SAM|Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall|HKCU\\Software\\Microsoft\\Terminal Server Client\\Default|Windows\\CurrentVersion\\Uninstall|HKCU\\Console\\QuickEdit|HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings|HKCU\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\Load|\\HKU\\SOFTWARE\\Microsoft\\Terminal Server Client\\Servers|HKCU\\Software\\Bitcoin\\Bitcoin-Qt\\strDataDir|HKCU\\Software\\Microsoft\\Office\\Excel\\Security\\AccessVBOM\\|HKCR\\http\\shell\\open\\command|HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\last_edate|HKCU\\Software\\Classes\\http\\shell\\\open\\command|HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run|SYSTEM\\CurrentControlSet\\Control\\Lsa Name|HKLM\\SYSTEM\\CurrentControlSet\\Services|HKCU\\Software\\Bitcoin\\Bitcoin-Qt|HKCU\\Software\\KasperskyLab|HKCU\\Software\\KasperskyLab|HKLM\\Software\\Microsoft\\Windows\\Current Version\\spreadCpuXmr - %stratum info%|HKCU\\Software\\Microsoft\\Terminal Server Client\\Default|\\REGISTRY\\SOFTWARE\\Microsoft\\DRM|\\REGISTRY\\SOFTWARE\\Microsoft\\DRM|HKLM\Software\\Microsoft\\Windows NT\CurrentVersion ProductName|HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion ProductName|HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\InternetSettings|HKLM\\System\\CurrentControlSet\\Services\\mssmbios\\Data\\SMBiosData|HKLM\\System\\CurrentControlSet\\Services\\mssmbios\\Data\\SMBiosData|HKLM\\Software\\Policies\\Microsoft\\Windows\\Installer\\AlwaysInstallElevated|HKLM\\SOFTWARE\\ Microsoft\\Cryptography\\MachineGuid|HKU\\SOFTWARE\\Microsoft\\CTF|HKLM\\SOFTWARE\\Microsoft\\MSDTC\\MTxOCI|HKLM\\SYSTEM\\CurrentControlSet\Control\\NIs\\Language|Software\\Simon Tatham\\Putty\\Sessions'
+| where EventID == 4656
+    and EventData matches regex @'(?i)(
+        HKLM\\SECURITY\\Policy\\Secrets|
+        /system32/config/SAM|
+        Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall|
+        HKCU\\Software\\Microsoft\\Terminal Server Client\\Default|
+        Windows\\CurrentVersion\\Uninstall|
+        HKCU\\Console\\QuickEdit|
+        HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings|
+        HKCU\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Windows\\Load|
+        HKU\\SOFTWARE\\Microsoft\\Terminal Server Client\\Servers|
+        HKCU\\Software\\Bitcoin\\Bitcoin-Qt\\strDataDir|
+        HKCU\\Software\\Microsoft\\Office\\Excel\\Security\\AccessVBOM|
+        HKCR\\http\\shell\\open\\command|
+        HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\last_edate|
+        HKCU\\Software\\Classes\\http\\shell\\open\\command|
+        HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run|
+        SYSTEM\\CurrentControlSet\\Control\\Lsa Name|
+        HKLM\\SYSTEM\\CurrentControlSet\\Services|
+        HKCU\\Software\\Bitcoin\\Bitcoin-Qt|
+        HKCU\\Software\\KasperskyLab|
+        HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion ProductName|
+        HKLM\\Software\\Microsoft\\Windows NT\\CurrentVersion ProductName|
+        HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\InternetSettings|
+        HKLM\\System\\CurrentControlSet\\Services\\mssmbios\\Data\\SMBiosData|
+        HKLM\\Software\\Policies\\Microsoft\\Windows\\Installer\\AlwaysInstallElevated|
+        HKLM\\SOFTWARE\\Microsoft\\Cryptography\\MachineGuid|
+        HKU\\SOFTWARE\\Microsoft\\CTF|
+        HKLM\\SOFTWARE\\Microsoft\\MSDTC\\MTxOCI|
+        HKLM\\SYSTEM\\CurrentControlSet\\Control\\NIs\\Language|
+        Software\\Simon Tatham\\Putty\\Sessions
+    )'
+| project TimeGenerated, Computer, User, EventData, RegistryKey, AccessType
+| order by TimeGenerated desc
