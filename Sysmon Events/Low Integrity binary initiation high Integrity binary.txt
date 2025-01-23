@@ -1,7 +1,15 @@
-// Title of Detection:  Low Integrity binary initiation high Integrity binary
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  
-// References (if available):  https://redcanary.com/blog/process-integrity-levels/ 
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Low Integrity Binary Initiating High Integrity Binary
+// Authorship & Contact:
+//    https://allthingscomputers.medium.com
+//    https://twitter.com/allthingshandle
+//    https://allthingscomputersblog.wordpress.com
+// Description of the Detection: Detects cases where a process running at a low integrity level spawns a high integrity process, which could indicate privilege escalation or abuse.
+// References: https://redcanary.com/blog/process-integrity-levels/
+// Logic of the Detection:
+
 SysmonEvent
-| where EventID == 1 and IntegrityLevel in ("High") and not(ParentImage matches regex (expected whitelisted low high processes you will need to make))
+| where EventID == 1 // Process creation events
+| where IntegrityLevel == "High" // Target process has high integrity level
+| where ParentImage !matches regex @"(?i)(expected_whitelisted_low_high_processes.exe|system32.exe|explorer.exe)" 
+   // Replace `expected_whitelisted_low_high_processes.exe` with specific whitelisted processes based on your environment
+| extend AdditionalDetails = pack("ParentProcess", ParentImage, "TargetProcess", Image, "CommandLine", CommandLine, "ParentIntegrity", ParentIntegrity, "User", User)
