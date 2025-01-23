@@ -8,6 +8,7 @@ let processsettingregvalues = (Sysmon
 | where EventID == 13
 | summarize count() by tostring(TargetObject)
 );
-Sysmon where TimeGenerated >= ago(1d)
+Sysmon 
+| where TimeGenerated >= ago(1d)
 | where EventID == 13
 | where tostring(TargetObject) !in (processsettingregvalues)
