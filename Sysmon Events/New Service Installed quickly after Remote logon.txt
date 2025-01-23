@@ -1,14 +1,25 @@
-// Title of Detection:  New Service Installed quickly after Remote logon
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection: 
-// References (if available): https://www.socinvestigation.com/hunting-for-suspect-windows-services-mind-map
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: New Service Installed Quickly After Remote Logon
+// Authorship & Contact:
+//    https://allthingscomputers.medium.com
+//    https://twitter.com/allthingshandle
+//    https://allthingscomputersblog.wordpress.com
+// Description: Detects new services installed shortly after a remote logon, a tactic commonly used by attackers to establish persistence.
+// References: https://www.socinvestigation.com/hunting-for-suspect-windows-services-mind-map
+
+// The Logic of the Detection:
 let connectionEvent = Sysmon
-| where EventID == 3
-| where Image endswith "\\services.exe" and toint(SourceIp) != toint(DestinationIp) and SourcePort >= 49152 and DestinationPort >= 49152 and isnotempty(SourceIp) and isnotempty(DestinationIp)
-| extend ConnectionAllowedTime = TimeGenerated;
+| where EventID == 3 // Network connection event
+| where Image endswith "\\services.exe" // Looking for connections involving services.exe
+| where toint(SourceIp) != toint(DestinationIp) // Remote logon
+| where SourcePort >= 49152 and DestinationPort >= 49152 // Dynamic port range
+| where isnotempty(SourceIp) and isnotempty(DestinationIp) // Ensure both IPs are populated
+| extend ConnectionAllowedTime = TimeGenerated; // Capture the time of the connection
+
 let regkeyEvent = Sysmon
-| where EventID == 13 and TargetObject contains "HKLM\\System\\CurrentControlSet\\services";
+| where EventID == 13 // Registry key event
+| where TargetObject contains "HKLM\\System\\CurrentControlSet\\services"; // Looking for changes in services registry keys
+
 connectionEvent
 | join kind=inner (regkeyEvent) on Computer
-|  where datetime_diff('minute', TimeGenerated, ConnectionAllowed Time) <= 2
+| where datetime_diff('minute', TimeGenerated, ConnectionAllowedTime) <= 2 // Service installation within 2 minutes after remote connection
+| project TimeGenerated, Computer, SourceIp, DestinationIp, SourcePort, DestinationPort, TargetObject, CommandLine // Output relevant information for further investigation
