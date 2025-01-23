@@ -4,4 +4,4 @@
 // References (if available):  https://posts.specterops.io/lateral-movement-using-outlooks-createobject-method-and-dotnettojscript-a88a81df27eb
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
-| where (EventID == 1 and Image endswith "outlook.exe" and ParentImage endswith "svchost.exe") or (EventID == 1 and "(?i) outlook\.exe.* -embedding") or (EventID == 7 and Image endswith "outlook.exe" and ImageLoaded matches regex @"(?i)(vbscript|jscript(9)?)\.dll")
+| where (EventID == 1 and Image endswith "outlook.exe" and ParentImage endswith "svchost.exe") or (EventID == 1 and CommandLine matches regex @"(?i)outlook\.exe.* -embedding") or (EventID == 7 and Image endswith "outlook.exe" and ImageLoaded matches regex @"(?i)(vbscript|jscript(9)?)\.dll")
