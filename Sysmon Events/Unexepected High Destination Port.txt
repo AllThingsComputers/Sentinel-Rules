@@ -7,5 +7,4 @@ SysmonEvent
 | where EventID == 3
 | summarize count() by toint(DestinationPort), toint(SourcePort), tostring(DestinationIp), tostring(SourceIp)
 | where not(ipv4_is_private(tostring(DestinationIp)) and ipv4_is_private(tostring(SourceIp)))
-| where DestinationPort > 6000
-// may need to figure out exclusions
+| where DestinationPort > 6000 // may need to figure out exclusions
