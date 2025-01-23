@@ -1,8 +1,10 @@
-// Title of Detection:  reversal obfuscation in powershell #3
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Strings can be reversed through several mechanisms   Array.Reverse ($a = [char[]]"detacsufbO"; [Array]::Reverse($a); -join $a)
-// References (if available): page 6  https://www.blackhat.com/docs/us-17/thursday/us-17-Bohannon-Revoke-Obfuscation-PowerShell-Obfuscation-Detection-And%20Evasion-Using-Science-wp.pdf 
-// The Logic of the Detection or Query Begins Below This Line
+// Title of Detection: Reversal Obfuscation in PowerShell #3
+// Authorship & Contact: https://allthingscomputers.medium.com | https://twitter.com/allthingshandle | https://allthingscomputersblog.wordpress.com/
+// Description of the Detection: Detects PowerShell obfuscation techniques where strings are reversed using mechanisms like `Array.Reverse` or similar methods (e.g., `$a = [char[]]"detacsufbO"; [Array]::Reverse($a); -join $a`).
+// References (if available): Page 6 - https://www.blackhat.com/docs/us-17/thursday/us-17-Bohannon-Revoke-Obfuscation-PowerShell-Obfuscation-Detection-And%20Evasion-Using-Science-wp.pdf
+
 SysmonEvent
-| where EventID == 1
-| where CommandLine matches regex '(?i)(([-\/\\|join|\$a|Array|char|reverse).*){5,}'
+| where EventID == 1 // Process creation events
+| where CommandLine matches regex @"(?i).*(\$a|Array|char|Reverse|join).*" // Detect common reversal-related keywords
+| where CommandLine contains "[char[]" or CommandLine contains "Array.Reverse" // Ensure specific indicators of reversing strings
+| where CommandLine matches regex @"(?i)(([-\/\\|join|\$a|Array|char|reverse).*){5,}" // Additional check for obfuscation patterns
