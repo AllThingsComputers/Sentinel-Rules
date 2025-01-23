@@ -1,15 +1,23 @@
-// Title of Detection:  New Process Detected Generating an Anonymously high Amount of actions
-// Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
-// Description of the Detection: the detects a new process spawning a high number of new process or network connections in a short amount of time. This may be ransomware. 
-// References (if available): 
-// The Logic of the Detection or Query Begins Below This Line
-let processSysmon = Sysmon
-| where EventID == 1
-| summarize count() by Process = tostring(ParentImage);
-let networkConnectionsSysmon = Sysmon
-| where EventID == 3
-| summarize count() by Process = tostring(Image);
+// Title of Detection: New Process Detected Generating an Anomalously High Number of Actions
+// Authorship & Contact:
+//    https://allthingscomputers.medium.com
+//    https://twitter.com/allthingshandle
+//    https://allthingscomputersblog.wordpress.com
+// Description: Detects new processes generating a high volume of process creation or network connection events in a short period, potentially indicative of ransomware or other malicious behavior.
+// References: None provided
+// Detection Logic:
+
+let processSysmon = SysmonEvent
+| where EventID == 1 // Process creation events
+| summarize ProcessCount = count() by ParentImage = tostring(ParentImage), ParentProcessId, Computer, bin(TimeGenerated, 5m);
+
+let networkConnectionsSysmon = SysmonEvent
+| where EventID == 3 // Network connection events
+| summarize ConnectionCount = count() by Image = tostring(Image), ProcessId, Computer, bin(TimeGenerated, 5m);
+
 processSysmon
-| join kind-fullouter (networkConnectionsSysmon) on Process
-| extend Total_networkConnections_and_Processes_spawned = count + count_1
-| where Total_networkConnections_and_Processes_spawned  > 20
+| join kind=fullouter (networkConnectionsSysmon) on $left.ParentImage == $right.Image and $left.ParentProcessId == $right.ProcessId and $left.Computer == $right.Computer and $left.bin_TimeGenerated == $right.bin_TimeGenerated
+| extend TotalActions = coalesce(ProcessCount, 0) + coalesce(ConnectionCount, 0)
+| where TotalActions > 20 // Threshold for high activity, tune based on the environment
+| project TimeGenerated = coalesce(bin_TimeGenerated, bin_TimeGenerated_1), Computer, ParentImage, TotalActions, ProcessCount, ConnectionCount
+| extend AlertDetails = pack("SuspiciousProcess", ParentImage, "Computer", Computer, "ProcessCount", ProcessCount, "NetworkConnectionCount", ConnectionCount, "TotalActions", TotalActions)
