@@ -1,6 +1,6 @@
 // Title of Detection:   Possible SMBexec execution execution for Impacket
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Impacket smbexec script, which allows a semi-interactive shell used through SMB. The regular expression identifies the name of a file share used to store output from the commands for interaction. 
+// Description of the Detection:  Impacket smbexec script, which allows a semi-interactive shell used through SMB. The regular expression identifies the name of a file share used to store output from the commands for interaction. 
 // References (if available):   p48-49  https://resource.redcanary.com/rs/003-YRU-314/images/2022-Threat-DetectionReport-RedCanary.pdf 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

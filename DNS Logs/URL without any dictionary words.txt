@@ -1,6 +1,6 @@
 // Title of Detection: URL without any dictionary words
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  This could indicate they could be randomly generated which is what malicious sites do. This idea of no dictionary words can be moved to other tables. created a custom table called Dictionary in your Sentinel workspace.
+// Description of the Detection:  This could indicate they could be randomly generated which is what malicious sites do. This idea of no dictionary words can be moved to other tables. created a custom table called Dictionary in your Sentinel workspace.
 // References (if available): http://www.mieliestronk.com/wordlist.html 
 // The Logic of the Detection or Query Begins Below This Line
 DNSLogs

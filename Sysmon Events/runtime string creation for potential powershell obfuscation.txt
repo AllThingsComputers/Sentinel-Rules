@@ -1,6 +1,6 @@
 // Title of Detection: runtime string creation for potential powershell obfuscation
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  PowerShell's -f string formatting operator, based on the C# String.Format method, can create strings at runtime.  format operator uses format tokens like {0} and {1} to identify the order of replacement strings, so obfuscating the invocation of New-Object might look like this with format operator obfuscation applied: & ("{1}{0}{2}" -f 'wOb', 'Ne', 'ject') 
+// Description of the Detection:  PowerShell's -f string formatting operator, based on the C# String.Format method, can create strings at runtime.  format operator uses format tokens like {0} and {1} to identify the order of replacement strings, so obfuscating the invocation of New-Object might look like this with format operator obfuscation applied: & ("{1}{0}{2}" -f 'wOb', 'Ne', 'ject') 
 // References (if available):  https://www.blackhat.com/docs/us-17/thursday/us-17-Bohannon-Revoke-Obfuscation-PowerShell-Obfuscation-Detection-And%20Evasion-Using-Science-wp.pdf  page 6 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

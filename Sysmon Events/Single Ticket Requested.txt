@@ -1,6 +1,6 @@
 // Title of Detection: Single Ticket Requested
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: detects a  query to the domain to extract the Service Principal Names for a single computer. This behaviour is typically used during a Kerberos or silver ticket attack, A successful execution will output the SPNs for the endpoint in question.
+// Description of the Detection: detects a  query to the domain to extract the Service Principal Names for a single computer. This behaviour is typically used during a Kerberos or silver ticket attack, A successful execution will output the SPNs for the endpoint in question.
 // References (if available):  https://docs.microsoft.com/en-us/windowsserver/administration/windows-commands/klist
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

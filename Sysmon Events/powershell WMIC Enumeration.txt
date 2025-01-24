@@ -1,6 +1,6 @@
 // Title of Detection:  powershell WMIC Enumeration
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Both adversaries and administrators use these cmdlets to query the operating system or execute commands, either locally or remotely to enumerate information or execute new processes 
+// Description of the Detection:  Both adversaries and administrators use these cmdlets to query the operating system or execute commands, either locally or remotely to enumerate information or execute new processes 
 // References (if available):    page 81  https://resource.redcanary.com/rs/003-YRU-314/images/2020-Threat-Detection-Report.pdf 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

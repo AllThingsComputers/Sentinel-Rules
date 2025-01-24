@@ -1,6 +1,6 @@
 // Title of Detection:   Enable delayed environment variable expansion for command prompt obfuscation
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  This is an obfuscation technique, but it is very rare.
+// Description of the Detection:  This is an obfuscation technique, but it is very rare.
 // References (if available):   https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/dosfuscation-report.pdf  page 25 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

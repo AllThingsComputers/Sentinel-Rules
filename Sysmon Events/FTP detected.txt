@@ -1,6 +1,6 @@
 // Title of Detection: FTP detected
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Detecting FTP from command line where an attacker may download tools or exfiltrate data. May get a high false positive rate so whitelisting may be needed
+// Description of the Detection:  Detecting FTP from command line where an attacker may download tools or exfiltrate data. May get a high false positive rate so whitelisting may be needed
  References (if available): n/a
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

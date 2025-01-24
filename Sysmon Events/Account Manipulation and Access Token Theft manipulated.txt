@@ -1,6 +1,6 @@
 // Title of Detection:   Account Manipulation and Access Token Theft manipulated
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Access tokens are obtained using functions in powershell.  LogonUser() function can also be used by an adversary but is loud.
+// Description of the Detection:  Access tokens are obtained using functions in powershell.  LogonUser() function can also be used by an adversary but is loud.
 // References (if available):   https://www.socinvestigation.com/account-manipulation-and-access-token-theft-attacks/
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

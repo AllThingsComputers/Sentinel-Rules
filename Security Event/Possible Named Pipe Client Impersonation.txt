@@ -1,6 +1,6 @@
 // Title of Detection:   Possible Named Pipe Client Impersonation
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: Hunt for new service installation by the user which will be logged with the Event ID 7045 or 4697 or with the sysmon RegistryEvent value set 13 which will be logged if the Registry value modification was done, along with the message "pipe" OR "COMSPEC". "COMSPEC" just points to cmd.exe, so both commands will do the same thing. The majority of security analysts were unaware of "COMSPEC," and no rules will be written using it. So, it is incredibly easy for attackers to escape.  
+// Description of the Detection: Hunt for new service installation by the user which will be logged with the Event ID 7045 or 4697 or with the sysmon RegistryEvent value set 13 which will be logged if the Registry value modification was done, along with the message "pipe" OR "COMSPEC". "COMSPEC" just points to cmd.exe, so both commands will do the same thing. The majority of security analysts were unaware of "COMSPEC," and no rules will be written using it. So, it is incredibly easy for attackers to escape.  
 // References (if available): https://www.socinvestigation.com/hunting-for-suspect-windows-services-mind-map 
 // The Logic of the Detection or Query Begins Below This Line
 SecurityEvent

@@ -1,6 +1,6 @@
 // Title of Detection:   Group Policy Object (GPO) Settings modification
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:   this detects malicious GPO modifications that can be used to implement other malicious behaviour
+// Description of the Detection:   this detects malicious GPO modifications that can be used to implement other malicious behaviour
 // References (if available):  https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1484.001/T1484.001.md 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

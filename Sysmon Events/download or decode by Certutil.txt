@@ -1,6 +1,6 @@
 // Title of Detection:  download or decode by Certutil
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  It comes with several command options, among which some of them can be (ab)used to decode a b64/hex encoded malicious file and/or to download a payload/script
+// Description of the Detection:  It comes with several command options, among which some of them can be (ab)used to decode a b64/hex encoded malicious file and/or to download a payload/script
 // References (if available):  https://blog.menasec.net/2019/03/initial-access-execution-evidences-for.html 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

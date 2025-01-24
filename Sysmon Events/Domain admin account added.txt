@@ -1,6 +1,6 @@
 // Title of Detection:  Domain admin account added
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Creation of a new Windows domain admin user
+// Description of the Detection:  Creation of a new Windows domain admin user
 // References (if available):    https://github.com/redcanaryco/atomic-red-team/bl-ob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1136.002/T1136.002.md#atomic-test-3create-a-new-domain-account-using-powershell 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

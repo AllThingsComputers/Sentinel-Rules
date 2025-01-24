@@ -1,6 +1,6 @@
 // Title of Detection:  Disabled SafeDIISearchMode 
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Safe DIISearchMode is essentially a setting, enabled by default, which places the process' current directory later in the search order to try mitigate this type of vulnerabilities. Its value can be set to 1 (enabled) or 0 (disabled) in the following registry key:  
+// Description of the Detection:  Safe DIISearchMode is essentially a setting, enabled by default, which places the process' current directory later in the search order to try mitigate this type of vulnerabilities. Its value can be set to 1 (enabled) or 0 (disabled) in the following registry key:  
 // References (if available):  https://labs.jumpsec.com/detecting-known-dil-hijacking-and-named-pipe-token-impersonation-attacks-with-sysmon/ 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

@@ -1,6 +1,6 @@
 // Title of Detection: CMD Decompress Commands
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  A detection for certain interesting decompress commands in tar.exe. This could be an attacker decompressing files.
+// Description of the Detection:  A detection for certain interesting decompress commands in tar.exe. This could be an attacker decompressing files.
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

@@ -1,6 +1,6 @@
 // Title of Detection: Deletion of  Volume Shadow Copies 
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:   Detects Volume Shadow Copies deletion using operating systems utilities . Syntax is vssadmin delete shadows /for=<ForVolumeSpec> [/oldest | /all /| /shadow=<ShadowID>] [/quiet]. This technique is used by numerous ransomware families such as Sodinokibi/REvil
+// Description of the Detection:   Detects Volume Shadow Copies deletion using operating systems utilities . Syntax is vssadmin delete shadows /for=<ForVolumeSpec> [/oldest | /all /| /shadow=<ShadowID>] [/quiet]. This technique is used by numerous ransomware families such as Sodinokibi/REvil
 // References (if available):  https://www.fortinet.com/blog/threat-research/stomping-shadow-copies-a-second-look-into-deletion-methods  
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

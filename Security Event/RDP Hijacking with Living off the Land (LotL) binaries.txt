@@ -1,6 +1,6 @@
 // Title of Detection:  RDP Hijacking with Living off the Land (LotL) binaries
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:   Process Created and then Service created
+// Description of the Detection:   Process Created and then Service created
 // References (if available): https://www.cyborgsecurity.com/cyborg-labs/living-off-the-land-lotl-rdp-hijacking/ 
 // The Logic of the Detection or Query Begins Below This Line
 SecurityEvent

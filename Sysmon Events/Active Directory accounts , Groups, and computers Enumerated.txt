@@ -1,6 +1,6 @@
 // Title of Detection:  Active Directory accounts , Groups, and computers Enumerated
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  This detects Enumeration of Active Directory Groups, computers and accounts 
+// Description of the Detection:  This detects Enumeration of Active Directory Groups, computers and accounts 
 // References (if available):  n/a
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

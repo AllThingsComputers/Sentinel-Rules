@@ -1,6 +1,6 @@
 // Title of Detection:   MS Office with a script child process
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:    You can add more scripting utility especially LOL-bins 
+// Description of the Detection:    You can add more scripting utility especially LOL-bins 
 // References (if available):  https://redcanary.com/blog/verclsid-exe-threat-detection/ 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

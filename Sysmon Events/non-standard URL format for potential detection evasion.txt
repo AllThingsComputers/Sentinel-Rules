@@ -1,6 +1,6 @@
 // Title of Detection: non-standard URL format for potential detection evasion
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  URL written in non-standard valid way that can avoid detection Additionally, many binaries allow additional slash flexibility in URLS and file paths: regsvr32.exe allows /i:https:// and /i:https:\\. powershell.exe allows  https://,  https:\\,  https:/\ and  https:\/. 
+// Description of the Detection:  URL written in non-standard valid way that can avoid detection Additionally, many binaries allow additional slash flexibility in URLS and file paths: regsvr32.exe allows /i:https:// and /i:https:\\. powershell.exe allows  https://,  https:\\,  https:/\ and  https:\/. 
 // References (if available):   https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/dosfuscation-report.pdf  page 34
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

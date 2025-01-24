@@ -1,6 +1,6 @@
 // Title of Detection: Installation of  Root Certificate
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: In order to circumvent alerts when connecting to opponent controlled web servers, adversaries may install a root certificate on a compromised system. 
+// Description of the Detection: In order to circumvent alerts when connecting to opponent controlled web servers, adversaries may install a root certificate on a compromised system. 
 // References (if available):  https://superuser.com/questions/1506440/import-certificates-using-command-line-on-windows
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

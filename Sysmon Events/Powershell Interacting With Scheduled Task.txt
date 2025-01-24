@@ -1,6 +1,6 @@
 // Title of Detection:  Powershell Interacting With Scheduled Task
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:    this can be used for attacker persistence
+// Description of the Detection:    this can be used for attacker persistence
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

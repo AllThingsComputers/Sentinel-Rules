@@ -1,6 +1,6 @@
 // Title of Detection: Data Extraction using Findstr
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Adversaries may search local file systems and remote file shares for files containing insecurely stored credentials. These can be files created by users to store their own credentials, shared credential stores for a group of individuals, configuration files containing passwords for a system or service, or source code/binary files containing embedded passwords. add more files users store credentials 
+// Description of the Detection:  Adversaries may search local file systems and remote file shares for files containing insecurely stored credentials. These can be files created by users to store their own credentials, shared credential stores for a group of individuals, configuration files containing passwords for a system or service, or source code/binary files containing embedded passwords. add more files users store credentials 
 // References (if available):  https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1552.001/T1552.001.md
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

@@ -1,6 +1,6 @@
 // Title of Detection: Obfuscated Powershell Commands in Registry Key
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:   This is because Obfuscated Powershell  Commands in registry keys can be a sign of fileless malware
+// Description of the Detection:   This is because Obfuscated Powershell  Commands in registry keys can be a sign of fileless malware
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

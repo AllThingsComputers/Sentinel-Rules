@@ -1,6 +1,6 @@
 // Title of Detection: Empire Detection of Powershell Framework Cmdlets 
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Empire is an open-source, cross-platform remote administration and post-exploitation framework for penetration testers and criminals.
+// Description of the Detection:  Empire is an open-source, cross-platform remote administration and post-exploitation framework for penetration testers and criminals.
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

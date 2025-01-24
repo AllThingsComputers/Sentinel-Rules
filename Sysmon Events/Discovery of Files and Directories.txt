@@ -1,6 +1,6 @@
 // Title of Detection:  Discovery of Files and Directories
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Adversaries may enumerate files and directories or may search in specific locations of a host or network share for certain information within a file system. Adversaries may use the information from [File and Directory Discovery] during automated discovery to shape follow-on behaviours, including whether or not the adversary fully infects the target and/or attempts specific actions.  
+// Description of the Detection:  Adversaries may enumerate files and directories or may search in specific locations of a host or network share for certain information within a file system. Adversaries may use the information from [File and Directory Discovery] during automated discovery to shape follow-on behaviours, including whether or not the adversary fully infects the target and/or attempts specific actions.  
 // References (if available):  https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1083/T1083.md#atomic-test-1=file-and-directory-discovery-cmdexe   https://attack.mitre.org/techniques/T1083 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

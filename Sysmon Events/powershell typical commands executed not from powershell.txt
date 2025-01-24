@@ -1,6 +1,6 @@
 // Title of Detection:  powershell typical commands executed not from powershell
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: possible renamed powershell executing powershell only commands is suspicious 
+// Description of the Detection: possible renamed powershell executing powershell only commands is suspicious 
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

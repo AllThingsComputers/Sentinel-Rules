@@ -1,6 +1,6 @@
 // Title of Detection:   at.exe used for possible  Lateral Movement
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  
+// Description of the Detection:  
 // References (if available):  https://www.secureworks.com/blog/where-you-at-indicators-of-lateral-movement-using-at-exe-on-windows-7-systems
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

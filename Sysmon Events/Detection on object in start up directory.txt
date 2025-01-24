@@ -1,6 +1,6 @@
 // Title of Detection:  Detection on object in start up directory
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  placing a program within a startup folder will also cause that program to execute when a user logs in. There is a startup folder location for individual user accounts as well as a system-wide startup folder that will be checked regardless of which user account logs in. 
+// Description of the Detection:  placing a program within a startup folder will also cause that program to execute when a user logs in. There is a startup folder location for individual user accounts as well as a system-wide startup folder that will be checked regardless of which user account logs in. 
 // References (if available): https://chains.prelude.org/techniques/T1547.001
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

@@ -1,6 +1,6 @@
 // Title of Detection:  Detecting Unexpected Core Windows Binary Paths
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  
+// Description of the Detection:  
 // References (if available):  https://digitalforensicsurvivalpodcast.com/2019/04/14/dfsp-165-windows-core-processes 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

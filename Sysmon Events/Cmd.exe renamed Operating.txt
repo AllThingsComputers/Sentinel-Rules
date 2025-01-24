@@ -1,6 +1,6 @@
 // Title of Detection:  Cmd.exe renamed Operating 
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  A Threat actor may rename Cmd.exe in order to get around detections and still use it.
+// Description of the Detection:  A Threat actor may rename Cmd.exe in order to get around detections and still use it.
 // References (if available):   https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse  
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

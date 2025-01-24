@@ -1,6 +1,6 @@
 // Title of Detection:  WMIC spawned by Common Office Application
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Office macro to set a WMI event consumer to launch a malicious PowerShell command-thereby avoiding defenders who monitor PowerShell activity spawned by Office. 
+// Description of the Detection:  Office macro to set a WMI event consumer to launch a malicious PowerShell command-thereby avoiding defenders who monitor PowerShell activity spawned by Office. 
 // References (if available):   Page 80.  https://resource.redcanary.com/rs/003-YRU-314/images/2020-Threat-Detection-Report.pdf 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

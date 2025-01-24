@@ -1,6 +1,6 @@
 // Title of Detection:   Command Prompt without parameters could be possible interactive session
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:   false positives can be legitimate processes. But the  loading of cmd.exe with zero parameters is sign of an interactive session
+// Description of the Detection:   false positives can be legitimate processes. But the  loading of cmd.exe with zero parameters is sign of an interactive session
 // References (if available):   p99  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf  
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

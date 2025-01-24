@@ -1,6 +1,6 @@
 // Title of Detection: possible Out-of-Band Application Security Testing
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  
+// Description of the Detection:  
 // References (if available): https://www.socinvestigation.com/out-of-band-application-security-testing-detection-and-response/ 
 // The Logic of the Detection or Query Begins Below This Line
 DNSLogs

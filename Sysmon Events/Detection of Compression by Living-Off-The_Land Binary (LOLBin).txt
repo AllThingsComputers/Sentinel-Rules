@@ -1,6 +1,6 @@
 // Title of Detection:  Detection of Compression by Living-Off-The_Land Binary (LOLBin)
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  it isn't overly suspect by itself but may be used as one tool in many before exfiltration by an adversary This can be noisy, but we strongly prefer this level of visibility because of the frequency with which malicious payloads are packaged within archives.
+// Description of the Detection:  it isn't overly suspect by itself but may be used as one tool in many before exfiltration by an adversary This can be noisy, but we strongly prefer this level of visibility because of the frequency with which malicious payloads are packaged within archives.
 // References (if available):  https://redcanary.com/wp-content/uploads/2023/03/2022_ThreatDetectionReport_RedCanary.pdf
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

@@ -1,6 +1,6 @@
 // Title of Detection:  Firewall Ports Added To Allow List
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:   You will need to whitelist expected computers and accounts
+// Description of the Detection:   You will need to whitelist expected computers and accounts
 // References (if available):  n/a
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

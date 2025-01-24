@@ -1,6 +1,6 @@
 // Title of Detection:   IP address within URL
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: Detecting an IP in the url string as an IP can evade detection based on domain names/urls.  
+// Description of the Detection: Detecting an IP in the url string as an IP can evade detection based on domain names/urls.  
 // References (if available): https://www.socinvestigation.com/threat-hunting-using-proxy-logs-soc-incident-response-procedure/ 
 // The Logic of the Detection or Query Begins Below This Line
 DNSLogs

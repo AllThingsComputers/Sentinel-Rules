@@ -1,6 +1,6 @@
 // Title of Detection:   Web File Hosting connection
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  This list can have additions made to increase the basin
+// Description of the Detection:  This list can have additions made to increase the basin
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

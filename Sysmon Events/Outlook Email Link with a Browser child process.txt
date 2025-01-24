@@ -1,6 +1,6 @@
 // Title of Detection: Outlook Email Link with a Browser child process
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Detects Browsers spawned by an Outlook Email Link included
+// Description of the Detection:  Detects Browsers spawned by an Outlook Email Link included
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

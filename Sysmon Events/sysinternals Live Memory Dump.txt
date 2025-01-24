@@ -1,6 +1,6 @@
 // Title of Detection: sysinternals Live Memory Dump
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: will detects usage of a command using sysinternals to dump the live memory of a Windows machine 
+// Description of the Detection: will detects usage of a command using sysinternals to dump the live memory of a Windows machine 
 // References (if available):   https://techcommunity.microsoft.com/t5/failover-clustering/troubleshooting-hangs-using-live-dump/ba-p/372080   
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

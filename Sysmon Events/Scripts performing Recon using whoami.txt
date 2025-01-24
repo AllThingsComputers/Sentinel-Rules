@@ -1,6 +1,6 @@
 // Title of Detection:   Scripts performing Recon using whoami
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  SocGholish employs several scripted reconnaissance commands. While much of this activity occurs in memory, one that stands out is the execution of whoami with the output redirected to a local temp file with the naming convention rad<5-hex- chars>.tmp. 
+// Description of the Detection:  SocGholish employs several scripted reconnaissance commands. While much of this activity occurs in memory, one that stands out is the execution of whoami with the output redirected to a local temp file with the naming convention rad<5-hex- chars>.tmp. 
 // References (if available):   p52  https://resource.redcanary.com/rs/003-YRU-314/images/2022-Threat-Detection-Report-RedCanary.pdf 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

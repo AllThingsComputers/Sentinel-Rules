@@ -1,5 +1,5 @@
 // Title of Detection: Detection of Right- to-Left Override Unicode Characters or Reversals  in Command-Line
- // Description of the Detection: In future you could develop a file name version in sysmon and security events version 
+// Description of the Detection: In future you could develop a file name version in sysmon and security events version 
 // References (if available): https://redcanary.com/blog/right-to-left-override/ 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

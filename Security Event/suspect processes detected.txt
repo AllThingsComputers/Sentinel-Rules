@@ -1,6 +1,6 @@
 // Title of Detection:  suspect processes detected
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:   may have high fp
+// Description of the Detection:   may have high fp
 // References (if available): https://www.socinvestigation.com/hunting-for-suspect-windows-services-mind-map/
 // The Logic of the Detection or Query Begins Below This Line
 SecurityEvent

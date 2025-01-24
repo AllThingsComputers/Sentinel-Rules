@@ -1,6 +1,6 @@
 // Title of Detection:  Unusual binary shutting down endpoint
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: Malware may cause shutdowns on this EID as well as EventID 6006 too
+// Description of the Detection: Malware may cause shutdowns on this EID as well as EventID 6006 too
 // References (if available):    https://attack.mitre.org/techniques/T1529/
 // The Logic of the Detection or Query Begins Below This Line
 Event

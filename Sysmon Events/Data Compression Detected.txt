@@ -1,6 +1,6 @@
 // Title of Detection: Data Compression Detected
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  An adversary may compress data (e.g. sensitive documents) that is collected before exfiltration in order to make it portable and minimise the volume of data sent over the network.  
+// Description of the Detection:  An adversary may compress data (e.g. sensitive documents) that is collected before exfiltration in order to make it portable and minimise the volume of data sent over the network.  
 // References (if available): https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1560/T1560.md  https://winbuzzer.com/2021/02/01/compress-uncompress-files-folders-windows-10-xcxwbt/ 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

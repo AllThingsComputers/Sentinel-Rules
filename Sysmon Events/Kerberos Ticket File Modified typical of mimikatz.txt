@@ -1,6 +1,6 @@
 // Title of Detection:  Kerberos Ticket File Modified typical of mimikatz
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: Because mimikatz writes these files.
+// Description of the Detection: Because mimikatz writes these files.
 // References (if available): p98  https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

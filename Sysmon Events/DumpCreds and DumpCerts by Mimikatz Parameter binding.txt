@@ -1,6 +1,6 @@
 // Title of Detection:  DumpCreds and DumpCerts by Mimikatz Parameter binding 
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: notes for future I can do more malicious commands via Parameter bindings to detect malicious syntax
+// Description of the Detection: notes for future I can do more malicious commands via Parameter bindings to detect malicious syntax
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

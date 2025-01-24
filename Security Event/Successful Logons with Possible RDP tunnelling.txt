@@ -1,6 +1,6 @@
 // Title of Detection:    Successful Logons with Possible RDP tunnelling
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:   Event ID 4624 with Logon type 10 (RemoteInteractive logins) and source network address is loopback (127.*.*.* or ::1), mostly RDP tunnelling.  
+// Description of the Detection:   Event ID 4624 with Logon type 10 (RemoteInteractive logins) and source network address is loopback (127.*.*.* or ::1), mostly RDP tunnelling.  
 // References (if available):  https://www.socinvestigation.com/threat-hunting-with-windows-event-ids-4625-4624 
 // The Logic of the Detection or Query Begins Below This Line
 SecurityEvent

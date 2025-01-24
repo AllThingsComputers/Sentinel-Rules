@@ -1,6 +1,6 @@
 // Title of Detection: suspect BootEventCollector Module Cmdlets in  Powershell
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  for Disable-SbecAutologger and Disable-SbecBcd
+// Description of the Detection:  for Disable-SbecAutologger and Disable-SbecBcd
 // References (if available): https://learn.microsoft.com/en-us/powershell/module/booteventcollector/?view=windowsserver2019-ps
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

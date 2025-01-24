@@ -1,6 +1,6 @@
 // Title of Detection: Potentially Illegitimate Services.exe
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  This detects 3 irregularities as seen in the link
+// Description of the Detection:  This detects 3 irregularities as seen in the link
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

@@ -1,6 +1,6 @@
 // Title of Detection: DLL installed in System32 using Powershell
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  detects Command to install/copy a .dll file into a system directory for eg System32  and SysWOW64. for future can try make one for any file copied in but need to  find the link 
+// Description of the Detection:  detects Command to install/copy a .dll file into a system directory for eg System32  and SysWOW64. for future can try make one for any file copied in but need to  find the link 
 // References (if available): n/a
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

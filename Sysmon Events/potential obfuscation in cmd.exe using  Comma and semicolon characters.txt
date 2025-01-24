@@ -1,6 +1,6 @@
 // Title of Detection: potential obfuscation in cmd.exe using  Comma and semicolon characters
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  the comma and semicolon are almost always interchangeable with one another and can be placed almost anywhere that white space is allowed in cmd.exe command line arguments.  
+// Description of the Detection:  the comma and semicolon are almost always interchangeable with one another and can be placed almost anywhere that white space is allowed in cmd.exe command line arguments.  
 // References (if available): https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/dosfuscation-report.pdf  page 13
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

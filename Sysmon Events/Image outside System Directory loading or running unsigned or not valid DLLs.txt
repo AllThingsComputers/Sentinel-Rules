@@ -1,6 +1,6 @@
 // Title of Detection:   Image outside System Directory loading or running unsigned or not valid DLLs 
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  possible marks of DLL SEARCH ORDER HIJACKING 
+// Description of the Detection:  possible marks of DLL SEARCH ORDER HIJACKING 
 // References (if available):   page 55-56  https://resource.redcanary.com/rs/003-YRU-314/images/2020-Threat-Detection-Report.pdf
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

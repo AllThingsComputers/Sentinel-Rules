@@ -1,6 +1,6 @@
 // Title of Detection: New-Object System.Net.Webclient in Command-Line
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: detects network functions such as New-Object System.Net.Webclient, a User-Agent string, and the domain to which the process will connect. 
+// Description of the Detection: detects network functions such as New-Object System.Net.Webclient, a User-Agent string, and the domain to which the process will connect. 
 // References (if available):  n/a
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

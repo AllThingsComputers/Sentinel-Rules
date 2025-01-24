@@ -1,6 +1,6 @@
 // Title of Detection:  Local Accounts/User Added or Deleted
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:    this detects user created or deleted
+// Description of the Detection:    this detects user created or deleted
 // References (if available):  https://blog.menasec.net/2020/09/hunting-local-accounts-and-groups.html  
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

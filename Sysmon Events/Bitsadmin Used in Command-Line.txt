@@ -1,6 +1,6 @@
 // Title of Detection: Bitsadmin Used in Command-Line
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Bitsadmin is a command-line tool that an adversary may used to download malicious software/file or upload stolen data. If you get high FP include the word download to it’s regex
+// Description of the Detection:  Bitsadmin is a command-line tool that an adversary may used to download malicious software/file or upload stolen data. If you get high FP include the word download to it’s regex
 // References (if available):    https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/bitsadmin-transfer
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

@@ -1,6 +1,6 @@
 // Title of Detection:  Modification to the Run Registry Key
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:   This logic detects any changes to the run reg key as this can achieve persistence. 
+// Description of the Detection:   This logic detects any changes to the run reg key as this can achieve persistence. 
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

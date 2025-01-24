@@ -1,6 +1,6 @@
 // Title of Detection:  Existing Service Modified 
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: This detects the  Modifying of an Existing Service  
+// Description of the Detection: This detects the  Modifying of an Existing Service  
 // References (if available):  https://www.socinvestigation.com/hunting-for-suspect-windows-services-mind-map
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

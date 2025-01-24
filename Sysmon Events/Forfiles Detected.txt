@@ -1,6 +1,6 @@
 // Title of Detection:  Forfiles Detected
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  forfile is a LoLbin and may be used by an adversary to find data to steel. Its rarely used by IT admins
+// Description of the Detection:  forfile is a LoLbin and may be used by an adversary to find data to steel. Its rarely used by IT admins
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

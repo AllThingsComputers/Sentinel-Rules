@@ -1,6 +1,6 @@
 // Title of Detection:  fileless uac bypass using sdclt-exe
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  this is an Alert for SDCLT to check for UAC Bypass  
+// Description of the Detection:  this is an Alert for SDCLT to check for UAC Bypass  
 // References (if available):  ://posts.specterops.io/fileless-uac-bypass-using-sdclt-exe-3e9f9ad4e2b3  https://posts.specterops.io/bypassing-uac-using-app-paths-9249d8cbe9c9 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

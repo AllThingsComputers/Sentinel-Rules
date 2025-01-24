@@ -1,6 +1,6 @@
 // Title of Detection:  Outlook's CreateObject Method and DotNetToJScript for possible Lateral Movement 
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:   
+// Description of the Detection:   
 // References (if available):  https://posts.specterops.io/lateral-movement-using-outlooks-createobject-method-and-dotnettojscript-a88a81df27eb
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

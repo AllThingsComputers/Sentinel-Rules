@@ -1,6 +1,6 @@
 // Title of Detection: Unpredicted Parent process
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Lsass generally doesn't spawn other processes and rundll32 doesn't usually spawn msiexec. It is unusual for msiexec.exe to initiate an external network connection and the command line options of /i and /q tell msiexec to quietly install the file without user interaction.  quantifier regex is used in this
+// Description of the Detection:  Lsass generally doesn't spawn other processes and rundll32 doesn't usually spawn msiexec. It is unusual for msiexec.exe to initiate an external network connection and the command line options of /i and /q tell msiexec to quietly install the file without user interaction.  quantifier regex is used in this
 // References (if available): https://redcanary.com/blog/lsass-behaving-badly/   
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

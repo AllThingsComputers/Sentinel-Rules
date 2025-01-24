@@ -1,6 +1,6 @@
 // Title of Detection:   windows core binaries that should not be be a spawned child process 
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:    you can add more protected key windows core services 
+// Description of the Detection:    you can add more protected key windows core services 
 // References (if available):  https://digitalforensicsurvivalpodcast.com/2019/04/14/dfsp-165-windows-core-processes/    
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

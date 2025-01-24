@@ -1,6 +1,6 @@
 // Title of Detection: ETW Trace removal using logman
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Detects utilisation of logman to disable or remove ETW trace sessions 
+// Description of the Detection:  Detects utilisation of logman to disable or remove ETW trace sessions 
 // References (if available):  https://medium.com/palantir/tampering-with-windows-event-tracing-background-offense-and-defense-4be7ac62ac63    https://docs.microsoft.com/en-us/windows/win32/wsw/tracing 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

@@ -1,6 +1,6 @@
 // Title of Detection: Windows Defender Tampered in Command-Line
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Detects when a user has modified windows defender by removing definitions or signatures to evade defences. It also cancels scans detections
+// Description of the Detection:  Detects when a user has modified windows defender by removing definitions or signatures to evade defences. It also cancels scans detections
 // References (if available): https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/command-line-arguements-microsoft-defender-antivirus?view=o365-worldwide  
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

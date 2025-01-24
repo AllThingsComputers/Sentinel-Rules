@@ -1,6 +1,6 @@
 // Title of Detection:  directory traversal in command
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  directory traversal in command using the \\.\ notation. potentially can add the web version which is  dot-dot-slash (../)
+// Description of the Detection:  directory traversal in command using the \\.\ notation. potentially can add the web version which is  dot-dot-slash (../)
 // References (if available):    https://attack.mitre.org/techniques/T1561    
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

@@ -1,6 +1,6 @@
 // Title of Detection:  sdelete.exe detected
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Monitor executed commands and arguments for binaries that could be involved in data destruction activity, such as SDelete.  
+// Description of the Detection:  Monitor executed commands and arguments for binaries that could be involved in data destruction activity, such as SDelete.  
 // References (if available): https://attack.mitre.org/techniques/T1485/ 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

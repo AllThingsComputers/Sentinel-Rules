@@ -1,6 +1,6 @@
 // Title of Detection:   NTLMv1 Potential Downgrade Attack 
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  The logic of the NTLM Auditing is that it will log NTLMv2-level authentication when it finds NTLMv2 key material on the logon session. It logs NTLMv1 in all other cases, which include anonymous sessions. Therefore, the general recommendation is to ignore the event for security protocol, usage information when the event is logged for ANONYMOUS LOGON.
+// Description of the Detection:  The logic of the NTLM Auditing is that it will log NTLMv2-level authentication when it finds NTLMv2 key material on the logon session. It logs NTLMv1 in all other cases, which include anonymous sessions. Therefore, the general recommendation is to ignore the event for security protocol, usage information when the event is logged for ANONYMOUS LOGON.
 // References (if available): https://learn.microsoft.com/en-us/troubleshoot/windows-server/windows-security/audit-domain-controller-ntlmv1
 // The Logic of the Detection or Query Begins Below This Line
 SecurityEvent

@@ -1,6 +1,6 @@
 // Title of Detection:    suspect Space character after Process name
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: please check for spaces at the end of Processes as they may be illegitimate processes made to look like a trusted process
+// Description of the Detection: please check for spaces at the end of Processes as they may be illegitimate processes made to look like a trusted process
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SecurityEvent

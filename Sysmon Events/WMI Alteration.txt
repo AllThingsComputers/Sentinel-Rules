@@ -1,6 +1,6 @@
 // Title of Detection:  WMI Alteration 
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  The infrastructure for management data and operations that enables local and remote management of Windows personal computers and servers 
+// Description of the Detection:  The infrastructure for management data and operations that enables local and remote management of Windows personal computers and servers 
 // References (if available):   https://docs.microsoft.com/en-us/windows/win32/wmisdk/wmi-command-line-to 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

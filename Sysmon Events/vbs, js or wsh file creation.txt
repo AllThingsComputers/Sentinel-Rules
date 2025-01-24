@@ -1,6 +1,6 @@
 // Title of Detection:   vbs, js or wsh file creation
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  these are script files and are worth looking at
+// Description of the Detection:  these are script files and are worth looking at
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

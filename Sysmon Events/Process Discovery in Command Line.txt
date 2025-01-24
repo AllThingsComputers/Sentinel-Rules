@@ -1,6 +1,6 @@
 // Title of Detection:   Process Discovery in Command Line
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Get the processes that are running on the local computer. You may need to whitelist users, accounts, physical and virtual machines
+// Description of the Detection:  Get the processes that are running on the local computer. You may need to whitelist users, accounts, physical and virtual machines
 // References (if available):  n/a
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

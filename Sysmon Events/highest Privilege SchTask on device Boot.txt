@@ -1,6 +1,6 @@
 // Title of Detection:   highest Privilege SchTask on device Boot  
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  scheduled the task to run on system boot with the highest level of privileges on the system. We've begun to observe this technique much more frequently in compromises, perhaps because adversaries have become aware of blue teams getting wise to monitoring the creation of autorun Registry keys.  
+// Description of the Detection:  scheduled the task to run on system boot with the highest level of privileges on the system. We've begun to observe this technique much more frequently in compromises, perhaps because adversaries have become aware of blue teams getting wise to monitoring the creation of autorun Registry keys.  
 // References (if available):   http://redcanary.com/blog/lateral-movement-and-cryptomining 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

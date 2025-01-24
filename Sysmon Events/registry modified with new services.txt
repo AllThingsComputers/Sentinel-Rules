@@ -1,6 +1,6 @@
 // Title of Detection:  registry modified with new services
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  
+// Description of the Detection:  
 // References (if available): https://www.socinvestigation.com/windows-service-creation-and-malware-detection-methods/ 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

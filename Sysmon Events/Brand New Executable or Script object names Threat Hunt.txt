@@ -1,6 +1,6 @@
 // Title of Detection: Brand New Executable or Script object names Threat Hunt
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: Scripts or executables can hide malicious code and no detection in a SIEM will see what is inside. This will provide a high false positive rate which you can tune and whitelist.
+// Description of the Detection: Scripts or executables can hide malicious code and no detection in a SIEM will see what is inside. This will provide a high false positive rate which you can tune and whitelist.
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line 
 SysmonEvent

@@ -1,6 +1,6 @@
 // Title of Detection:   Execution using sc.exe
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: One technique to execute programs remotely and have them persist beyond system reboots is to interact with Windows services remotely. It can be done with a variety of tools such as sc.exe, WMI, etc. Monitoring sc.exe process execution command line and network connections are good but not resilient enough and can be bypassed easily as detection because adversaries rename sc.exe to something else and run it from another folder. 
+// Description of the Detection: One technique to execute programs remotely and have them persist beyond system reboots is to interact with Windows services remotely. It can be done with a variety of tools such as sc.exe, WMI, etc. Monitoring sc.exe process execution command line and network connections are good but not resilient enough and can be bypassed easily as detection because adversaries rename sc.exe to something else and run it from another folder. 
 // References (if available):  https://www.socinvestigation.com/hunting-for-suspect-windows-services-mind-map 
 // The Logic of the Detection or Query Begins Below This Line
 SecurityEvent

@@ -1,6 +1,6 @@
 // Title of Detection:Chrome Loader usage
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  ChromeLoader might seem like a run-of-the-mill browser hijacker, but its peculiar use of PowerShell could spell deeper trouble 
+// Description of the Detection:  ChromeLoader might seem like a run-of-the-mill browser hijacker, but its peculiar use of PowerShell could spell deeper trouble 
 // References (if available):  https://redcanary.com/blog/chromeloader/ 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

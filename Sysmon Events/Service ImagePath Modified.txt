@@ -1,6 +1,6 @@
 // Title of Detection:  Service ImagePath Modified 
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Adversaries may execute their own malicious payloads by hijacking the Registry entries used by services. Adversaries may use flawsin the permissions for registry to redirect from the originally specified executable to one that they control, in order to launch their own code at Service start. Windows stores local service configuration information in the Registry under HKLM\SYSTEM\CurrentControlSet\Services.
+// Description of the Detection:  Adversaries may execute their own malicious payloads by hijacking the Registry entries used by services. Adversaries may use flawsin the permissions for registry to redirect from the originally specified executable to one that they control, in order to launch their own code at Service start. Windows stores local service configuration information in the Registry under HKLM\SYSTEM\CurrentControlSet\Services.
 // References (if available): https://github.com/SigmaHQ/sigma/blob/master/rules/windows/powershell/powershell_script/posh_ps_get_ac_service.yml 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

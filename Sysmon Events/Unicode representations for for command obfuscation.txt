@@ -1,6 +1,6 @@
 // Title of Detection: Unicode representations for for command obfuscation
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: Detects Unicode characters in the command line.  for example certutil accept hyphens, slashes, and most Unicode representations of slashes, including the division slash (0x2215) and fraction slash (0x2044).  
+// Description of the Detection: Detects Unicode characters in the command line.  for example certutil accept hyphens, slashes, and most Unicode representations of slashes, including the division slash (0x2215) and fraction slash (0x2044).  
 // References (if available):  https://www.wietzebeukema.nl/blog/windows-command-line-obfuscation   
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

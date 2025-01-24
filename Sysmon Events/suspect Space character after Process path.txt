@@ -1,6 +1,6 @@
 // Title of Detection:   suspect Space character after Process path
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: detection spaces at the end of Process names as they may be illegitimate
+// Description of the Detection: detection spaces at the end of Process names as they may be illegitimate
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

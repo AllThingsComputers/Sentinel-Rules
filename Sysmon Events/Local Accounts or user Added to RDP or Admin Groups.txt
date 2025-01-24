@@ -1,6 +1,6 @@
 // Title of Detection:  Local Accounts/user Added to RDP/Admin Groups
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:    Note - Administrators Group is in the  1st part. and the 2nd part is for adding user to RDP user group
+// Description of the Detection:    Note - Administrators Group is in the  1st part. and the 2nd part is for adding user to RDP user group
 // References (if available):  https://blog.menasec.net/2020/09/hunting-local-accounts-and-groups.html 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

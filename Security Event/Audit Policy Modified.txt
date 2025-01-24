@@ -1,6 +1,6 @@
 // Title of Detection:    Audit Policy Modified
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: To spot users with malicious intent, such as those responsible for tampering with event logs. 1102 (Log cleared) (Alternatively the event log service can also be disabled which results in the logs not getting recorded. This is done by the system audit policy, in which case event 4719 gets recorded. changing the audit policy will allow the attacker to clear the logs without you being alerted
+// Description of the Detection: To spot users with malicious intent, such as those responsible for tampering with event logs. 1102 (Log cleared) (Alternatively the event log service can also be disabled which results in the logs not getting recorded. This is done by the system audit policy, in which case event 4719 gets recorded. changing the audit policy will allow the attacker to clear the logs without you being alerted
 // References (if available):  https://www.manageengine.com/products/active-directory-audit/kb/event-log-events/event-id-1102.html
 // The Logic of the Detection or Query Begins Below This Line
 SecurityEvent

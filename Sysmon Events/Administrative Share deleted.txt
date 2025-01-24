@@ -1,6 +1,6 @@
 // Title of Detection: Administrative Share deleted
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Administrative shares are hidden network shares created by Microsoft's Windows NT operating systems that grant system administrators remote access to every disk volume on a network-connected system. These shares are automatically created at started unless they have been purposefully disabled and is done in this Atomic test. As Microsoft puts it, "Missing administrative shares typically indicate that the computer in question has been compromised by malicious software."  
+// Description of the Detection:  Administrative shares are hidden network shares created by Microsoft's Windows NT operating systems that grant system administrators remote access to every disk volume on a network-connected system. These shares are automatically created at started unless they have been purposefully disabled and is done in this Atomic test. As Microsoft puts it, "Missing administrative shares typically indicate that the computer in question has been compromised by malicious software."  
 // References (if available):  https://threatpost.com/conti-ransomware-gang-has-full-log4shell-attack-chain/177173/     https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.005/T1070.005.md 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

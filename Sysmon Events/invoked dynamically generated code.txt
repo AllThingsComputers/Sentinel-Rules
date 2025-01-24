@@ -1,6 +1,6 @@
 // Title of Detection:  invoked dynamically generated code
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Invoke-Expression is not the only cmdlet or technique that can be used to invoke dynamically generated code. Other alternatives are Invoke-Command, Script Block invocation (such as & [Scriptblock]::Create("Write-Host Script Block Conversion")), and dynamic script invocation APIs such as $ExecutionContext.InvokeCommand.InvokeScript("Write-Host EXPRESSION")."
+// Description of the Detection:  Invoke-Expression is not the only cmdlet or technique that can be used to invoke dynamically generated code. Other alternatives are Invoke-Command, Script Block invocation (such as & [Scriptblock]::Create("Write-Host Script Block Conversion")), and dynamic script invocation APIs such as $ExecutionContext.InvokeCommand.InvokeScript("Write-Host EXPRESSION")."
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

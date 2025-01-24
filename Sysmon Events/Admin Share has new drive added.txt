@@ -1,6 +1,6 @@
 // Title of Detection:  Admin Share has new drive added
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Adversaries may use to interact with a remote network share using Server Message Block (SMB). The adversary may then perform actions as the logged-on user.  
+// Description of the Detection:  Adversaries may use to interact with a remote network share using Server Message Block (SMB). The adversary may then perform actions as the logged-on user.  
 // References (if available): https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1021.002/T1021.002.md#atomic-test-2---map-admin-share-powershell   https://attack.mitre.org/techniques/T1021/
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

@@ -1,6 +1,6 @@
 // Title of Detection: Powershell with non-interactive execution
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  "non-interactive" means the shell is executing a script, command, or script block and terminates after execution. If PowerShell is run with any of the options -Command, -EncodedCommand, or -File, it is non-interactive.
+// Description of the Detection:  "non-interactive" means the shell is executing a script, command, or script block and terminates after execution. If PowerShell is run with any of the options -Command, -EncodedCommand, or -File, it is non-interactive.
 // References (if available):  https://stackoverflow.com/questions/9738535/powershell-test-for-noninteractive-mode
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

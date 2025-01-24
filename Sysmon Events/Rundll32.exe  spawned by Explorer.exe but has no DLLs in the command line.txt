@@ -1,6 +1,6 @@
 // Title of Detection: Rundll32.exe  spawned by Explorer.exe but has no DLLs in the command line
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Gamarue an Autorun worm that spread primarily via infected USB drives 
+// Description of the Detection:  Gamarue an Autorun worm that spread primarily via infected USB drives 
 // References (if available):  67  https://resource.redcanary.com/rs/003-YRU-314/images/2022-Threat-DetectionReport-RedCanary.pdf 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

@@ -1,6 +1,6 @@
 // Title of Detection:  Network Discovery
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Adversaries may attempt to get a listing of network connections to or from the compromised system they are currently accessing or from remote systems by querying for information over the network. You may need to whitelist expected machines that perform Network Discovery
+// Description of the Detection:  Adversaries may attempt to get a listing of network connections to or from the compromised system they are currently accessing or from remote systems by querying for information over the network. You may need to whitelist expected machines that perform Network Discovery
 // References (if available): https://www.digitalcitizen.life/command-prompt-advanced-networking-commands/
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

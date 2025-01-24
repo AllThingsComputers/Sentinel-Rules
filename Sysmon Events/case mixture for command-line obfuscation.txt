@@ -1,6 +1,6 @@
 // Title of Detection:  case mixture for command-line obfuscation
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  switching between upper case and lower case to much in one word is an indicator of obfuscation
+// Description of the Detection:  switching between upper case and lower case to much in one word is an indicator of obfuscation
 // References (if available):   n/a
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

@@ -1,6 +1,6 @@
 // Title of Detection:    construction of a WMI object
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: Initial construction of a WMI object, such as a filter, consumer, subscription, binding, or provider (ex: Sysmon EIDs 19-21)  
+// Description of the Detection: Initial construction of a WMI object, such as a filter, consumer, subscription, binding, or provider (ex: Sysmon EIDs 19-21)  
 // References (if available): https://attack.mitre.org/datasources/DS0005  https://attack.mitre.org/techniques/T1546/003/ 
 // The Logic of the Detection or Query Begins Below This Line
 Event

@@ -1,6 +1,6 @@
 // Title of Detection: DSRM Registry Keys Created or modified
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:   
+// Description of the Detection:   
 // References (if available):  https://www.socinvestigation.com/directory-services-restore-mode-password-reset-event-ids-to-monitor
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

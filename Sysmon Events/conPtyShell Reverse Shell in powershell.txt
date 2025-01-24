@@ -1,6 +1,6 @@
 // Title of Detection:   ConPtyShell Reverse Shell in powershell
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  ConPtyShell is a Windows server Interactive Reverse Shell. ConPtyShell converts your bash shell into a remote PowerShell. CreatePseudoConsole() is a ConPtyShell function that was first used It creates a Pseudo Console. Can in future add other shells and reverse shells web shells. Cmd prompt needs netcat for example. 
+// Description of the Detection:  ConPtyShell is a Windows server Interactive Reverse Shell. ConPtyShell converts your bash shell into a remote PowerShell. CreatePseudoConsole() is a ConPtyShell function that was first used It creates a Pseudo Console. Can in future add other shells and reverse shells web shells. Cmd prompt needs netcat for example. 
 // References (if available): https://www.hackingarticles.in/powershell-for-pentester-windows-reverse-shell/ 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

@@ -1,6 +1,6 @@
 // Title of Detection: Irregular Outlook spawned process  
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  This can be potentially phishing as  we would not expect outlook to launch a child process of a script tool or shell  
+// Description of the Detection:  This can be potentially phishing as  we would not expect outlook to launch a child process of a script tool or shell  
 // References (if available):    https://www.cyborgsecurity.com/cyborg-labs/hunting-a-phish/
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

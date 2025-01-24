@@ -1,6 +1,6 @@
 // Title of Detection:  Suspicious External CMSTP network connection
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Monitor for newly constructed network connections that are sent or received by untrusted hosts, such as Sysmon Event 3 (Network connection) where Image contains CMSTP.exe and Destination!P is external. 
+// Description of the Detection:  Monitor for newly constructed network connections that are sent or received by untrusted hosts, such as Sysmon Event 3 (Network connection) where Image contains CMSTP.exe and Destination!P is external. 
 // References (if available):  https://attack.mitre.org/techniques/T1218/003
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

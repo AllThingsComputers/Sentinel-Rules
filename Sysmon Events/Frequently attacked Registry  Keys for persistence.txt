@@ -1,6 +1,6 @@
 // Title of Detection: Frequently attacked Registry  Keys for persistence 
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: basically the registry keys that are used to launch programs or create folder objects for persistence are detected by this such as creating new keys, modifying or deleting autorun of security software for example
+// Description of the Detection: basically the registry keys that are used to launch programs or create folder objects for persistence are detected by this such as creating new keys, modifying or deleting autorun of security software for example
 // References (if available): https://kevindicks.co.uk/blog/2018/05/07/common-malware-registry-keys  https://www.minitool.com/news/check-registry-for-malware-and-remove-it.html  https://www.cyborgsecurity.com/cyborg-labs/hunting-for-persistence-registry-run-keys-startup-folder  
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

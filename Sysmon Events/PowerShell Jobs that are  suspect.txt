@@ -1,6 +1,6 @@
 // Title of Detection: PowerShell Jobs that are  suspect
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  we have found no system-level usage of scheduled jobs. This suggests that scheduled jobs you identify are deliberately put there and are worth investigation. You can query the scheduled jobs on a machine with this straight forward command Get-ScheduledJob  
+// Description of the Detection:  we have found no system-level usage of scheduled jobs. This suggests that scheduled jobs you identify are deliberately put there and are worth investigation. You can query the scheduled jobs on a machine with this straight forward command Get-ScheduledJob  
 // References (if available):   https://labs.jumpsec.com/powershell-jobs/ 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

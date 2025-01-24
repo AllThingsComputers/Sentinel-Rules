@@ -1,6 +1,6 @@
 // Title of Detection:  COMSPEC environment variable for cmd.exe path obfuscation
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  The %ComSpec% variable contains the full path to the command processor; on the Windows NT family of operating systems, this is cmd.exe
+// Description of the Detection:  The %ComSpec% variable contains the full path to the command processor; on the Windows NT family of operating systems, this is cmd.exe
 // References (if available):     https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/dosfuscation-report.pdf  page 13-14
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

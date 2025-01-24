@@ -1,6 +1,6 @@
 // Title of Detection:  potentially renamed cmd.exe
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  /c is a command line argument for cmd.exe
+// Description of the Detection:  /c is a command line argument for cmd.exe
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

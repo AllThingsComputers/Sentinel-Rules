@@ -1,6 +1,6 @@
 // Title of Detection:   Isass spawning a child process
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: detetcs the above which should be rare  
+// Description of the Detection: detetcs the above which should be rare  
 // References (if available): https://redcanary.com/blog/lateral-movement-and-cryptomining/
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

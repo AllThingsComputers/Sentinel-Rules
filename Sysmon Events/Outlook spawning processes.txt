@@ -1,6 +1,6 @@
 // Title of Detection:   Outlook spawning processes
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: Please look into the Image commandline to see if its malicious or safe
+// Description of the Detection: Please look into the Image commandline to see if its malicious or safe
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

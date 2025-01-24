@@ -1,6 +1,6 @@
 // Title of Detection:  bcdedit's Commands frequently used by threat actors
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:   
+// Description of the Detection:   
 // References (if available): https://www.socinvestigation.com/ransomware-how-attackers-are-breaching-corporate-networks/    https://labs.jumpsec.com/a-defenders-guide-for-rootkit-detection-episode-1-kernel-drivers/ 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

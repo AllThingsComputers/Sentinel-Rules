@@ -1,6 +1,6 @@
 // Title of Detection:  Unknown Local Admin or Guest Logon 
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:    000001F4 (Administrator) or 000001F5 (Guest)  
+// Description of the Detection:    000001F4 (Administrator) or 000001F5 (Guest)  
 // References (if available): https://blog.menasec.net/2020/09/hunting-local-accounts-and-groups.html 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

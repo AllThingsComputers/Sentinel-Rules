@@ -1,6 +1,6 @@
 // Title of Detection:   Scheduled Task Spawning Child Image
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: . Adware updating itself by using Scheduled Tasks to launch unsigned binaries from AppData. Malware using the Task Scheduler Engine (taskeng.exe) to launch a malicious binary that then executes the Service Host process (svchost.exe)> abnormal child ot parent process  . this can be for persistence or legitimate admin activity
+// Description of the Detection: . Adware updating itself by using Scheduled Tasks to launch unsigned binaries from AppData. Malware using the Task Scheduler Engine (taskeng.exe) to launch a malicious binary that then executes the Service Host process (svchost.exe)> abnormal child ot parent process  . this can be for persistence or legitimate admin activity
 // References (if available):  https://attack.mitre.org/techniques/T1053/005/
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

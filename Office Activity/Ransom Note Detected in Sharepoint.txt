@@ -1,6 +1,6 @@
 // Title of Detection:   Ransom Note Detected
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  eg HELP DECRYPT.TXT, HELP YOUR FILES.TXT, HELP_TO_DECRYPT_YOUR_FILES.txt, RECOVERY KEY.txt HELP_RESTORE_FILES.txt, HELP_RECOVER_FILES.txt
+// Description of the Detection:  eg HELP DECRYPT.TXT, HELP YOUR FILES.TXT, HELP_TO_DECRYPT_YOUR_FILES.txt, RECOVERY KEY.txt HELP_RESTORE_FILES.txt, HELP_RECOVER_FILES.txt
 // References (if available):  https://woshub.com/wp-content/uploads/bin/ransomware_extensions.txt
 // The Logic of the Detection or Query Begins Below This Line
 OfficeActivity

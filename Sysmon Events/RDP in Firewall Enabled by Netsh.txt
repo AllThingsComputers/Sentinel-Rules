@@ -1,6 +1,6 @@
 // Title of Detection: RDP in Firewall Enabled by Netsh
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  After gaining initial access, Symantec has observed affiliates for all three ransomware families using third- party software such as AnyDesk and ConnectWise Control (previously known as ScreenConnect) to maintain access to victim networks. They also enable default Remote Desktop access in the firewall 
+// Description of the Detection:  After gaining initial access, Symantec has observed affiliates for all three ransomware families using third- party software such as AnyDesk and ConnectWise Control (previously known as ScreenConnect) to maintain access to victim networks. They also enable default Remote Desktop access in the firewall 
 // References (if available):  https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/ransomware-hive-conti-avoslocker https://www.socinvestigation.com/ransomware-how-attackers-are-breaching-corporate-networks/ 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

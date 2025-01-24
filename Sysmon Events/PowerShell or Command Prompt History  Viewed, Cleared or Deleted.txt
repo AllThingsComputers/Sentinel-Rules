@@ -1,6 +1,6 @@
 // Title of Detection: PowerShell or Command Prompt History  Viewed, Cleared or Deleted
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Detects code that may indicate clearing PowerShell or Cmd.exe history. 1st one CLS clears window history. 2nd one views any deleted history. 3rd one saves history to a file. Note CLS has a high false positive rate
+// Description of the Detection:  Detects code that may indicate clearing PowerShell or Cmd.exe history. 1st one CLS clears window history. 2nd one views any deleted history. 3rd one saves history to a file. Note CLS has a high false positive rate
 // References (if available):  https://www.thewindowsclub.com/view-save-clear-command-history-windows
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

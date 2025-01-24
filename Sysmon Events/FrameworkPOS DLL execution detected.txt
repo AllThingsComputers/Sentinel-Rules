@@ -1,6 +1,6 @@
 // Title of Detection: FrameworkPOS DLL execution detected
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  
+// Description of the Detection:  
 // References (if available):    https://redcanary.com/blog/frameworkpos-and-the-adequate-persistent-threat/ 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

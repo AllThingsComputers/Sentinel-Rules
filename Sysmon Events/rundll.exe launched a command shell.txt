@@ -1,6 +1,6 @@
 // Title of Detection:   rundll.exe launched a command shell
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:   this shouldn't happen under normal operation
+// Description of the Detection:   this shouldn't happen under normal operation
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

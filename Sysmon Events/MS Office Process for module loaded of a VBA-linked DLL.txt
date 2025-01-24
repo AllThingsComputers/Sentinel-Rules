@@ -1,6 +1,6 @@
 // Title of Detection:   MS Office Process for module loaded of a VBA-linked DLL
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  Office processes for module loads of VBA-related DLLs, including vbeui.dll and vbe7.dll. The presence of these DLLs being loaded is a potential indicator of macro usewin32_process 
+// Description of the Detection:  Office processes for module loads of VBA-related DLLs, including vbeui.dll and vbe7.dll. The presence of these DLLs being loaded is a potential indicator of macro usewin32_process 
 // References (if available):    https://resource.redcanary.com/rs/003-YRU-314/images/2021-Threat-Detection-Report.pdf  pg111 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

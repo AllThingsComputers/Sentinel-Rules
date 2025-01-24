@@ -1,6 +1,6 @@
 // Title of Detection:  non-standard File path format for potential detection evasion
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection:  File path written in non-standard valid way that can avoid detection file paths can often be written with substituted slashes in addition to many other directory traversal tricks, drive syntaxes, etc.- c:\windows/system32\.\calc.exe-c:windows/system32\.//\\\./\/\/.\calc.exe    
+// Description of the Detection:  File path written in non-standard valid way that can avoid detection file paths can often be written with substituted slashes in addition to many other directory traversal tricks, drive syntaxes, etc.- c:\windows/system32\.\calc.exe-c:windows/system32\.//\\\./\/\/.\calc.exe    
 // References (if available): page 34. https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/dosfuscation-report.pdf
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

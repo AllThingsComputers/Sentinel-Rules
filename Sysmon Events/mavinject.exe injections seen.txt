@@ -1,6 +1,6 @@
 // Title of Detection:   mavinject.exe injections seen
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: Though it is a windows tool, it may be used maliciously. For Sysmon EID create remote thread most likely 
+// Description of the Detection: Though it is a windows tool, it may be used maliciously. For Sysmon EID create remote thread most likely 
 // References (if available):  https://posts.specterops.io/mavinject-exe-functionality-deconstructed-c29ab2cf5c0e
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

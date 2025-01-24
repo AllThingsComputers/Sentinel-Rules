@@ -1,6 +1,6 @@
 // Title of Detection:   svchost.exe making Unexpected port connections 
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: This is because TrickBot uses ports 447 and 449 using svchost.exe
+// Description of the Detection: This is because TrickBot uses ports 447 and 449 using svchost.exe
 // References (if available): https://redcanary.com/threat-detection-report/threats/trickbot/
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent

@@ -1,6 +1,6 @@
 // Title of Detection: Bash Script Run
 // Authorship & Contact: https://allthingscomputers.medium.com  https://twitter.com/allthingshandle  https://allthingscomputersblog.wordpress.com/ 
- // Description of the Detection: this  searches for shell scripts that Bash uses when they are used from the command line 
+// Description of the Detection: this  searches for shell scripts that Bash uses when they are used from the command line 
 // References (if available): 
 // The Logic of the Detection or Query Begins Below This Line
 SysmonEvent
