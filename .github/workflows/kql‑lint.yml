@@ -9,26 +9,39 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout code
       - uses: actions/checkout@v5
 
+      # Step 2: Set up .NET 7
       - name: Set up .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 7.0
 
+      # Step 3: Install Kusto parser tool
       - name: Install Kusto parser
         run: dotnet tool install -g Kusto.Language.Tool
 
-      # Normalize KQL files before linting
+      # Step 4: Normalize all KQL files (line endings + trailing spaces)
       - name: Normalize KQL files
         run: |
+          echo "Normalizing line endings and trimming spaces..."
           find . -name "*.kql" -exec sed -i 's/\r$//' {} \;
           find . -name "*.kql" -exec sed -i 's/[[:space:]]\+$//' {} \;
 
+      # Step 5: Run syntax check
       - name: Run KQL syntax check
         run: |
           export PATH="$PATH:$HOME/.dotnet/tools"
+          failed=0
           for f in $(find . -name "*.kql"); do
-            echo "Checking $f"
-            kusto-parse "$f" || exit 1
+            echo "Checking $f..."
+            if ! kusto-parse "$f"; then
+              echo "❌ Syntax error in $f"
+              failed=1
+            fi
           done
+          if [ $failed -eq 1 ]; then
+            echo "Some KQL files have syntax errors."
+            exit 1
+          fi
