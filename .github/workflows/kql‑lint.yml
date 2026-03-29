@@ -1,0 +1,28 @@
+name: KQL Syntax Check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0
+
+      - name: Install parser
+        run: dotnet tool install -g Kusto.Language.Tool
+
+      - name: Run KQL check
+        run: |
+          export PATH="$PATH:$HOME/.dotnet/tools"
+          for f in $(find . -name "*.kql"); do
+            echo "Checking $f"
+            kusto‑parse "$f" || exit 1
+          done
