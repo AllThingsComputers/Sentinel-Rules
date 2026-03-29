@@ -16,24 +16,19 @@ jobs:
         with:
           dotnet-version: 7.0
 
-      - name: Install parser
+      - name: Install Kusto parser
         run: dotnet tool install -g Kusto.Language.Tool
 
-      - name: Run KQL check
+      # Normalize KQL files before linting
+      - name: Normalize KQL files
+        run: |
+          find . -name "*.kql" -exec sed -i 's/\r$//' {} \;
+          find . -name "*.kql" -exec sed -i 's/[[:space:]]\+$//' {} \;
+
+      - name: Run KQL syntax check
         run: |
           export PATH="$PATH:$HOME/.dotnet/tools"
-          FAILED=0
           for f in $(find . -name "*.kql"); do
             echo "Checking $f"
-            if ! kusto-parse "$f"; then
-              echo "❌ Syntax error in $f"
-              FAILED=1
-            fi
+            kusto-parse "$f" || exit 1
           done
-
-          if [ $FAILED -eq 1 ]; then
-            echo "Some KQL files failed syntax check"
-            exit 1
-          else
-            echo "All KQL files passed syntax check ✅"
-          fi
