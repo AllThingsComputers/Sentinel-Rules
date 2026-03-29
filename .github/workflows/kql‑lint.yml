@@ -22,7 +22,18 @@ jobs:
       - name: Run KQL check
         run: |
           export PATH="$PATH:$HOME/.dotnet/tools"
+          FAILED=0
           for f in $(find . -name "*.kql"); do
             echo "Checking $f"
-            kusto‑parse "$f" || exit 1
+            if ! kusto-parse "$f"; then
+              echo "❌ Syntax error in $f"
+              FAILED=1
+            fi
           done
+
+          if [ $FAILED -eq 1 ]; then
+            echo "Some KQL files failed syntax check"
+            exit 1
+          else
+            echo "All KQL files passed syntax check ✅"
+          fi
