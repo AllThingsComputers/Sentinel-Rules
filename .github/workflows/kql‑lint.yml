@@ -22,19 +22,19 @@ jobs:
       - name: Install Kusto parser
         run: dotnet tool install -g Kusto.Language.Tool
 
-      # Step 4: Normalize all KQL files (line endings + trailing spaces)
-      - name: Normalize KQL files
+      # Step 4: Normalize all TXT files (line endings + trailing spaces)
+      - name: Normalize TXT files
         run: |
           echo "Normalizing line endings and trimming spaces..."
-          find . -name "*.kql" -exec sed -i 's/\r$//' {} \;
-          find . -name "*.kql" -exec sed -i 's/[[:space:]]\+$//' {} \;
+          find . -name "*.txt" -exec sed -i 's/\r$//' {} \;
+          find . -name "*.txt" -exec sed -i 's/[[:space:]]\+$//' {} \;
 
       # Step 5: Run syntax check
       - name: Run KQL syntax check
         run: |
           export PATH="$PATH:$HOME/.dotnet/tools"
           failed=0
-          for f in $(find . -name "*.kql"); do
+          for f in $(find . -name "*.txt"); do
             echo "Checking $f..."
             if ! kusto-parse "$f"; then
               echo "❌ Syntax error in $f"
