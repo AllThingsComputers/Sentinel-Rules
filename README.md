@@ -8,7 +8,7 @@ please star it if you like it
 
 DISCLAIMER: These rules are all in development and are not to be relied on. Please suit to your environment and requirement
 
-fix sigma ruekl number 7 as title doenst match
+fix sigma rule number 7 as title doesn't match
 
 Sentinel-Rules/Office Activity
 /Ransom Note Detected in Sharepoint.txt
